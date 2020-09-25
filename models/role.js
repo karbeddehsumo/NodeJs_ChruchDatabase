@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const roleSchema = new Schema({
 userId: {
  type: String,
- required
+ required: [true]
 },
 roleId: {
   type: String,
-  required
+  required: [true]
 }
 });
 

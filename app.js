@@ -13,13 +13,16 @@ const methodOverride = require('method-override');
 
 const announcementRoutes = require('./routes/announcementRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
+const authRoutes = require('./routes/authRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const constantRoutes = require('./routes/constantRoutes');
 const churchRoutes = require('./routes/churchRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
 const incomeRoutes = require('./routes/incomeRoutes');
 const memberRoutes = require('./routes/memberRoutes');
+const roleRoutes = require('./routes/roleRoutes');
 const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes');
+
 
 const app = express();
 
@@ -41,8 +44,9 @@ app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(cookieParser());
 
+app.get('*', checkUser);
 app.get('/', (req, res) => {
-    res.redirect('/churches');  
+    res.render('welcome', {title: 'Welcome'});  
 });
 
 
@@ -54,14 +58,16 @@ app.get('/about', (req, res) => {
 app.get('/welcome', requireAuth, (req, res) => res.render('welcome'));
 
   //Blog Routes
-  app.get('*', checkUser);
+  //app.get('*', checkUser);
   app.use('/announcements',announcementRoutes);
   app.use('/attendances', attendanceRoutes);
   app.use('/blogs', blogRoutes);
+  app.use('/constants', constantRoutes);
   app.use('/churches', churchRoutes);
   app.use('/expenses',expenseRoutes);
   app.use('/incomes', incomeRoutes);
   app.use('/members', memberRoutes);
+  app.use('/roles', roleRoutes);
   app.use('/users', userRoutes);
   app.use(authRoutes);
   
