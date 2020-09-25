@@ -1,0 +1,35 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/incomes" method="POST">
+                <label for="familyId">Family</label>
+                <input type="text" id="familyId" name="familyId" required>
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname" required>
+                <label for="dob">Birth Date</label>
+                <input type="date" id="dob" name="dob" >
+                <label for="gender">Gender</label>
+                <input type="text" id="gender" name="gender" >
+                <label for="phone">Pemailhone</label>
+                <input type="text" id="phone" name="phone" >
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" >
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" >
+                <label for="membershipDate">Membership Since</label>
+                <input type="date" id="membershipDate" name="membershipDate" >
+                <label for="contactType">contact Type</label>
+                <input type="text" id="contactType" name="contactType" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

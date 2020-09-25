@@ -1,0 +1,37 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/constants/edited/<%= constant._id %>" method="post">
+                        <label for="cateory">Constant Category</label>
+                        <input type="text" id="category" name="category" value="<%= constant.category %>"" required>
+                        <label for="title">Name</label>
+                        <input type="text" id="name" name="name" value="<%= constant.name %>"" required>
+                        <label for="founded">Value1</label>
+                        <input type="date" id="value1" name="value1" value="<%= constant.value1 %>"" required>
+                        <label for="address1">Value2</label>
+                        <input type="text" id="value2" name="value2" value="<%= constant.value2 %>"" >
+                        <label for="address2">Value3</label>
+                        <input type="text" id="value3" name="value3" value="<%= constant.value3 %>"" >
+                        <label for="city">Sort</label>
+                        <input type="text" id="sort" name="sort" value="<%= constant.sort %>"" >
+                        <label for="state">Status</label>
+                        <input type="text" id="status" name="status" value="<%= constant.status %>"" >
+                        <label for="zipcode">Entered By</label>
+                        <input type="text" id="enteredBy" name="enteredBy" value="<%= constant.enteredBy %>"" >
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

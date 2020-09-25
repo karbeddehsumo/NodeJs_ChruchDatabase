@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+const { requireAuth, checkUser }  = require('./middleware/authMiddleware');
 
 const User = require('./models/user');
 
@@ -21,7 +23,8 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
-const dbURI = 'mongodb://gfumbah:John316love@ds133113.mlab.com:33113/churchdatabase'
+const dbURI = 'mongodb+srv://gfumbah:zorzor1964@cluster0.ssjpy.mongodb.net/ChurchDB';
+               
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 .then((result) => app.listen(3000))
 .catch((err) => console.log(err));
@@ -36,52 +39,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(methodOverride('_method'));
 app.use(express.json());
-
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
-    res.redirect('/blogs');  
+    res.redirect('/churches');  
 });
 
-// app.get('/login', (req, res) => {
-//   res.render('login.ejs')
-// });
-
-// app.post('/login', (req, res) => {
-
-// });
-
-// app.get('/signup', (req, res) => {
-  
-// });
-
-// app.post('/register', async (req, res, next) => {
-//   try{
-//     const user = new User(req.body);
-//     const hashedPassword = await bcrypt.hash(user.password, 10);
-//     if(user.password.compareTo(user.conformPassword)) return res.status(404).send('Passwords mismatch.');
-//    // const emailExist = await User.findOne({email: req.body.email});
-//     console.log('after is exist');
-//     //if(emailExist) return res.status(400).send('Email already exists.');
-//     console.log('after exist error message');
-//     user.password = hashedPassword;
-//     await user.save()
-//     .then((result) => {
-//       res.redirect('/login');
-//     })
-//     .catch((err) => {
-//       res.redirect('/register');
-//     });
-//   } catch {
-
-//   }
-//   next
-// });
 
 app.get('/about', (req, res) => {
     res.render('about', {title: 'About'});
 });
 
+//must be authenticated to access the landing page
+app.get('/welcome', requireAuth, (req, res) => res.render('welcome'));
+
   //Blog Routes
+  app.get('*', checkUser);
   app.use('/announcements',announcementRoutes);
   app.use('/attendances', attendanceRoutes);
   app.use('/blogs', blogRoutes);
@@ -92,10 +65,9 @@ app.get('/about', (req, res) => {
   app.use('/users', userRoutes);
   app.use(authRoutes);
   
-  
-
 
   //404 page
   app.use((req,res)=>{
     res.status(404).render('404', {title: '404'});
-  })
+  });
+

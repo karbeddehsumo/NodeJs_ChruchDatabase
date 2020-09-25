@@ -1,0 +1,35 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/announcements/edited/<%= announcement._id %>" method="post"> 
+                        <label for="ministryId">Enter Ministry</label>
+                        <input type="text" id="ministryId" name="ministryId" value="<%= announcement.ministryId %>"" required>
+                        <label for="documentId">Document</label>
+                        <input type="text" id="documentId" name="documentId" value="<%= announcement.documentId %>"" required>
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" value="<%= announcement.title %>"" required>
+                        <label for="beginDate">Begin Date</label>
+                        <input type="date" id="beginDate" name="beginDate" value="<%= announcement.beginDate %>"" >
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate" name="endDate" value="<%= announcement.endDate %>"" >
+                        <label for="message">Enter Message</label>
+                        <input type="textbox" id="message" name="message" value="<%= announcement.message %>"" >
+                        <label for="statusId">Status</label>
+                        <input type="text" id="statusId" name="statusId" value="<%= announcement.statusId %>"" >
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

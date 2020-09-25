@@ -1,0 +1,31 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/constants" method="POST">
+                <label for="category">Category</label>
+                <input type="text" id="category" name="category" required>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+                <label for="value1">Value1</label>
+                <input type="text" id="value1" name="value1" required>
+                <label for="value2">Valuea</label>
+                <input type="text" id="value2" name="value2" >
+                <label for="value3">Value3</label>
+                <input type="text" id="value3" name="value3" >
+                <label for="sort">Sort</label>
+                <input type="text" id="sort" name="sort" >
+                <label for="status">Status</label>
+                <input type="text" id="status" name="status" >
+                <label for="enteredBy">Entered By</label>
+                <input type="text" id="enterBy" name="enterBy" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

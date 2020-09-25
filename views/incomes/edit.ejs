@@ -1,0 +1,35 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/incomes/edited/<%= income._id %>" method="post">
+                        <label for="fundId">Income Type</label>
+                        <input type="text" id="fundId" name="fundId" value="<%= income.fundId %>"" required>
+                        <label for="incomeDate">Date</label>
+                        <input type="date" id="incomeDate" name="incomeDate" value="<%= income.incomeDate %>"" required>
+                        <label for="cashAmount">Cash Amount</label>
+                        <input type="text" id="cashAmount" name="cashAmount" value="<%= income.cashAmount %>"" required>
+                        <label for="checkAmount">Check Amount</label>
+                        <input type="text" id="checkAmount" name="checkAmount" value="<%= income.checkAmount %>"" >
+                        <label for="coinAmount">Coin Amount</label>
+                        <input type="text" id="coinAmount" name="coinAmount" value="<%= income.coinAmount %>"" >
+                        <label for="checkNumber">Check Number</label>
+                        <input type="text" id="checkNumber" name="checkNumber" value="<%= income.checkNumber %>"" >
+                        <label for="comment">Comment</label>
+                        <input type="text" id="comment" name="comment" value="<%= income.comment %>"" >
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

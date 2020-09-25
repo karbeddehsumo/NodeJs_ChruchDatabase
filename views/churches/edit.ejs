@@ -1,0 +1,49 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/churches/edited/<%= church._id %>" method="post">
+                        <label for="name">Church Name</label>
+                        <input type="text" id="name" name="name" value="<%= church.name %>"" required>
+                        <label for="title">Church Title</label>
+                        <input type="text" id="title" name="title" value="<%= church.title %>"" required>
+                        <label for="founded">Date Founded</label>
+                        <input type="date" id="founded" name="founded" value="<%= church.founded %>"" required>
+                        <label for="address1">Address1</label>
+                        <input type="text" id="address1" name="address1" value="<%= church.address1 %>"" >
+                        <label for="address2">Address2</label>
+                        <input type="text" id="address2" name="address2" value="<%= church.address2 %>"" >
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" value="<%= church.city %>"" >
+                        <label for="state">State</label>
+                        <input type="text" id="state" name="state" value="<%= church.state %>"" >
+                        <label for="zipcode">Zip Code</label>
+                        <input type="text" id="zipcode" name="zipcode" value="<%= church.zipcode %>"" >
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" value="<%= church.country %>"" >
+                        <label for="phone">Phone</label>
+                        <input type="phone" id="phone" name="phone" value="<%= church.phone %>"" >
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="<%= church.email %>"" >
+                        <label for="parent">Parent Church</label>
+                        <input type="text" id="parent" name="parent" value="<%= church.parent %>"" >
+                        <label for="picture">Picture</label>
+                        <input type="text" id="picture" name="picture" value="<%= church.picture %>"" >
+                        <label for="statusId">Status</label>
+                        <input type="text" id="statusId" name="statusId" value="<%= church.picture %>""  >
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

@@ -1,0 +1,29 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/announcements" method="POST">
+                <label for="ministryId">Enter Ministry</label>
+                <input type="text" id="ministryId" name="ministryId" required>
+                <label for="documentId">Document</label>
+                <input type="text" id="documentId" name="documentId" required>
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
+                <label for="beginDate">Begin Date</label>
+                <input type="date" id="beginDate" name="beginDate" >
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" name="endDate" >
+                <label for="message">Enter Message</label>
+                <input type="textbox" id="message" name="message" >
+                <label for="statusId">Status</label>
+                <input type="text" id="statusId" name="statusId" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,0 +1,24 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="details content">
+            <h2><%= announcement.title %></h2>
+            <div class="content" >
+                <p><%= announcement.calendarId %></p>
+            </div>
+             <p>Are you sure you want to delete this record?</p>>
+            <form method="post" action="/announcements/deleted/<%= announcement._id %>">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Commit Delete</button>
+                </form>
+                <a href="/announcements" >Cancel Delete</a>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

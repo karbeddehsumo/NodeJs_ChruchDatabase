@@ -1,0 +1,20 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h2>All Churches</h2>
+            <% if(churches.length > 0) { %>
+                <% churches.forEach(church => { %>
+                    <a class="single" href="/churches/<%= church._id %>" >
+                <h3 class="title"><%= church.name %> </h3>
+                <p class="snippet"><%= church.title %></p>
+                </a>
+                <% }) %>
+            <% } %>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

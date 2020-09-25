@@ -1,0 +1,19 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/roles" method="POST">
+                <label for="userId">User</label>
+                <input type="text" id="userId" name="userId" required>
+                <label for="roleId">Role</label>
+                <input type="text" id="roleId" name="roleId" required>
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

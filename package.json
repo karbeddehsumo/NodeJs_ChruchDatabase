@@ -1,0 +1,35 @@
+{
+  "name": "node-crash-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karbeddehsumo/Node-Crash-Course.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karbeddehsumo/Node-Crash-Course/issues"
+  },
+  "homepage": "https://github.com/karbeddehsumo/Node-Crash-Course#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "joi": "^17.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
+    "material-design-icons": "^3.0.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.9.23",
+    "morgan": "^1.10.0",
+    "validator": "^13.1.1"
+  }
+}

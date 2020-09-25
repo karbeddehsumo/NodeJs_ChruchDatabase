@@ -1,0 +1,20 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h2>All Incomes</h2>
+            <% if(incomes.length > 0) { %>
+                <% incomes.forEach(income => { %>
+                    <a class="single" href="/incomes/<%= income._id %>" >
+                <h3 class="title"><%= income.cashAmount %> </h3>
+                <p class="snippet"><%= income.checkNumber %></p>
+                </a>
+                <% }) %>
+            <% } %>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="details content">
+            <h2><%= announcement.title %></h2>
+            <div class="content" >
+                <p><%= announcement.calendarId %></p>
+    
+            <a class="edit blogs" href="/announcements/edit/<%= announcement._id %>">
+                <img src="/pencil.svg" alt="edit icon">
+            </a>
+           
+           <a class="delete blogs" href="/announcements/delete/<%= announcement._id %>">
+            <img src="/trashcan.svg" alt="delete icon">
+        </a>
+    
+            </div>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+            
+    </body>
+
+</html>

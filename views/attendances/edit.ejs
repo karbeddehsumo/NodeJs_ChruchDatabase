@@ -1,0 +1,27 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/attendances/edited/<%= attendance._id %>" method="post">                        
+                        <label for="memberId">Member</label>
+                        <input type="text" id="memberId" name="memberId" value="<%= attendance.memberId %>"" required>
+                        <label for="calendarId">Date</label>
+                        <input type="date" id="calendarId" name="calendarId" value="<%= attendance.calendarId %>"" required>
+                        <label for="rollcall">Roll</label>
+                        <input type="checkbox" id="rollcall" name="rollcall" value="<%= attendance.rollcall %>"" required>
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

@@ -1,0 +1,30 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/expense" method="POST">
+                <label for="fundId">Expense Type</label>
+                <input type="text" id="fundId" name="fundId" required>         
+                <label for="payee">Payee</label>
+                <input type="text" id="payee" name="payee" required>
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" name="amount" >
+                <label for="checkNumber">Check Number</label>
+                <input type="text" id="checkNumber" name="checkNumber" >
+                <label for="expenseDate">Date</label>
+                <input type="date" id="expenseDate" name="expenseDate" required>
+                <label for="comment">Comment</label>
+                <input type="text" id="comment" name="comment" >
+                <label for="statusId">Status</label>
+                <input type="text" id="statusId" name="statusId"  >
+
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

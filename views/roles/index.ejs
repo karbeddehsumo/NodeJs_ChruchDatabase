@@ -1,0 +1,20 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h2>All Roles</h2>
+            <% if(roles.length > 0) { %>
+                <% roles.forEach(role => { %>
+                    <a class="single" href="/roles/<%= role._id %>" >
+                <h3 class="title"><%= roles.userID %> </h3>
+                <p class="snippet"><%= roles.roleId %></p>
+                </a>
+                <% }) %>
+            <% } %>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

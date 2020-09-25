@@ -1,0 +1,29 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/incomes" method="POST">
+                <label for="fundId">Income Type</label>
+                <input type="text" id="subCategoryId" name="subCategoryId" required>
+                <label for="incomeDate">Date</label>
+                <input type="date" id="incomeDate" name="incomeDate" required>
+                <label for="cashAmount">Cash Amount</label>
+                <input type="text" id="cashAmount" name="cashAmount" required>
+                <label for="checkAmount">Check Amount</label>
+                <input type="text" id="checkAmount" name="checkAmount" >
+                <label for="coinAmount">Coin Amount</label>
+                <input type="text" id="coinAmount" name="coinAmount" >
+                <label for="checkNumber">Check Number</label>
+                <input type="text" id="checkNumber" name="checkNumber" >
+                <label for="comment">Comment</label>
+                <input type="text" id="comment" name="comment" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
