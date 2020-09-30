@@ -42,13 +42,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(methodOverride('_method'));
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser());  //middlewae to add user data to res.locals
 
 app.get('*', checkUser);
 app.get('/', (req, res) => {
-    res.render('welcome', {title: 'Welcome'});  
+    res.render('welcome', {title: 'welcome'});  
 });
 
+app.get('/home', (req, res) => {
+  res.render('home', {title: 'home'});  
+});
 
 app.get('/about', (req, res) => {
     res.render('about', {title: 'About'});

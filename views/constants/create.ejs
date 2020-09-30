@@ -5,6 +5,7 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
+            <h2>Add a Constant</h2>
             <form action="/constants" method="POST">
                 <label for="category">Category</label>
                 <input type="text" id="category" name="category" required>
@@ -12,16 +13,24 @@
                 <input type="text" id="name" name="name" required>
                 <label for="value1">Value1</label>
                 <input type="text" id="value1" name="value1" required>
-                <label for="value2">Valuea</label>
+                <label for="value2">Value2</label>
                 <input type="text" id="value2" name="value2" >
                 <label for="value3">Value3</label>
                 <input type="text" id="value3" name="value3" >
                 <label for="sort">Sort</label>
-                <input type="text" id="sort" name="sort" >
-                <label for="status">Status</label>
-                <input type="text" id="status" name="status" >
-                <label for="enteredBy">Entered By</label>
-                <input type="text" id="enterBy" name="enterBy" >
+
+                <select id="sort">
+                    <option value="None">-- Select --</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
                 <button>Submit</button>
             </form>
         </div>

@@ -7,9 +7,23 @@
         <div class="create-blog content">
             <form action="/roles" method="POST">
                 <label for="userId">User</label>
-                <input type="text" id="userId" name="userId" required>
+                <select id="userId">
+                    <% if(users.length > 0) { %>
+                        <% users.forEach(user => { %>
+                        <option value="<%= user._id %>"><%= user.email %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+
                 <label for="roleId">Role</label>
-                <input type="text" id="roleId" name="roleId" required>
+                <select id="roleId">
+                    <% if(roleTypes.length > 0) { %>
+                        <% roleTypes.forEach(roleType => { %>
+                        <option value="<%= roleType._id %>"><%= roleType.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+
                 <button>Submit</button>
             </form>
         </div>

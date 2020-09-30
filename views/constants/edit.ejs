@@ -10,19 +10,34 @@
                     <form action="/constants/edited/<%= constant._id %>" method="post">
                         <label for="cateory">Constant Category</label>
                         <input type="text" id="category" name="category" value="<%= constant.category %>"" required>
-                        <label for="title">Name</label>
+                        <label for="name">Name</label>
                         <input type="text" id="name" name="name" value="<%= constant.name %>"" required>
-                        <label for="founded">Value1</label>
-                        <input type="date" id="value1" name="value1" value="<%= constant.value1 %>"" required>
-                        <label for="address1">Value2</label>
+                        <label for="value1">Value1</label>
+                        <input type="text" id="value1" name="value1" value="<%= constant.value1 %>"" required>
+                        <label for="value2">Value2</label>
                         <input type="text" id="value2" name="value2" value="<%= constant.value2 %>"" >
-                        <label for="address2">Value3</label>
+                        <label for="value3">Value3</label>
                         <input type="text" id="value3" name="value3" value="<%= constant.value3 %>"" >
-                        <label for="city">Sort</label>
-                        <input type="text" id="sort" name="sort" value="<%= constant.sort %>"" >
-                        <label for="state">Status</label>
-                        <input type="text" id="status" name="status" value="<%= constant.status %>"" >
-                        <label for="zipcode">Entered By</label>
+                        <label for="sort">Sort</label>
+                        <select id="sort">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+
+                        <label for="status">Status</label>                      
+                        <select id="status">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Not Active</option>
+                        </select>
+                        
+                        <label for="enteredBy">Entered By</label>
                         <input type="text" id="enteredBy" name="enteredBy" value="<%= constant.enteredBy %>"" >
                         <button>Submit</button>
                     </form>

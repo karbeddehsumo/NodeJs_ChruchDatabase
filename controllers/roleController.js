@@ -1,4 +1,6 @@
 const Role = require('../models/role');
+const User = require('../models/user');
+const Constant = require('../models/constant');
 
 const role_index = (req, res) => {
     Role.find().sort({ createdAt: -1 })
@@ -21,13 +23,16 @@ const role_details = (req, res) => {
     });
 }
 
-const role_create_get = (req, res) => {
-    res.render('roles/create', {title: 'Create a New role'});
+const role_create_get = async (req, res) => {
+    const users = await User.find();
+    const roleTypes = await Constant.find( {category: "Role" } );
+    res.render('roles/create', {title: 'Create a New role', users, roleTypes});
 }
 
 const role_create_post = (req, res) => {
   const role = new Role(req.body);
-  
+  console.log('Here is the role data');
+  console.log(role);
   role.save()
   .then((result) => {
     res.redirect("/roles");

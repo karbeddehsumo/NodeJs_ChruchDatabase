@@ -1,5 +1,6 @@
 const Constant = require('../models/constant');
 
+//app.get('*', checkUser); //put user values in res.locals
 const constant_index = (req, res) => {
     Constant.find().sort({ createdAt: -1 })
     .then((result) => {
@@ -22,12 +23,14 @@ const constant_details = (req, res) => {
 }
 
 const constant_create_get = (req, res) => {
+    
     res.render('constants/create', {title: 'Create a New constant'});
 }
 
 const constant_create_post = (req, res) => {
   const constant = new Constant(req.body);
-  
+  constant.enteredBy = global.userId;
+  constant.status = "Active";
   constant.save()
   .then((result) => {
     res.redirect("/constants");
@@ -68,7 +71,8 @@ const constant_edit_get = (req, res) => {
 const constant_edit = async (req, res) => {
 const id = req.params.id;
 const constant = new Constant(req.body);
-Constant.findById(id)
+console.log(constant);
+await Constant.findById(id)
 .then(result => {
   result.category = constant.category;
   result.name = constant.name;
