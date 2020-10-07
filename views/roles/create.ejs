@@ -7,7 +7,7 @@
         <div class="create-blog content">
             <form action="/roles" method="POST">
                 <label for="userId">User</label>
-                <select id="userId">
+                <select name="userId">
                     <% if(users.length > 0) { %>
                         <% users.forEach(user => { %>
                         <option value="<%= user._id %>"><%= user.email %></option>
@@ -16,7 +16,7 @@
                 </select>
 
                 <label for="roleId">Role</label>
-                <select id="roleId">
+                <select name="roleId">
                     <% if(roleTypes.length > 0) { %>
                         <% roleTypes.forEach(roleType => { %>
                         <option value="<%= roleType._id %>"><%= roleType.name %></option>

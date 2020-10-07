@@ -7,7 +7,7 @@
         <div class="create-blog content">
             <h2><%= title %></h2>
             
-                    <form action="/roles/edited/<%= role._id %>" method="post">
+                    <form action="/roles/edited/<%= role._id %>" method="POST">
                         <label for="userId">User</label>
                         <input type="text" id="userId" name="userId" value="<%= role.userId %>"" required>
                         <label for="roleId">Role</label>

@@ -31,8 +31,6 @@ const role_create_get = async (req, res) => {
 
 const role_create_post = (req, res) => {
   const role = new Role(req.body);
-  console.log('Here is the role data');
-  console.log(role);
   role.save()
   .then((result) => {
     res.redirect("/roles");

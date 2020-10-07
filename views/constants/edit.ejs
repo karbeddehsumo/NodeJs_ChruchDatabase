@@ -19,16 +19,16 @@
                         <label for="value3">Value3</label>
                         <input type="text" id="value3" name="value3" value="<%= constant.value3 %>"" >
                         <label for="sort">Sort</label>
-                        <select id="sort">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
+                        <select name="sort">
+                            <option <%= constant.sort==1 ? "selected" : "" %> value="1">1</option> 
+                            <option <%= constant.sort==2 ? "selected" : "" %> value="2">2</option>
+                            <option <%= constant.sort==3 ? "selected" : "" %> value="3">3</option>
+                            <option <%= constant.sort==4 ? "selected" : "" %> value="4">4</option>
+                            <option <%= constant.sort==5 ? "selected" : "" %> value="5">5</option>
+                            <option <%= constant.sort==6 ? "selected" : "" %> value="6">6</option>
+                            <option <%= constant.sort==7 ? "selected" : "" %> value="7">7</option>
+                            <option <%= constant.sort==8 ? "selected" : "" %> value="8">8</option>
+                            <option <%= constant.sort==9 ? "selected" : "" %> value="9">9</option>
                         </select>
 
                         <label for="status">Status</label>                      
