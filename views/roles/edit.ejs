@@ -1,25 +1,25 @@
 <html lang="en">
     <%- include('../partials/head.ejs') %>
     <body>
-        
+
         <%- include('../partials/nav.ejs') %>
-
+        
         <div class="create-blog content">
-            <h2><%= title %></h2>
-            
-                    <form action="/roles/edited/<%= role._id %>" method="POST">
-                        <label for="userId">User</label>
-                        <input type="text" id="userId" name="userId" value="<%= role.userId %>"" required>
-                        <label for="roleId">Role</label>
-                        <input type="text" id="roleId" name="roleId" value="<%= role.roleId %>"" required>
-                        <button>Submit</button>
-                    </form>
-              
+           <p>Add Role(s) for this user <%= user.email %> </p>
+            <form action="/roles/edited/<%= user._id %>" method="POST">
+                <label for="roleName">Role</label>
+                <select name="roleName">
+                    <% if(roleTypes.length > 0) { %>
+                        <% roleTypes.forEach(roleType => { %>
+                        <option value="<%= roleType.name %>"><%= roleType.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
 
+                <button>Submit</button>
+            </form>
         </div>
         <%- include('../partials/footer.ejs') %>
-
-    
     </body>
 
 </html>

@@ -3,23 +3,17 @@
     <body>
 
         <%- include('../partials/nav.ejs') %>
-
+        
         <div class="create-blog content">
+           <p>Add Role(s) for user <%= user.email %> </p>
             <form action="/roles" method="POST">
-                <label for="userId">User</label>
-                <select name="userId">
-                    <% if(users.length > 0) { %>
-                        <% users.forEach(user => { %>
-                        <option value="<%= user._id %>"><%= user.email %></option>
-                        <% }) %>
-                    <% } %>
-                </select>
+                 <input type="hidden" id="id" name="id" value="<%= user._id %>"" >
 
-                <label for="roleId">Role</label>
-                <select name="roleId">
+                <label for="roleName">Role</label>
+                <select name="roleName">
                     <% if(roleTypes.length > 0) { %>
                         <% roleTypes.forEach(roleType => { %>
-                        <option value="<%= roleType._id %>"><%= roleType.name %></option>
+                        <option value="<%= roleType.name %>"><%= roleType.name %></option>
                         <% }) %>
                     <% } %>
                 </select>

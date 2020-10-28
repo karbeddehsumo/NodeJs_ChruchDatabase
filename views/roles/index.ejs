@@ -8,10 +8,8 @@
             <h2>All Roles</h2>
             <% if(roles.length > 0) { %>
                 <% roles.forEach(role => { %>
-                    <a class="single" href="/roles/<%= role._id %>" >
-                <h3 class="title"><%= role.userId %> </h3>
-                <p class="snippet"><%= role.roleId %></p>
-                </a>
+                    <h3 class="title"><%= role.email %> </h3>
+                    <a class="single" href="/roles/edit/<%= role._id %>" >Add Roles</a>
                 <% }) %>
             <% } %>
         </div>

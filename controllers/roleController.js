@@ -1,5 +1,4 @@
-const Role = require('../models/role');
-const User = require('../models/user');
+const Role = require('../models/user'); //User model
 const Constant = require('../models/constant');
 
 const role_index = (req, res) => {
@@ -24,14 +23,19 @@ const role_details = (req, res) => {
 }
 
 const role_create_get = async (req, res) => {
-    const users = await User.find();
+    const user = await Role.findById({_id: req.params.id});
     const roleTypes = await Constant.find( {category: "Role" } );
-    res.render('roles/create', {title: 'Create a New role', users, roleTypes});
+    res.render('roles/create', {title: 'Create a New role', user, roleTypes});
 }
 
-const role_create_post = (req, res) => {
-  const role = new Role(req.body);
-  role.save()
+const role_create_post = async (req, res) => {
+  const userId = req.body.id;
+  const roleName = req.body.roleName;
+  const user = await Role.findById({_id: req.body.id});
+  //const count = user.roles.length + 1;
+  user.roles[0] = roleName;
+  //user.roles.push(roleName);
+  await user.save()
   .then((result) => {
     res.redirect("/roles");
   })
@@ -59,22 +63,35 @@ const role_delete_get = (req, res) => {
     .catch(err => console.log(err));
 }
 
-const role_edit_get = (req, res) => {
-  const id = req.params.id;
-    Role.findById(id)
-    .then(result => {
-      res.render('roles/edit', {role: result, title: 'Edit role'});
-    })
-    .catch(err => console.log(err));
+const role_edit_get = async (req, res) => {
+  //const id = req.params.id;
+    // Role.findById(id)
+    // .then(result => {
+    //   res.render('roles/edit', {role: result, title: 'Edit role'});
+    // })
+    // .catch(err => console.log(err));
+
+    const user = await Role.findById({_id: req.params.id});
+    const roleTypes = await Constant.find( {category: "Role" } );
+    res.render('roles/edit', {title: 'Create a New role', user, roleTypes});
 }
 
 const role_edit = async (req, res) => {
 const id = req.params.id;
-const role = new Role(req.body);
-Role.findById(id)
+console.log(id);
+console.log(req.body.roleName);
+const roleName = req.body.roleName;
+
+// const role = await Role.findById(id);
+//  const newRoles = role.roles;
+//  newRoles.push(roleName);
+// await Role.updateOne({_id: id},{roles: newRoles});
+await Role.findById(id)
 .then(result => {
-  result.userId = role.userId;
-  result.roleId = role.roleId;
+  result.userId = id;
+ // result.password = role.password;
+  //result.email = role.email;
+  result.roles.push(roleName);
   result.save();
   res.redirect('/roles');
 })

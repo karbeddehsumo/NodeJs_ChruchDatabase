@@ -15,7 +15,8 @@ password: {
   type: String,
   required: [true,'Please enter a password'],
   minlength: [6, 'Minimum password length is 6 characters']
-}
+},
+roles: [String]
 });
 
 //fire a function after doc saved to db

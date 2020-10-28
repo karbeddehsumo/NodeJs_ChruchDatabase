@@ -4,7 +4,7 @@ const router = express.Router();
   
   router.get('/', roleController.role_index);
   router.post('/', roleController.role_create_post);
-  router.get('/create', roleController.role_create_get);
+  router.get('/create/:id', roleController.role_create_get);
   router.post('/deleted/:id', roleController.role_delete);
   router.get('/delete/:id', roleController.role_delete_get);
   router.get('/:id', roleController.role_details);
