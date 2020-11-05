@@ -1,0 +1,39 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/members/edited/<%= member._id %>" method="post">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" value="<%= member.firstName %>"" required>
+                        <label for="lastname">Last Name</label>
+                        <input type="text" id="lastname" name="lastname" value="<%= member.lastname %>"" required>
+                        <label for="dob">Birth Date</label>
+                        <input type="date" id="dob" name="dob" value="<%= member.dob %>"" >
+                        <label for="gender">Gender</label>
+                        <input type="text" id="gender" name="gender" value="<%= member.gender %>"" >
+                        <label for="phone">Pemailhone</label>
+                        <input type="text" id="phone" name="phone" value="<%= member.phone %>"" >
+                        <label for="email">Email</label>
+                        <input type="text" id="email" name="email" value="<%= member.email %>"" >
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" value="<%= member.title %>"" >
+                        <label for="membershipDate">Membership Since</label>
+                        <input type="date" id="membershipDate" name="membershipDate" value="<%= member.membershipDate %>"" >
+                        <label for="contactType">contact Type</label>
+                        <input type="text" id="contactType" name="contactType" value="<%= member.contactType %>"" >
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

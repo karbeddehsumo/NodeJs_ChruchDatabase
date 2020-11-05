@@ -1,0 +1,21 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <a href="/members/create">Add Member</a>
+            <h2>All Members</h2>
+            <% if(members.length > 0) { %>
+                <% members.forEach(member => { %>
+                    <a class="single" href="/members/<%= member._id %>" >
+                <h3 class="title"><%= member.lastName %> </h3>
+                <p class="snippet"><%= member.firstName %></p>
+                </a>
+                <% }) %>
+            <% } %>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
