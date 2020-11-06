@@ -1,27 +1,31 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.schema;
+const Schema = mongoose.Schema;
 
 const familySchema = new Schema({
   familyName: {
-      type: string,
-      required: [True, 'Enter family name']
+      type: String,
+      required: [true, 'Enter family name']
+  },
+  familyLabel: {
+    type: String,
+    required: [true, 'Enter the family label']
   },
   address1: {
-      type: string
+      type: String
   },
   address2: {
-      type: string
+      type: String
   },
   city: {
-      type: string
+      type: String
   },
   state: {
-    type: string
+    type: String
   },
   zip: {
-      type: string
+      type: String
   },
   country: {
-      type: string
+      type: String
   }
 });

@@ -3,7 +3,7 @@ const Family = require('../models/family');
 const family_index = (req, res) => {
     Family.find().sort({ createdAt: -1 })
     .then((result) => {
-      res.render('families/index', { title: 'All families', familiess: result })
+      res.render('families/index', { title: 'All families', families: result })
     })
     .catch((err) => {
       console.log(err)

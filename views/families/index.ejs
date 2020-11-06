@@ -4,12 +4,14 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
+            <a href="/families/create">Add Family</a>
             <h2>All Families</h2>
             <% if(families.length > 0) { %>
                 <% families.forEach(family => { %>
                     <a class="single" href="/families/<%= family._id %>" >
                 <h3 class="title"><%= family.familyName %> </h3>
                 <p class="snippet"><%= family.address1 %></p>
+                <a href="/members/create/<%= family._id %>">Add Family</a>
                 </a>
                 <% }) %>
             <% } %>

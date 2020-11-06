@@ -10,6 +10,8 @@
                     <form action="/families/edited/<%= family._id %>" method="post">
                         <label for="familyName">Family Name</label>
                         <input type="text" id="familyName" name="familyName" value="<%= family.familyName %>"" required>
+                        <label for="familyLabel">Family Label</label>       
+                        <input type="text" id="familyLabel" name="familyLabel" value="<%= family.familyLabel %>"" required>
                         <label for="address1">Address1</label>
                         <input type="text" id="address1" name="address1" value="<%= family.address1 %>"" required>
                         <label for="address2">Address2</label>

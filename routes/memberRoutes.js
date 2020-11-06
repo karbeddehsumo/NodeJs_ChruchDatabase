@@ -4,7 +4,7 @@ const router = express.Router();
   
   router.get('/', memberController.member_index);
   router.post('/', memberController.member_create_post);
-  router.get('/create', memberController.member_create_get);
+  router.get('/create/:id', memberController.member_create_get);
   router.post('/deleted/:id', memberController.member_delete);
   router.get('/delete/:id', memberController.member_delete_get);
   router.get('/:id', memberController.member_details);

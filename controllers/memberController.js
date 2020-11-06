@@ -22,7 +22,8 @@ const member_details = (req, res) => {
 }
 
 const member_create_get = (req, res) => {
-    res.render('members/create', {title: 'Create a New member'});
+    const id = req.params.id;
+    res.render('members/create', {title: 'Create a New member', familyId: id});
 }
 
 const member_create_post = (req, res) => {
