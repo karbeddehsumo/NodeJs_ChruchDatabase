@@ -6,9 +6,9 @@ const familySchema = new Schema({
       type: String,
       required: [true, 'Enter family name']
   },
-  familyLabel: {
+  familyPatriots: {
     type: String,
-    required: [true, 'Enter the family label']
+    required: [true, 'Enter the names of the family patriot(s)']
   },
   address1: {
       type: String
@@ -28,4 +28,7 @@ const familySchema = new Schema({
   country: {
       type: String
   }
-});
+}, {timestamp: true});
+
+const Family = mongoose.model('family', familySchema);
+module.exports = Family;

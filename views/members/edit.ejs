@@ -16,11 +16,15 @@
                         <input type="date" id="dob" name="dob" value="<%= member.dob %>"" >
                         <label for="gender">Gender</label>
                         <input type="text" id="gender" name="gender" value="<%= member.gender %>"" >
-                        <label for="phone">Pemailhone</label>
+                        <select name="gender">
+                            <option <%= gender==Male ? "selected" : "" %> value="Male">Male</option> 
+                            <option <%= gender==Female ? "selected" : "" %> value="Female">Female</option>
+                        </select>
+                        <label for="phone">Phone</label>
                         <input type="text" id="phone" name="phone" value="<%= member.phone %>"" >
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" value="<%= member.email %>"" >
-                        <label for="title">Title</label>
+                        <label for="title">Church Title</label>
                         <input type="text" id="title" name="title" value="<%= member.title %>"" >
                         <label for="membershipDate">Membership Since</label>
                         <input type="date" id="membershipDate" name="membershipDate" value="<%= member.membershipDate %>"" >

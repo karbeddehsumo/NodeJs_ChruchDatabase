@@ -71,6 +71,7 @@ const family = new Family(req.body);
 Family.findById(id)
 .then(result => {
   result.familyName = family.firstName;
+  result.familyPatriots = family.familyPatriots
   result.address1 = family.address1;
   result.address2 = family.address2;
   result.city = family.city;
