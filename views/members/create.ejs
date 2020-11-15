@@ -3,14 +3,15 @@
     <body>
 
         <%- include('../partials/nav.ejs') %>
-        <p>Add Member</p>
+        <h1>Add New Member</h1>
+        <h3 class="center"><%= subTitle %></h3>
         <div class="create-blog content">
             <form action="/members" method="POST">
                 <input type="hidden" id="familyId" name="familyId" value="<%= familyId %>"" required>
                 <label for="firstName">First Name</label>
                 <input type="text" id="firstName" name="firstName" required>
                 <label for="lastname">Last Name</label>
-                <input type="text" id="lastname" name="lastname" required>
+                <input type="text" id="lastname" name="lastName" required>
                 <label for="dob">Birth Date</label>
                 <input type="date" id="dob" name="dob" >
                 <label for="gender">Gender</label>
@@ -27,9 +28,9 @@
                 <label for="title">Church Title</label>
                 <select name="title">
                     <option value="None"></option>
-                    <% if(ChurchTitles.length > 0) { %>
-                        <% ChurchTitles.forEach(title => { %>
-                        <option value="<% title %>"><%= title.name %></option>
+                    <% if(churchTitles.length > 0) { %>
+                        <% churchTitles.forEach(churchTitle => { %>
+                        <option value="<% churchTitle %>"><%= churchTitle.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
@@ -37,7 +38,14 @@
                 <label for="membershipDate">Membership Since</label>
                 <input type="date" id="membershipDate" name="membershipDate" >
                 <label for="contactType">contact Type</label>
-                <input type="text" id="contactType" name="contactType" >
+                <select name="contactType">
+                    <option value="None"></option>
+                    <% if(contactTypes.length > 0) { %>
+                        <% contactTypes.forEach(contactType => { %>
+                        <option value="<% contactType %>"><%= contactType.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
                 <button>Submit</button>
             </form>
         </div>

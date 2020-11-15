@@ -15,21 +15,32 @@
                         <label for="dob">Birth Date</label>
                         <input type="date" id="dob" name="dob" value="<%= member.dob %>"" >
                         <label for="gender">Gender</label>
-                        <input type="text" id="gender" name="gender" value="<%= member.gender %>"" >
                         <select name="gender">
-                            <option <%= gender==Male ? "selected" : "" %> value="Male">Male</option> 
-                            <option <%= gender==Female ? "selected" : "" %> value="Female">Female</option>
+                            <option <%= member.gender=="Male" ? "selected" : "" %> value="Male">Male</option> 
+                            <option <%= member.gender=="Female" ? "selected" : "" %> value="Female">Female</option>
                         </select>
                         <label for="phone">Phone</label>
                         <input type="text" id="phone" name="phone" value="<%= member.phone %>"" >
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" value="<%= member.email %>"" >
                         <label for="title">Church Title</label>
-                        <input type="text" id="title" name="title" value="<%= member.title %>"" >
+                        <select name="title">
+                            <% if(churchTitles.length > 0) { %>
+                                <% churchTitles.forEach(churchTitle => { %>
+                                <option value="<%= churchTitle.name %>"><%= churchTitle.name %></option>
+                                <% }) %>
+                            <% } %>
+                        </select>
                         <label for="membershipDate">Membership Since</label>
                         <input type="date" id="membershipDate" name="membershipDate" value="<%= member.membershipDate %>"" >
                         <label for="contactType">contact Type</label>
-                        <input type="text" id="contactType" name="contactType" value="<%= member.contactType %>"" >
+                        <select name="title">
+                            <% if(contactTypes.length > 0) { %>
+                                <% contactTypes.forEach(contactType => { %>
+                                <option value="<%= contactType.name %>"><%= contactType.name %></option>
+                                <% }) %>
+                            <% } %>
+                        </select>
                         <button>Submit</button>
                     </form>
               

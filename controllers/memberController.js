@@ -1,5 +1,6 @@
 const Member = require('../models/member');
 const Constant = require('../models/constant');
+const Family = require('../models/family');
 
 const member_index = (req, res) => {
     Member.find().sort({ createdAt: -1 })
@@ -23,9 +24,12 @@ const member_details = (req, res) => {
 }
 
 const member_create_get = async (req, res) => {
-    const id = req.params.id;
-    const ChurchTitles = await Constant.find( {category: "Church Title" } );
-    res.render('members/create', {title: 'Create a New member', familyId: id, ChurchTitles});
+    const familyId = req.params.id;
+    const family = await Family.findById(familyId);
+    const subTitle = 'Add a member to ' + family.familyName +  ' Family (' + family.familyPatriots + ')';
+    const churchTitles = await Constant.find( {category: "Church Title" } );
+    const contactTypes = await Constant.find( {category: "Member Contact Type"} );
+    res.render('members/create', {title: 'Create a New member', familyId, churchTitles, contactTypes, subTitle});
 }
 
 const member_create_post = (req, res) => {
@@ -61,10 +65,11 @@ const member_delete_get = (req, res) => {
 
 const member_edit_get = async (req, res) => {
   const id = req.params.id;
-  const ChurchTitles = await Constant.find( {category: "Church Title" } );
+  const churchTitles = await Constant.find( {category: "Church Title" } );
+  const contactTypes = await Constant.find( {category: "Member Contact Type"} );
     Member.findById(id)
     .then(result => {
-      res.render('members/edit', {member: result, title: 'Edit member', ChurchTitles});
+      res.render('members/edit', {member: result, title: 'Edit member', churchTitles, contactTypes});
     })
     .catch(err => console.log(err));
 }

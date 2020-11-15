@@ -115,3 +115,10 @@ form button {
   width: auto;
   display: inline-block;
 }
+
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

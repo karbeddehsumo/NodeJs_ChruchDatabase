@@ -9,9 +9,9 @@
             <% if(families.length > 0) { %>
                 <% families.forEach(family => { %>
                     <a class="single" href="/families/<%= family._id %>" >
-                <h3 class="title"><%= family.familyName %> </h3>
-                <p class="snippet"><%= family.address1 %></p>
-                <a href="/members/create/<%= family._id %>">Add Family</a>
+                <h3 class="title"><%= family.familyName %> (<%= family.familyPatriots %>) </h3>
+                <p class="snippet"></p>
+                <a href="/members/create/<%= family._id %>">Add Family Member</a>
                 </a>
                 <% }) %>
             <% } %>
