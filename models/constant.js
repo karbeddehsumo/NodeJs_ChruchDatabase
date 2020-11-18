@@ -43,7 +43,7 @@ value1: {
   }
 
 
-});
+}, {timestamp: true});
 
 const Constant = mongoose.model('constant', constantSchema);
 module.exports = Constant;

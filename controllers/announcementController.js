@@ -37,9 +37,9 @@ const announcement_create_post = (req, res) => {
   });
 }
 
-const announcement_delete = (req, res) => {
+const announcement_delete = async (req, res) => {
  const id = req.params.id;
-  Announcement.findByIdAndDelete(id)
+  await Announcement.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/announcements");
   })
@@ -47,18 +47,18 @@ const announcement_delete = (req, res) => {
     console.log(err);
   });
 }
-const announcement_delete_get = (req, res) => {
+const announcement_delete_get = async (req, res) => {
   const id = req.params.id;
-    Announcement.findById(id)
+    await Announcement.findById(id)
     .then(result => {
       res.render('announcements/delete', {announcement: result, title: 'Delete Announcement'});
     })
     .catch(err => console.log(err));
 }
 
-const announcement_edit_get = (req, res) => {
+const announcement_edit_get = async (req, res) => {
   const id = req.params.id;
-    Announcement.findById(id)
+    await Announcement.findById(id)
     .then(result => {
       res.render('announcements/edit', {announcement: result, title: 'Edit Announcement'});
     })
@@ -68,7 +68,7 @@ const announcement_edit_get = (req, res) => {
 const announcement_edit = async (req, res) => {
 const id = req.params.id;
 const announcement = new Announcement(req.body);
-Announcement.findById(id)
+await Announcement.findById(id)
 .then(result => {
   result.ministryId = announcement.ministryId;
   result.documentId = announcement.documentId;

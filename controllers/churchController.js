@@ -1,7 +1,7 @@
 const Church = require('../models/church');
 
-const church_index = (req, res) => {
-    Church.find().sort({ createdAt: -1 })
+const church_index = async (req, res) => {
+    await Church.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('churches/index', { title: 'All Churches', churches: result })
     })
@@ -10,9 +10,9 @@ const church_index = (req, res) => {
     })
 }
 
-const church_details = (req, res) => {
+const church_details = async (req, res) => {
     const id = req.params.id;
-    Church.findById(id)
+    await Church.findById(id)
      .then((result) => {
       res.render("churches/details", { church: result, title: 'Church Details'})
     })
@@ -37,9 +37,9 @@ const church_create_post = (req, res) => {
   });
 }
 
-const church_delete = (req, res) => {
+const church_delete = async (req, res) => {
  const id = req.params.id;
-  Church.findByIdAndDelete(id)
+  await Church.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/churches");
   })
@@ -47,18 +47,18 @@ const church_delete = (req, res) => {
     console.log(err);
   });
 }
-const church_delete_get = (req, res) => {
+const church_delete_get = async (req, res) => {
   const id = req.params.id;
-    Church.findById(id)
+    await Church.findById(id)
     .then(result => {
       res.render('churches/delete', {church: result, title: 'Delete Church'});
     })
     .catch(err => console.log(err));
 }
 
-const church_edit_get = (req, res) => {
+const church_edit_get = async (req, res) => {
   const id = req.params.id;
-    Church.findById(id)
+    await Church.findById(id)
     .then(result => {
       res.render('churches/edit', {church: result, title: 'Edit Church'});
     })
@@ -68,7 +68,7 @@ const church_edit_get = (req, res) => {
 const church_edit = async (req, res) => {
 const id = req.params.id;
 const church = new Church(req.body);
-Church.findById(id)
+await Church.findById(id)
 .then(result => {
   result.title = church.title;
   result.name = church.name;

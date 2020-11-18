@@ -1,7 +1,7 @@
 const Expense = require('../models/expense');
 
-const expense_index = (req, res) => {
-    Expense.find().sort({ createdAt: -1 })
+const expense_index = async (req, res) => {
+    await Expense.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('expenses/index', { title: 'All expenses', expenses: result })
     })
@@ -10,9 +10,9 @@ const expense_index = (req, res) => {
     })
 }
 
-const expense_details = (req, res) => {
+const expense_details = async (req, res) => {
     const id = req.params.id;
-    Expense.findById(id)
+    await Expense.findById(id)
      .then((result) => {
       res.render("expenses/details", { expense: result, title: 'expense Details'})
     })
@@ -37,9 +37,9 @@ const expense_create_post = (req, res) => {
   });
 }
 
-const expense_delete = (req, res) => {
+const expense_delete = async (req, res) => {
  const id = req.params.id;
-  Expense.findByIdAndDelete(id)
+  await Expense.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/expenses");
   })
@@ -56,9 +56,9 @@ const expense_delete_get = (req, res) => {
     .catch(err => console.log(err));
 }
 
-const expense_edit_get = (req, res) => {
+const expense_edit_get = async (req, res) => {
   const id = req.params.id;
-    Expense.findById(id)
+    await Expense.findById(id)
     .then(result => {
       res.render('expenses/edit', {expense: result, title: 'Edit expense'});
     })
@@ -68,7 +68,7 @@ const expense_edit_get = (req, res) => {
 const expense_edit = async (req, res) => {
 const id = req.params.id;
 const expense = new Expense(req.body);
-Expense.findById(id)
+await Expense.findById(id)
 .then(result => {
   result.fundId = expense.fundId;
   result.statusId = expense.statusId;

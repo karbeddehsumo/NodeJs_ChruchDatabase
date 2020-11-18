@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
-const user_index = (req, res) => {
-    User.find().sort({ createdAt: -1 })
+const user_index = async (req, res) => {
+    await User.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('users/index', { title: 'All users', users: result })
     })
@@ -10,9 +10,9 @@ const user_index = (req, res) => {
     })
 }
 
-const user_details = (req, res) => {
+const user_details = async (req, res) => {
     const id = req.params.id;
-    User.findById(id)
+    await User.findById(id)
      .then((result) => {
       res.render("users/details", { user: result, title: 'user Details'})
     })
@@ -37,9 +37,9 @@ const user_create_post = (req, res) => {
   });
 }
 
-const user_delete = (req, res) => {
+const user_delete = async (req, res) => {
  const id = req.params.id;
-  User.findByIdAndDelete(id)
+  await User.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/users");
   })
@@ -47,18 +47,18 @@ const user_delete = (req, res) => {
     console.log(err);
   });
 }
-const user_delete_get = (req, res) => {
+const user_delete_get = async (req, res) => {
   const id = req.params.id;
-    User.findById(id)
+    await User.findById(id)
     .then(result => {
       res.render('users/delete', {user: result, title: 'Delete user'});
     })
     .catch(err => console.log(err));
 }
 
-const user_edit_get = (req, res) => {
+const user_edit_get = async (req, res) => {
   const id = req.params.id;
-    User.findById(id)
+    await User.findById(id)
     .then(result => {
       res.render('users/edit', {user: result, title: 'Edit user'});
     })
@@ -68,7 +68,7 @@ const user_edit_get = (req, res) => {
 const user_edit = async (req, res) => {
 const id = req.params.id;
 const user = new User(req.body);
-User.findById(id)
+await User.findById(id)
 .then(result => {
   result.userName = user.userName;
   result.password = user.password;

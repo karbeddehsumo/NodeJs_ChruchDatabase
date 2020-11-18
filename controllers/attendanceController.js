@@ -38,9 +38,9 @@ const attendance_create_post = (req, res) => {
   });
 }
 
-const attendance_delete = (req, res) => {
+const attendance_delete = async (req, res) => {
  const id = req.params.id;
- Attendance.findByIdAndDelete(id)
+ await Attendance.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/attendances");
   })
@@ -48,18 +48,18 @@ const attendance_delete = (req, res) => {
     console.log(err);
   });
 }
-const attendance_delete_get = (req, res) => {
+const attendance_delete_get = async (req, res) => {
   const id = req.params.id;
-  Attendance.findById(id)
+  await Attendance.findById(id)
     .then(result => {
       res.render('attendances/delete', {attendance: result, title: 'Delete attendance'});
     })
     .catch(err => console.log(err));
 }
 
-const attendance_edit_get = (req, res) => {
+const attendance_edit_get = async (req, res) => {
   const id = req.params.id;
-  Attendance.findById(id)
+  await Attendance.findById(id)
     .then(result => {
       res.render('attendances/edit', {attendance: result, title: 'Edit attendance'});
     })
@@ -69,7 +69,7 @@ const attendance_edit_get = (req, res) => {
 const attendance_edit = async (req, res) => {
 const id = req.params.id;
 const attendance = new Attendance(req.body);
-Attendance.findById(id)
+await Attendance.findById(id)
 .then(result => {
   result.memberId = attendance.memberId;
   result.calenderId = attendance.calenderId;

@@ -2,8 +2,8 @@ const Member = require('../models/member');
 const Constant = require('../models/constant');
 const Family = require('../models/family');
 
-const member_index = (req, res) => {
-    Member.find().sort({ createdAt: -1 })
+const member_index = async (req, res) => {
+    await Member.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('members/index', { title: 'All members', members: result })
     })
@@ -12,9 +12,9 @@ const member_index = (req, res) => {
     })
 }
 
-const member_details = (req, res) => {
+const member_details =  async(req, res) => {
     const id = req.params.id;
-    Member.findById(id)
+    await Member.findById(id)
      .then((result) => {
       res.render("members/details", { member: result, title: 'member Details'})
     })
@@ -44,9 +44,9 @@ const member_create_post = (req, res) => {
   });
 }
 
-const member_delete = (req, res) => {
+const member_delete = async (req, res) => {
  const id = req.params.id;
-  Member.findByIdAndDelete(id)
+  await Member.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/members");
   })
@@ -54,9 +54,9 @@ const member_delete = (req, res) => {
     console.log(err);
   });
 }
-const member_delete_get = (req, res) => {
+const member_delete_get = async (req, res) => {
   const id = req.params.id;
-    Member.findById(id)
+    await Member.findById(id)
     .then(result => {
       res.render('members/delete', {member: result, title: 'Delete member'});
     })
@@ -77,7 +77,7 @@ const member_edit_get = async (req, res) => {
 const member_edit = async (req, res) => {
 const id = req.params.id;
 const member = new Member(req.body);
-Member.findById(id)
+await Member.findById(id)
 .then(result => {
   result.familyId = member.familyId;
   result.statusId = member.statusId;

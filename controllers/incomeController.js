@@ -1,7 +1,7 @@
 const Income = require('../models/income');
 
-const income_index = (req, res) => {
-    Income.find().sort({ createdAt: -1 })
+const income_index = async (req, res) => {
+    await Income.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('incomes/index', { title: 'All Incomes', incomes: result })
     })
@@ -10,9 +10,9 @@ const income_index = (req, res) => {
     })
 }
 
-const income_details = (req, res) => {
+const income_details = async (req, res) => {
     const id = req.params.id;
-    Income.findById(id)
+    await Income.findById(id)
      .then((result) => {
       res.render("incomes/details", { income: result, title: 'Income Details'})
     })
@@ -37,9 +37,9 @@ const income_create_post = (req, res) => {
   });
 }
 
-const income_delete = (req, res) => {
+const income_delete = async (req, res) => {
  const id = req.params.id;
-  Income.findByIdAndDelete(id)
+  await Income.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/incomes");
   })
@@ -47,18 +47,18 @@ const income_delete = (req, res) => {
     console.log(err);
   });
 }
-const income_delete_get = (req, res) => {
+const income_delete_get = async (req, res) => {
   const id = req.params.id;
-    Income.findById(id)
+    await Income.findById(id)
     .then(result => {
       res.render('incomes/delete', {income: result, title: 'Delete Income'});
     })
     .catch(err => console.log(err));
 }
 
-const income_edit_get = (req, res) => {
+const income_edit_get = async (req, res) => {
   const id = req.params.id;
-    Income.findById(id)
+    await Income.findById(id)
     .then(result => {
       res.render('incomes/edit', {income: result, title: 'Edit Income'});
     })
@@ -68,7 +68,7 @@ const income_edit_get = (req, res) => {
 const income_edit = async (req, res) => {
 const id = req.params.id;
 const income = new Income(req.body);
-Income.findById(id)
+await Income.findById(id)
 .then(result => {
   result.fundId = income.fundId;
   result.statusId = income.statusId;

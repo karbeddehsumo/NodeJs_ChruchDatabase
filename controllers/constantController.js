@@ -40,9 +40,9 @@ const constant_create_post = (req, res) => {
   });
 }
 
-const constant_delete = (req, res) => {
+const constant_delete = async (req, res) => {
  const id = req.params.id;
- Constant.findByIdAndDelete(id)
+ await Constant.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/constants");
   })
@@ -50,18 +50,18 @@ const constant_delete = (req, res) => {
     console.log(err);
   });
 }
-const constant_delete_get = (req, res) => {
+const constant_delete_get = async (req, res) => {
   const id = req.params.id;
-  Constant.findById(id)
+  await Constant.findById(id)
     .then(result => {
       res.render('constants/delete', {constant: result, title: 'Delete constant'});
     })
     .catch(err => console.log(err));
 }
 
-const constant_edit_get = (req, res) => {
+const constant_edit_get = async (req, res) => {
   const id = req.params.id;
-    Constant.findById(id)
+    await Constant.findById(id)
     .then(result => {
       res.render('constants/edit', {constant: result, title: 'Edit constant'});
     })

@@ -1,7 +1,7 @@
 const Family = require('../models/family');
 
-const family_index = (req, res) => {
-    Family.find().sort({ createdAt: -1 })
+const family_index = async (req, res) => {
+    await Family.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('families/index', { title: 'All families', families: result })
     })
@@ -10,9 +10,9 @@ const family_index = (req, res) => {
     })
 }
 
-const family_details = (req, res) => {
+const family_details = async (req, res) => {
     const id = req.params.id;
-    Family.findById(id)
+    await Family.findById(id)
      .then((result) => {
       res.render("families/details", { family: result, title: 'family Details'})
     })
@@ -37,9 +37,9 @@ const family_create_post = (req, res) => {
   });
 }
 
-const family_delete = (req, res) => {
+const family_delete = async (req, res) => {
  const id = req.params.id;
- Family.findByIdAndDelete(id)
+ await Family.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/families");
   })
@@ -47,18 +47,18 @@ const family_delete = (req, res) => {
     console.log(err);
   });
 }
-const family_delete_get = (req, res) => {
+const family_delete_get = async (req, res) => {
   const id = req.params.id;
-  Family.findById(id)
+  await Family.findById(id)
     .then(result => {
       res.render('families/delete', {family: result, title: 'Delete family'});
     })
     .catch(err => console.log(err));
 }
 
-const family_edit_get = (req, res) => {
+const family_edit_get = async (req, res) => {
   const id = req.params.id;
-  Family.findById(id)
+  await Family.findById(id)
     .then(result => {
       res.render('families/edit', {family: result, title: 'Edit family'});
     })
@@ -68,7 +68,7 @@ const family_edit_get = (req, res) => {
 const family_edit = async (req, res) => {
 const id = req.params.id;
 const family = new Family(req.body);
-Family.findById(id)
+await Family.findById(id)
 .then(result => {
   result.familyName = family.firstName;
   result.familyPatriots = family.familyPatriots

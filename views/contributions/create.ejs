@@ -1,0 +1,35 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/contributions" method="POST">
+                <input type="text" id="churchId" name="churchId" value="<%= churchId %>"" required>
+                <input type="text" id="memberId" name="memberId" required value="<%= memberId %>"" required>
+                <label for="contributionTypeId">Fund</label>
+                <select name="contributionTypeId">
+                    <option value="None"></option>
+                    <% if(contributionTypes.length > 0) { %>
+                        <% contributionTypes.forEach(contributionType => { %>
+                        <option value="<% contributionType %>"><%= contributionType.constantId %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="contributionDate">Date</label>
+                <input type="date" id="contributionDate" name="contributionDate" required>
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" name="amount" >
+                <label for="checkNumber">Check Number</label>
+                <input type="text" id="checkNumber" name="checkNumber" >
+                <label for="comment">Comment</label>
+                <input type="textbox" id="comment" name="comment" >
+                <input type="text" id="enteredBy" name="enteredBy" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

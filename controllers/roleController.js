@@ -1,8 +1,8 @@
 const Role = require('../models/user'); //User model
 const Constant = require('../models/constant');
 
-const role_index = (req, res) => {
-    Role.find().sort({ createdAt: -1 })
+const role_index = async (req, res) => {
+    await Role.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('roles/index', { title: 'All roles', roles: result })
     })
@@ -11,9 +11,9 @@ const role_index = (req, res) => {
     })
 }
 
-const role_details = (req, res) => {
+const role_details = async (req, res) => {
     const id = req.params.id;
-    Role.findById(id)
+    await Role.findById(id)
      .then((result) => {
       res.render("roles/details", { role: result, title: 'role Details'})
     })
@@ -44,9 +44,9 @@ const role_create_post = async (req, res) => {
   });
 }
 
-const role_delete = (req, res) => {
+const role_delete = async (req, res) => {
  const id = req.params.id;
- Role.findByIdAndDelete(id)
+ await Role.findByIdAndDelete(id)
   .then((result) => {
     res.redirect("/roles");
   })
@@ -54,9 +54,9 @@ const role_delete = (req, res) => {
     console.log(err);
   });
 }
-const role_delete_get = (req, res) => {
+const role_delete_get = async (req, res) => {
   const id = req.params.id;
-  Role.findById(id)
+  await Role.findById(id)
     .then(result => {
       res.render('roles/delete', {role: result, title: 'Delete role'});
     })
@@ -64,13 +64,6 @@ const role_delete_get = (req, res) => {
 }
 
 const role_edit_get = async (req, res) => {
-  //const id = req.params.id;
-    // Role.findById(id)
-    // .then(result => {
-    //   res.render('roles/edit', {role: result, title: 'Edit role'});
-    // })
-    // .catch(err => console.log(err));
-
     const user = await Role.findById({_id: req.params.id});
     const roleTypes = await Constant.find( {category: "Role" } );
     res.render('roles/edit', {title: 'Create a New role', user, roleTypes});
@@ -82,15 +75,9 @@ console.log(id);
 console.log(req.body.roleName);
 const roleName = req.body.roleName;
 
-// const role = await Role.findById(id);
-//  const newRoles = role.roles;
-//  newRoles.push(roleName);
-// await Role.updateOne({_id: id},{roles: newRoles});
 await Role.findById(id)
 .then(result => {
   result.userId = id;
- // result.password = role.password;
-  //result.email = role.email;
   result.roles.push(roleName);
   result.save();
   res.redirect('/roles');
