@@ -1,0 +1,21 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <a href="/contributions/create">Add Member Contribution</a>
+            <h2>All Contributions</h2>
+            <% if(contributions.length > 0) { %>
+                <% contributions.forEach(contribution => { %>
+                    <a class="single" href="/contributions/<%= contribution._id %>" >
+                <h3 class="title"><%= contribution.contributionType %> </h3>
+                <p class="snippet"><%= contributions.Amount %></p>
+                </a>
+                <% }) %>
+            <% } %>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

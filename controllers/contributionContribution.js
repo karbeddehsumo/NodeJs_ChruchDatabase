@@ -1,10 +1,13 @@
 const Contribution = require('../models/contribution');
+const Constant = require('../models/constant');
+const Member = require('../models/member');
 
 //app.get('*', checkUser); //put user values in res.locals
-const contribution_index = (req, res) => {
-    Contribution.find().sort({ createdAt: -1 })
+const contribution_index = async (req, res) => {
+    const members = Member.find();
+    await Contribution.find().sort({ createdAt: -1 })
     .then((result) => {
-      res.render('contributions/index', { title: 'All contributions', contributions: result })
+      res.render('contributions/index', { title: 'All contributions', contributions: result, members })
     })
     .catch((err) => {
       console.log(err)
@@ -22,10 +25,13 @@ const contribution_details = (req, res) => {
     });
 }
 
-const contribution_create_get = (req, res) => {
-    
-    res.render('contributions/create', {title: 'Create a New contribution'});
+const contribution_create_get = async (req, res) => {
+    const memberId = req.params.id;
+    const churchId = "TBD_123456";
+    const contributionTypes = await Constant.find( {category: "Member Contribution Type"} );
+    res.render('contributions/create', {title: 'Add contribution', contributionTypes});
 }
+
 
 const contribution_create_post = (req, res) => {
   const contribution = new Contribution(req.body);
