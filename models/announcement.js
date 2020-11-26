@@ -1,17 +1,28 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const joi = require('joi');
 
 const announcementSchema = new Schema({
-    churdId: joi.string().required(),
-    ministryId: joi.string().required(),
-    documentId: joi.string().required(),
-    title: joi.string().required().label('Title is required.'),
-    beginDate: joi.date().default(Date()).required().label('Begin date is required.'),
-    endDate: joi.date().default(Date()).required().label('End date is required.'),
-    message: joi.string().required().label('Message is required.'),
-    statusId: joi.string().required(),
-    enteredBy: joi.string().required()
+    church: { type: Schema.Types.ObjectId, ref: 'church'},
+    ministry: { type: Schema.Types.ObjectId, ref: 'ministry'},
+    document: { type: Schema.Types.ObjectId, ref: 'document'},
+    title: {
+        type: String,
+        required: [true, 'Please enter title']
+    },
+    startDate: {
+        type: Date,
+        required: [true, 'Please enter start date']
+    },
+    endDate: {
+        type: Date,
+        required: [true, 'Please enter end date']
+    },
+    message: {
+        type: String,
+        required: [true, 'Please enter message']
+    },
+    status: { type: Schema.Types.ObjectId, ref: 'constant'},
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 },{timestamps: true});
 
 const Announcement = mongoose.model('announcement', announcementSchema);

@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const memberSchema = new Schema({
-    churchId: {type: String},
-    familyId: {type: String},
-    statusId: {type: String},
+    church: {type: Schema.Types.ObjectId, ref: 'church'},
+    family: {type: Schema.Types.ObjectId, ref: 'family'},
+    status: {type: String},
     firstName: {
         type: String,
         required: [true, 'Please enter first name']
@@ -25,6 +25,7 @@ const memberSchema = new Schema({
     title: {type: String},
     roles: [String],
     contactType: {type: String},
+    contributions: [{ type: Schema.Types.ObjectId, ref: 'contribution'}],
     enteredBy: {type: String},
 }, {timestamps: true});
 

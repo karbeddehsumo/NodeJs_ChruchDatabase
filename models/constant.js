@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const constantSchema = new Schema({
+  church: { type: Schema.Types.ObjectId, ref: 'church'},
 category: {
  type: String,
  required: [true,'Please enter a category'],
@@ -37,10 +38,7 @@ value1: {
     required: [true,'Please enter the status']
   },
 
-  enteredBy: {
-    type: String,
-    required: [true,'Who entered this record']
-  }
+  enteredBy: { type: Schema.Types.ObjectId, ref: 'user'},
 
 
 }, {timestamp: true});

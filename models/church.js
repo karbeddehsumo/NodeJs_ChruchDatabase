@@ -1,22 +1,53 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const joi = require('joi');
 
 const churchSchema = new Schema({
-    title: joi.string(),
-    name: joi.string().required().label('Church name is required.'),
-    founded: joi.date().default(Date()).required().label('Date founded is required.'),
-    address1: joi.string().required().label('Address1 is required.'),
-    address2: joi.string(),
-    city: joi.string().required().label('City is required'),
-    state: joi.string(),
-    zipcode: joi.string(),
-    country: joi.string().required().label('Country is required.'),
-    Phone: joi.string().regex(/^(\(\d{3}\) |\d{3}-)\d{3}-\d{4}$/).default('111-222-3333'),
-    email: joi.string().email().lowercase(),
-    parent: joi.string(),
-    picture: joi.string(),
-    enteredBy: joi.string().required()
+    church: { type: Schema.Types.ObjectId, ref: 'church'},
+    title: {
+        type: String,
+        required: [true, 'Enter the title.']
+    },
+    name: {
+        type: String,
+        required: [true, 'Enter the name.']
+    },
+    founded: {
+        type: String,
+        required: [true, 'Enter the year founded.']
+    },
+    address1: {
+        type: String,
+    },
+    address2: {
+        type: String,
+    },
+    city: {
+        type: String,
+        required: [true, 'Enter the city.']
+    },
+    state: {
+        type: String
+    },
+    zipcode: {
+        type: String
+    },
+    country: {
+        type: String,
+        required: [true, 'Enter the country.']
+    },
+    Phone: {
+        type: String,
+        required: [true, 'Enter the phone.']
+    },
+    email: {
+        type: String,
+        required: [true, 'Enter the email.']
+    },
+    parent: {
+        type: String
+    },
+    pictures: { type: Schema.Types.ObjectId, ref: 'picture'},
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 
 const Church = mongoose.model('Church', churchSchema);

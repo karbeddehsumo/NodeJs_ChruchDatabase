@@ -1,18 +1,30 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const joi = require('joi');
 
 const incomeSchema = new Schema({
-    churchId: joi.string().required(),
-    fundId: joi.string().required(),
-    statusId: joi.string().required(),
-    cashAmount: joi.number().label('Invalid cash amount'),
-    checkAmount: joi.number().label('Invalid check amount'),
-    coinAmount: joi.number().label('Invalid coin amount'),
-    checkNumber: joi.string(),
-    incomeDate:joi.date().default(Date()).label('Enter the income date.'),
-    comment: joi.string(),
-    enteredBy: joi.string().required()
+    church: { type: Schema.Types.ObjectId, ref: 'church'},
+    fund: { type: Schema.Types.ObjectId, ref: 'constant'},
+    status: { type: Schema.Types.ObjectId, ref: 'constant'},
+    cashAmount: {
+        type: Number
+    },
+    checkAmount: {
+        type: Number
+    },
+    coinAmount: {
+        type: Number
+    },
+    checkNumber: {
+        type: String
+    },
+    incomeDate:{
+        type: Date,
+        required: [true, 'Please enter the date']
+    },
+    comment: {
+        type: String
+    },
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamps: true});
 
 const Income = mongoose.model('income', incomeSchema);

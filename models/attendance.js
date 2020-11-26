@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const joi = require('joi');
 
 const attendanceSchema = new Schema({
-    churdId: joi.string().required(),
-    memberId: joi.string().required(),
-    calendarId: joi.string().required(),
-    rollCall: joi.boolean().default(true).required().label('Enter the roll.'),
-    enteredBy: joi.string().required()
+    church: { type: Schema.Types.ObjectId, ref: 'church'},
+    user: { type: Schema.Types.ObjectId, ref: 'user'},
+    calendar: { type: Schema.Types.ObjectId, ref: 'calendar'},
+    rollCall: {
+        type: Boolean,
+        required: [true, 'Enter the roll']
+    },
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 },{timestamps: true});
 
 const Attendance = mongoose.model('Attendance', attendanceSchema);

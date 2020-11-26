@@ -2,18 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema();
 
 const contributionSchema = new Schema({
-    churchId: {
-        type: String,
-        required: [true,'Please enter church ID']
-   },
-    memberId: {
-        type: String,
-        required: [true,'Please enter member ID']
-    },
-    contributionTypeId: {
-        type: String,
-        required: [true, 'Please enter contribution type ID']
-    },
+    church: { type: Schema.Types.ObjectId, ref: 'church'},
+    member: { type: Schema.Types.ObjectId, ref: 'member'},
+    contributionType: { type: Schema.Types.ObjectId, ref: 'constant'},
     contributionDate: {
         type: Date,
         required: [true, 'Please enter date']
@@ -28,10 +19,7 @@ const contributionSchema = new Schema({
     comment: {
         type: String
     },
-    enteredBy: {
-        type: String,
-        required: [true, 'Who entered contribution']
-    }
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 
 }, {timestamp: true});
 
