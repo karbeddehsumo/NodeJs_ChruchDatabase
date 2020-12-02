@@ -32,11 +32,14 @@ const member_create_get = async (req, res) => {
     res.render('members/create', {title: 'Create a New member', familyId, churchTitles, contactTypes, subTitle});
 }
 
-const member_create_post = (req, res) => {
+const member_create_post = async (req, res) => {
   const member = new Member(req.body);
-  console.log(req.body);
+  const family = await Family.findById(req.body.familyId);
+  member.family = req.body.familyId;
   member.save()
   .then((result) => {
+    family.familyMembers.push(member._id);
+    family.save();
     res.redirect("/members");
   })
   .catch((err) => {

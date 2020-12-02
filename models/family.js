@@ -11,6 +11,7 @@ const familySchema = new Schema({
     type: String,
     required: [true, 'Enter the names of the family patriot(s)']
   },
+  familyMembers:[{ type: Schema.Types.ObjectId, ref: 'member'}],
   address1: {
       type: String
   },

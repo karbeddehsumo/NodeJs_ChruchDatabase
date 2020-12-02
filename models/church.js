@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const churchSchema = new Schema({
-    church: { type: Schema.Types.ObjectId, ref: 'church'},
+    church: [{ type: Schema.Types.ObjectId, ref: 'church'}],
     title: {
         type: String,
         required: [true, 'Enter the title.']
@@ -43,10 +43,7 @@ const churchSchema = new Schema({
         type: String,
         required: [true, 'Enter the email.']
     },
-    parent: {
-        type: String
-    },
-    pictures: { type: Schema.Types.ObjectId, ref: 'picture'},
+    pictures: [{ type: Schema.Types.ObjectId, ref: 'picture'}],
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 

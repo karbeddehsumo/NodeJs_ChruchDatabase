@@ -27,7 +27,7 @@ const family_create_get = (req, res) => {
 
 const family_create_post = (req, res) => {
   const family = new Family(req.body);
-  
+  family.familyMembers = [];
   family.save()
   .then((result) => {
     res.redirect("/families");
