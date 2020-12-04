@@ -4,7 +4,7 @@ const Member = require('../models/member');
 
 //app.get('*', checkUser); //put user values in res.locals
 const contribution_index = async (req, res) => {
-    const members = Member.find();
+     const members = await Member.find();
     await Contribution.find().sort({ createdAt: -1 })
     .then((result) => {
       res.render('contributions/index', { title: 'All contributions', contributions: result, members })
@@ -27,15 +27,22 @@ const contribution_details = (req, res) => {
 
 const contribution_create_get = async (req, res) => {
     const memberId = req.params.id;
-    const churchId = "TBD_123456";
     const contributionTypes = await Constant.find( {category: "Member Contribution Type"} );
-    res.render('contributions/create', {title: 'Add contribution', contributionTypes});
+    res.render('contributions/create', {title: 'Add contribution', contributionTypes, memberId});
 }
 
 
 const contribution_create_post = (req, res) => {
   const contribution = new Contribution(req.body);
   contribution.enteredBy = global.userId;
+
+  const memberId = req.body.memberId;
+  const churchId = req.body.churchId;
+
+  console.log('Here is the contribution member id');
+  console.log(memberId);
+  console.log(churchId);
+
   contribution.status = "Active";
   contribution.save()
   .then((result) => {

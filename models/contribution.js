@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema();
+const Schema = mongoose.Schema;
+
 
 const contributionSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
@@ -19,7 +20,7 @@ const contributionSchema = new Schema({
     comment: {
         type: String
     },
-    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'},
 
 }, {timestamp: true});
 
