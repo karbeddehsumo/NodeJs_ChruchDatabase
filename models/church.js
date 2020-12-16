@@ -2,17 +2,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const churchSchema = new Schema({
-    church: [{ type: Schema.Types.ObjectId, ref: 'church'}],
+    branchChurches: [{ type: Schema.Types.ObjectId, ref: 'church'}],
     title: {
-        type: String,
-        required: [true, 'Enter the title.']
+        type: String
     },
     name: {
         type: String,
         required: [true, 'Enter the name.']
     },
     founded: {
-        type: String,
+        type: Date,
+        default: Date.now ,
         required: [true, 'Enter the year founded.']
     },
     address1: {
@@ -35,7 +35,7 @@ const churchSchema = new Schema({
         type: String,
         required: [true, 'Enter the country.']
     },
-    Phone: {
+    phone: {
         type: String,
         required: [true, 'Enter the phone.']
     },
@@ -44,6 +44,7 @@ const churchSchema = new Schema({
         required: [true, 'Enter the email.']
     },
     pictures: [{ type: Schema.Types.ObjectId, ref: 'picture'}],
+    moto:  String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 

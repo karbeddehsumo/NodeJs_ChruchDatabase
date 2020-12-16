@@ -21,13 +21,43 @@ const church_details = async (req, res) => {
     });
 }
 
+const church_branch_create_get = (req, res) => {
+  const churchId = req.params.id;
+  console.log('Here is the parent church id');
+  console.log(churchId);
+  res.render('Churches/createBranch', {title: 'Create a New Church Branch', parentId: churchId});
+}
+
+const church_createBranch_post = async (req, res) => {
+  console.log('Here is the church branch body');
+  console.log(req.body);
+  const church = new Church(req.body);
+  const parentChurch = await Church.findById(req.body.parentId);
+
+  console.log('Here is teh branch church');
+  console.log(parentChurch);
+  church.save()
+  .then((result) => {
+    parentChurch.branchChurches.push(church._id);
+    parentChurch.save();
+    res.redirect("/churches");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
+
 const church_create_get = (req, res) => {
     res.render('Churches/create', {title: 'Create a New Church'});
 }
 
+
 const church_create_post = (req, res) => {
   const church = new Church(req.body);
+  console.log('Here is the church data');
+  console.log(church);
   
+
   church.save()
   .then((result) => {
     res.redirect("/churches");
@@ -97,5 +127,7 @@ module.exports = {
     church_delete_get,
     church_delete,
     church_edit_get,
-    church_edit
+    church_edit,
+    church_branch_create_get,
+    church_createBranch_post
 }

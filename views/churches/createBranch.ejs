@@ -3,10 +3,11 @@
     <body>
 
         <%- include('../partials/nav.ejs') %>
-        <h1>Add New Church</h1>
+        <h1>Add New Branch Church</h1>
         <div class="create-blog content">
-            <form action="/churches" method="POST">
-                <label for="name">Church Name</label>
+            <form action="/churches/createBranch" method="POST">
+                <input type="hidden" id="parentId" name="parentId" value="<%=parentId %>"" > 
+                <label for="name">Branch Name</label>
                 <input type="text" id="name" name="name" required>
                 <!-- <label for="title">Church Title</label>
                 <input type="text" id="title" name="title" required> -->

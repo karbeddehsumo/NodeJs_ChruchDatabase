@@ -27,7 +27,7 @@ const contribution_details = (req, res) => {
 
 const contribution_create_get = async (req, res) => {
     const memberId = req.params.id;
-    const contributionTypes = await Constant.find( {category: "Member Contribution Type"} );
+    const contributionTypes = await Constant.find( {category: "Member Contribution"} );
     res.render('contributions/create', {title: 'Add contribution', contributionTypes, memberId});
 }
 
