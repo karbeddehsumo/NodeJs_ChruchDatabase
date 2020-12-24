@@ -1,7 +1,8 @@
 const Income = require('../models/income');
 
 const income_index = async (req, res) => {
-    await Income.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    await Income.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('incomes/index', { title: 'All Incomes', incomes: result })
     })

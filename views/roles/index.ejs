@@ -6,12 +6,17 @@
         <div class="blogs content">
             <a href="/roles/create">Add Role</a>
             <h2>All Roles</h2>
-            <% if(roles.length > 0) { %>
-                <% roles.forEach(role => { %>
-                    <h3 class="title"><%= role.email %> </h3>
-                    <a class="single" href="/roles/edit/<%= role._id %>" >Add Roles</a>
-                <% }) %>
-            <% } %>
+            <% if(roles === null) { %>
+                <p>No roles data available</p>
+               <% } else { %>
+                <% if(roles.length > 0) { %>
+                    <% roles.forEach(role => { %>
+                        <h3 class="title"><%= role.email %> </h3>
+                        <a class="single" href="/roles/edit/<%= role._id %>" >Add Roles</a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+           
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>

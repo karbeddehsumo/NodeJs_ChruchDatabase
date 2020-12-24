@@ -5,15 +5,20 @@
           
         <div class="blogs content">
             <h2>All Members</h2>
-            <% if(members.length > 0) { %>
-                <% members.forEach(member => { %>
-                    <a class="single" href="/contributions/<%= member._id %>" >
-                <h3 class="title"><%= member.lastName %> </h3>
-                <p class="snippet"><%= member.firstName %></p>
-                <a href="/contributions/create/<%= member._id %>">Add Contribution</a>
-                </a>
-                <% }) %>
-            <% } %>
+            <% if(members === null) { %>
+                <p>No members data available</p>
+               <% } else { %>
+                <% if(members.length > 0) { %>
+                    <% members.forEach(member => { %>
+                        <a class="single" href="/contributions/<%= member._id %>" >
+                    <h3 class="title"><%= member.lastName %> </h3>
+                    <p class="snippet"><%= member.firstName %></p>
+                    <a href="/contributions/create/<%= member._id %>">Add Contribution</a>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>

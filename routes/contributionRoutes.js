@@ -2,7 +2,7 @@ const express = require('express');
 const contributionController = require('../controllers/contributionController');
 const router = express.Router();
   
-  router.get('/', contributionController.contribution_index);
+  router.get('/church/:id', contributionController.contribution_index);
   router.post('/', contributionController.contribution_create_post);
   router.get('/create/:id', contributionController.contribution_create_get);
   router.post('/deleted/:id', contributionController.contribution_delete);

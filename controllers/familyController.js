@@ -1,9 +1,10 @@
 const Family = require('../models/family');
 
 const family_index = async (req, res) => {
-    await Family.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    await Family.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('families/index', { title: 'All families', families: result })
+      res.render('families/index', { title: 'All families', families: result, church: id })
     })
     .catch((err) => {
       console.log(err)
@@ -22,15 +23,18 @@ const family_details = async (req, res) => {
 }
 
 const family_create_get = (req, res) => {
-    res.render('families/create', {title: 'Create a New family'});
+    const churchId = req.params.id;
+    res.render('families/create', {title: 'Create a New family', churchId});
 }
 
-const family_create_post = (req, res) => {
+const family_create_post = async (req, res) => {
   const family = new Family(req.body);
+  family.church = req.body.churchId;
   family.familyMembers = [];
+
   family.save()
   .then((result) => {
-    res.redirect("/families");
+    res.redirect("/families/church/" + req.body.churchId);
   })
   .catch((err) => {
     console.log(err);

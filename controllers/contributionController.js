@@ -4,8 +4,9 @@ const Member = require('../models/member');
 
 //app.get('*', checkUser); //put user values in res.locals
 const contribution_index = async (req, res) => {
-     const members = await Member.find();
-    await Contribution.find().sort({ createdAt: -1 })
+     const id = req.params.id;
+     const members = await Member.find({ church: id});
+    await Contribution.find({ church: id}).sort({ createdAt: -1 })
     .then((result) => {
       res.render('contributions/index', { title: 'All contributions', contributions: result, members })
     })

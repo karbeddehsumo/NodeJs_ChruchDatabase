@@ -5,14 +5,19 @@
           
         <div class="blogs content">
             <h2>All Incomes</h2>
-            <% if(incomes.length > 0) { %>
-                <% incomes.forEach(income => { %>
-                    <a class="single" href="/incomes/<%= income._id %>" >
-                <h3 class="title"><%= income.cashAmount %> </h3>
-                <p class="snippet"><%= income.checkNumber %></p>
-                </a>
-                <% }) %>
-            <% } %>
+            <% if(incomes === null) { %>
+                <p>No incomes data available</p>
+               <% } else { %>
+                <% if(incomes.length > 0) { %>
+                    <% incomes.forEach(income => { %>
+                        <a class="single" href="/incomes/<%= income._id %>" >
+                    <h3 class="title"><%= income.cashAmount %> </h3>
+                    <p class="snippet"><%= income.checkNumber %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>

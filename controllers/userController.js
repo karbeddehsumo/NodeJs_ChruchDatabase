@@ -1,7 +1,8 @@
 const User = require('../models/user');
 
 const user_index = async (req, res) => {
-    await User.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    await User.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('users/index', { title: 'All users', users: result })
     })

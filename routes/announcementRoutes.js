@@ -2,7 +2,7 @@ const express = require('express');
 const announcementController = require('../controllers/announcementController');
 const router = express.Router();
   
-  router.get('/', announcementController.announcement_index);
+  router.get('/church/:id', announcementController.announcement_index);
   router.post('/', announcementController.announcement_create_post);
   router.get('/create', announcementController.announcement_create_get);
   router.post('/deleted/:id', announcementController.announcement_delete);

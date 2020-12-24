@@ -2,7 +2,8 @@ const Constant = require('../models/constant');
 
 //app.get('*', checkUser); //put user values in res.locals
 const constant_index = (req, res) => {
-    Constant.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    Constant.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('constants/index', { title: 'All constants', constants: result })
     })

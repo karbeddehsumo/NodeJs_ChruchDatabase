@@ -2,7 +2,7 @@ const express = require('express');
 const attendanceController = require('../controllers/attendanceController');
 const router = express.Router();
   
-  router.get('/', attendanceController.attendance_index);
+  router.get('/church/:id', attendanceController.attendance_index);
   router.post('/', attendanceController.attendance_create_post);
   router.get('/create', attendanceController.attendance_create_get);
   router.post('/deleted/:id', attendanceController.attendance_delete);

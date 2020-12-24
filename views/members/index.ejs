@@ -4,8 +4,11 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
-            <a href="/families">Add Member</a>
+            <a href="/families/church/<%= churchId %>">Add Member</a>
             <h2>All Members</h2>
+            <% if(members === null) { %>
+                 <p>No member data available</p>
+                <% } else { %>
             <% if(members.length > 0) { %>
                 <% members.forEach(member => { %>
                     <a class="single" href="/members/<%= member._id %>" >
@@ -13,6 +16,7 @@
                 <p class="snippet"><%= member.firstName %></p>
                 </a>
                 <% }) %>
+            <% } %>
             <% } %>
         </div>
         <%- include('../partials/footer.ejs') %>

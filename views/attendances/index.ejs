@@ -5,14 +5,19 @@
           
         <div class="blogs content">
             <h2>All Attendances</h2>
-            <% if(attendances.length > 0) { %>
-                <% attendances.forEach(attendance => { %>
-                    <a class="single" href="/attendances/<%= attendance._id %>" >
-                <h3 class="title"><%= attendance.calendarId %> </h3>
-                <p class="snippet"><%= attendance.memberId %></p>
-                </a>
-                <% }) %>
-            <% } %>
+            <% if(attendances === null) { %>
+                <p>No attendances data available</p>
+               <% } else { %>
+                <% if(attendances.length > 0) { %>
+                    <% attendances.forEach(attendance => { %>
+                        <a class="single" href="/attendances/<%= attendance._id %>" >
+                    <h3 class="title"><%= attendance.calendarId %> </h3>
+                    <p class="snippet"><%= attendance.memberId %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>

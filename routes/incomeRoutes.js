@@ -2,7 +2,7 @@ const express = require('express');
 const incomeController = require('../controllers/incomeController');
 const router = express.Router();
   
-  router.get('/', incomeController.income_index);
+  router.get('/church/:id', incomeController.income_index);
   router.post('/', incomeController.income_create_post);
   router.get('/create', incomeController.income_create_get);
   router.post('/deleted/:id', incomeController.income_delete);

@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const joi = require('joi');
 
 const expenseSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
-    fundId: joi.string().required(),
-    statusId: joi.string().required(),
+    fund: { type: Schema.Types.ObjectId, ref: 'fund'},
+    statusId: { type: Schema.Types.ObjectId, ref: 'constant'},
     payee: { type: Schema.Types.ObjectId, ref: 'member'},
     amount: {
         type: Number,

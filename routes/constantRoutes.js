@@ -2,7 +2,7 @@ const express = require('express');
 const constantController = require('../controllers/constantController');
 const router = express.Router();
   
-  router.get('/', constantController.constant_index);
+  router.get('/church/:id', constantController.constant_index);
   router.post('/', constantController.constant_create_post);
   router.get('/create', constantController.constant_create_get);
   router.post('/deleted/:id', constantController.constant_delete);

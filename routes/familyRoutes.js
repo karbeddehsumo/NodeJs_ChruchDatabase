@@ -2,9 +2,9 @@ const express = require('express');
 const familyController = require('../controllers/familyController');
 const router = express.Router();
   
-  router.get('/', familyController.family_index);
+  router.get('/church/:id', familyController.family_index);
   router.post('/', familyController.family_create_post);
-  router.get('/create', familyController.family_create_get);
+  router.get('/create/:id', familyController.family_create_get);
   router.post('/deleted/:id', familyController.family_delete);
   router.get('/delete/:id', familyController.family_delete_get);
   router.get('/:id', familyController.family_details);

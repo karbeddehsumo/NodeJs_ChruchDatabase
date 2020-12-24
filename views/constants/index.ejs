@@ -6,14 +6,19 @@
         <div class="blogs content">
             <a href="/constants/create">Add Constant</a>
             <h2>All Constants</h2>
-            <% if(constants.length > 0) { %>
-                <% constants.forEach(constant => { %>
-                    <a class="single" href="/constants/<%= constant._id %>" >
-                <h3 class="title"><%= constant.name %> </h3>
-                <p class="snippet"><%= constant.category %></p>
-                </a>
-                <% }) %>
-            <% } %>
+            <% if(constants === null) { %>
+                <p>No constants data available</p>
+               <% } else { %>
+                <% if(constants.length > 0) { %>
+                    <% constants.forEach(constant => { %>
+                        <a class="single" href="/constants/<%= constant._id %>" >
+                    <h3 class="title"><%= constant.name %> </h3>
+                    <p class="snippet"><%= constant.category %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+           
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>

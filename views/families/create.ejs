@@ -6,6 +6,7 @@
 
         <div class="create-blog content">
             <form action="/families" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
                 <label for="familyName">Family Name</label>
                 <input type="text" id="familyName" name="familyName" required> 
                 <label for="familyLabel">Family Patriots Names</label>       

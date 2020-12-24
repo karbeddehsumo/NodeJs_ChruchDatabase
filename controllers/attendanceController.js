@@ -1,7 +1,8 @@
 const Attendance = require('../models/attendance');
 
 const attendance_index = (req, res) => {
-    Attendance.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    Attendance.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('attendances/index', { title: 'All attendances', attendances: result })
     })

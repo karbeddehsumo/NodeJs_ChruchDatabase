@@ -1,7 +1,8 @@
 const Church = require('../models/church');
 
 const church_index = async (req, res) => {
-    await Church.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    await Church.find({ parentChurch: id }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('churches/index', { title: 'All Churches', churches: result })
     })
@@ -32,10 +33,8 @@ const church_createBranch_post = async (req, res) => {
   console.log('Here is the church branch body');
   console.log(req.body);
   const church = new Church(req.body);
-  const parentChurch = await Church.findById(req.body.parentId);
-
-  console.log('Here is teh branch church');
-  console.log(parentChurch);
+  const parentChurch = await Church.findById(req.body.parentChurch);
+ 
   church.save()
   .then((result) => {
     parentChurch.branchChurches.push(church._id);

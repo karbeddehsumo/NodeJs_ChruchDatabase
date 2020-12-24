@@ -1,7 +1,8 @@
 const Announcement = require('../models/announcement');
 
 const announcement_index = (req, res) => {
-    Announcement.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    Announcement.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('announcements/index', { title: 'All Announcements', announcements: result })
     })

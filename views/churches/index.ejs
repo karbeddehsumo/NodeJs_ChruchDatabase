@@ -6,14 +6,19 @@
         <div class="blogs content">
             <a href="/churches/create">Add New Church Branch</a>
             <h2>All Churches</h2>
-            <% if(churches.length > 0) { %>
-                <% churches.forEach(church => { %>
-                    <a class="single" href="/churches/<%= church._id %>" >
-                <h3 class="title"><%= church.name %> </h3>
-                <p class="snippet"><%= church.title %></p>
-                </a>
-                <% }) %>
-            <% } %>
+            <% if(churches === null) { %>
+                <p>No church branch data available</p>
+               <% } else { %>
+                <% if(churches.length > 0) { %>
+                    <% churches.forEach(church => { %>
+                        <a class="single" href="/churches/<%= church._id %>" >
+                    <h3 class="title"><%= church.name %> </h3>
+                    <p class="snippet"><%= church.title %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>

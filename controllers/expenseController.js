@@ -1,7 +1,8 @@
 const Expense = require('../models/expense');
 
 const expense_index = async (req, res) => {
-    await Expense.find().sort({ createdAt: -1 })
+    const id = req.params.id;
+    await Expense.find({ church: id}).sort({ createdAt: -1 })
     .then((result) => {
       res.render('expenses/index', { title: 'All expenses', expenses: result })
     })

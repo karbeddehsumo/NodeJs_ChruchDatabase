@@ -3,9 +3,10 @@ const Constant = require('../models/constant');
 const Family = require('../models/family');
 
 const member_index = async (req, res) => {
-    await Member.find().sort({ createdAt: -1 })
+  const id = req.params.id;  
+  await Member.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('members/index', { title: 'All members', members: result })
+      res.render('members/index', { title: 'All members', members: result, churchId: id })
     })
     .catch((err) => {
       console.log(err)
@@ -36,11 +37,12 @@ const member_create_post = async (req, res) => {
   const member = new Member(req.body);
   const family = await Family.findById(req.body.familyId);
   member.family = req.body.familyId;
+  member.church = family.church;
   member.save()
   .then((result) => {
     family.familyMembers.push(member._id);
     family.save();
-    res.redirect("/members");
+    res.redirect("/members/church/" + family.church);
   })
   .catch((err) => {
     console.log(err);

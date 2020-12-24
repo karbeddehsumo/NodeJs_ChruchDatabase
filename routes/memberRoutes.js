@@ -2,7 +2,7 @@ const express = require('express');
 const memberController = require('../controllers/memberController');
 const router = express.Router();
   
-  router.get('/', memberController.member_index);
+  router.get('/church/:id', memberController.member_index);
   router.post('/', memberController.member_create_post);
   router.get('/create/:id', memberController.member_create_get);
   router.post('/deleted/:id', memberController.member_delete);
