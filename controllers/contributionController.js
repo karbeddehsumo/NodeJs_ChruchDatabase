@@ -33,21 +33,24 @@ const contribution_create_get = async (req, res) => {
 }
 
 
-const contribution_create_post = (req, res) => {
-  const contribution = new Contribution(req.body);
-  contribution.enteredBy = global.userId;
+const contribution_create_post = async (req, res) => {
+  console.log('contribution data');
+  console.log(req.body);
 
   const memberId = req.body.memberId;
-  const churchId = req.body.churchId;
+  const member = await Member.findById(memberId);
+  const contribution = new Contribution(req.body);
+  contribution.enteredBy = global.userId;
+  contribution.church = member.church;
 
   console.log('Here is the contribution member id');
-  console.log(memberId);
-  console.log(churchId);
+  console.log(member.church);
+  console.log(global.userId);
 
   contribution.status = "Active";
   contribution.save()
   .then((result) => {
-    res.redirect("/contributions");
+    res.redirect("/contributions/create/" + member._Id);
   })
   .catch((err) => {
     console.log(err);

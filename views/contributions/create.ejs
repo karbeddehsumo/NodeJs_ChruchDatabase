@@ -6,14 +6,13 @@
 
         <div class="create-blog content">
             <form action="/contributions" method="POST">
-                <!-- <input type="text" id="churchId" name="churchId" value="<%= churchId %>"" required> -->
-                <input type="text" id="memberId" name="memberId" required value="<%= memberId %>"" required>
+                <input type="hidden" id="memberId" name="memberId" required value="<%= memberId %>"" required>
                 <label for="contributionTypeId">Fund</label>
-                <select name="contributionTypeId">
+                <select name="contributionType">
                     <option value="None"></option>
                     <% if(contributionTypes.length > 0) { %>
                         <% contributionTypes.forEach(contributionType => { %>
-                        <option value="<% contributionType %>"><%= contributionType.constantId %></option>
+                        <option value="<%= contributionType._id %>"><%= contributionType.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
@@ -25,7 +24,6 @@
                 <input type="text" id="checkNumber" name="checkNumber" >
                 <label for="comment">Comment</label>
                 <input type="textbox" id="comment" name="comment" >
-                <input type="text" id="enteredBy" name="enteredBy" >
                 <button>Submit</button>
             </form>
         </div>

@@ -30,8 +30,6 @@ const church_branch_create_get = (req, res) => {
 }
 
 const church_createBranch_post = async (req, res) => {
-  console.log('Here is the church branch body');
-  console.log(req.body);
   const church = new Church(req.body);
   const parentChurch = await Church.findById(req.body.parentChurch);
  

@@ -7,6 +7,7 @@
         <div class="create-blog content">
             <h2>Add a Constant</h2>
             <form action="/constants" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>"
                 <label for="category">Category</label>
                 <input type="text" id="category" name="category" required>
                 <label for="name">Name</label>

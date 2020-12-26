@@ -5,7 +5,7 @@ const constant_index = (req, res) => {
     const id = req.params.id;
     Constant.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('constants/index', { title: 'All constants', constants: result })
+      res.render('constants/index', { title: 'All constants', constants: result, churchId: id })
     })
     .catch((err) => {
       console.log(err)
@@ -24,17 +24,18 @@ const constant_details = (req, res) => {
 }
 
 const constant_create_get = (req, res) => {
-    
-    res.render('constants/create', {title: 'Create a New constant'});
+    const churchId = req.params.id;
+    res.render('constants/create', {title: 'Create a New constant', churchId});
 }
 
-const constant_create_post = (req, res) => {
+const constant_create_post = async (req, res) => {
   const constant = new Constant(req.body);
   constant.enteredBy = global.userId;
+  constant.church = req.body.churchId;
   constant.status = "Active";
   constant.save()
   .then((result) => {
-    res.redirect("/constants");
+    res.redirect("/constants/church/" + req.body.churchId);
   })
   .catch((err) => {
     console.log(err);
