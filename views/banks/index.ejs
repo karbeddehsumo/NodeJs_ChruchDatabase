@@ -1,0 +1,25 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h2>All Bank Accounts</h2>
+            <% if(banks === null) { %>
+                <p>No bank account data available</p>
+               <% } else { %>
+                <% if(banks.length > 0) { %>
+                    <% banks.forEach(bank => { %>
+                        <a class="single" href="/banks/<%= bank._id %>" >
+                    <h3 class="title"><%= bank.accountName %> </h3>
+                    <p class="snippet"><%= bank.accountNumber %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

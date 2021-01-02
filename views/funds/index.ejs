@@ -1,0 +1,25 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h2>All Funds</h2>
+            <% if(funds === null) { %>
+                <p>No funds data available</p>
+               <% } else { %>
+                <% if(funds.length > 0) { %>
+                    <% funds.forEach(fund => { %>
+                        <a class="single" href="/funds/<%= fund._id %>" >
+                    <h3 class="title"><%= fund.name %> </h3>
+                    <p class="snippet"><%= fund.category %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

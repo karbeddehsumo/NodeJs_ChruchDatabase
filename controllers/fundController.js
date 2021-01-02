@@ -72,7 +72,7 @@ const fund = new Fund(req.body);
 await Fund.findById(id)
 .then(result => {
   result.church = fund.church;
-  result.fund = fund.fund;
+  result.name = fund.name;
   result.category = fund.category;
   result.bank = fund.bank;
   result.description = fund.description;

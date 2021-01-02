@@ -1,0 +1,20 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/banks" method="POST">
+                <input type="hidden" id="churchId" name="churchId" required>
+                <label for="name">Account Name</label>
+                <input type="text" id="accountName" name="accountName" required>
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

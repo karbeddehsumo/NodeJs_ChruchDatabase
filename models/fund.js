@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const fundSchema = new Schema({  
     church: { type: Schema.Types.ObjectId, ref: 'church'},
-    fund: { type: String },
+    name: { type: String },
     category: { type: String },
     bank: { type: Schema.Types.ObjectId, ref: 'bank' },
     description: { type: String },

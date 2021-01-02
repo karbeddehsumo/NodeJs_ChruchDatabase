@@ -1,0 +1,24 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="details content">
+            <h2><%= bank.accountName %></h2>
+            <div class="content" >
+                <p><%= bank.accountnumber %></p>
+            </div>
+             <p>Are you sure you want to delete this record?</p>>
+            <form method="post" action="/banks/deleted/<%= bank._id %>">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Commit Delete</button>
+                </form>
+                <a href="/bank" >Cancel Delete</a>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>
