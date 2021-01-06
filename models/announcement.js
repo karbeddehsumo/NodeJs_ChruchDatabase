@@ -11,6 +11,7 @@ const announcementSchema = new Schema({
     },
     startDate: {
         type: Date,
+        default: Date.now,
         required: [true, 'Please enter start date']
     },
     endDate: {

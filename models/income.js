@@ -5,15 +5,16 @@ const incomeSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
     fund: { type: Schema.Types.ObjectId, ref: 'constant'},
     status: { type: Schema.Types.ObjectId, ref: 'constant'},
-    cashAmount: { type: Number },
-    checkAmount: { type: Number },
-    coinAmount: { type: Number },
-    checkNumber: { type: String },
+    cashAmount: Number,
+    checkAmount: Number,
+    coinAmount: Number,
+    checkNumber: Number,
     date:{
         type: Date, 
+        default: Date.now,
         required: [true, 'Please enter the date']
     },
-    comment: { type: String },
+    comment: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamps: true});
 

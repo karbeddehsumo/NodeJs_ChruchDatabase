@@ -4,9 +4,7 @@ const Schema = mongoose.Schema;
 const churchSchema = new Schema({
     branchChurches: [{ type: Schema.Types.ObjectId, ref: 'church'}],
     parentChurch: { type: Schema.Types.ObjectId, ref: 'church'},
-    title: {
-        type: String
-    },
+    title: String,
     name: {
         type: String,
         required: [true, 'Enter the name.']
@@ -16,22 +14,14 @@ const churchSchema = new Schema({
         default: Date.now ,
         required: [true, 'Enter the year founded.']
     },
-    address1: {
-        type: String,
-    },
-    address2: {
-        type: String,
-    },
+    address1: String,
+    address2: String,
     city: {
         type: String,
         required: [true, 'Enter the city.']
     },
-    state: {
-        type: String
-    },
-    zipcode: {
-        type: String
-    },
+    state: String,
+    zipcode: String,
     country: {
         type: String,
         required: [true, 'Enter the country.']

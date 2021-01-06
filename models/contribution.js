@@ -8,18 +8,15 @@ const contributionSchema = new Schema({
     contributionType: { type: Schema.Types.ObjectId, ref: 'constant'},
     contributionDate: {
         type: Date,
+        default: Date.now,
         required: [true, 'Please enter date']
     },
     amount: {
         type: Number,
         required: [true, 'Please enter amount']
     },
-    checkNumber: {
-        type: String
-    },
-    comment: {
-        type: String
-    },
+    checkNumber: String,
+    comment: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'},
 
 }, {timestamp: true});

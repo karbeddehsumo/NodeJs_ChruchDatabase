@@ -73,10 +73,10 @@ await BankBalance.findById(id)
 .then(result => {
   result.church = bankBalance.church;
   result.bank = bankBalance.bank;
-  result.beginningDate = bankBalance.beginningDate;
+  result.beginDate = bankBalance.beginDate;
   result.endDate = babankBalancenk.endDate;
-  result.beginningBalance = bankBalance.beginningBalance;
-  result.endingBalance = bankBalance.endingBalance;
+  result.beginBalance = bankBalance.beginBalance;
+  result.endBalance = bankBalance.endBalance;
   result.income = bankBalance.income;
   result.expense = bankBalance.expense;
   result.revenueAmount = bankBalance.revenueAmount;

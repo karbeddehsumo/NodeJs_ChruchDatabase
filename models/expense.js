@@ -10,13 +10,13 @@ const expenseSchema = new Schema({
         type: Number,
         required: [true, 'Please enter amount']
     },
-    checkNumber: { type: String },
+    checkNumber: String,
     expenseDate:{
         type: Date,
         required: [true, 'Please enter the date']
     },
-    reconcile: { type: Boolean },
-    comment: { type: String },
+    reconcile: Boolean,
+    comment: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamps: true});
 

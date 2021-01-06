@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const memberSchema = new Schema({
     church: {type: Schema.Types.ObjectId, ref: 'church'},
     family: {type: Schema.Types.ObjectId, ref: 'family'},
-    status: {type: String},
+    status: String,
     firstName: {
         type: String,
         required: [true, 'Please enter first name']
@@ -13,20 +13,20 @@ const memberSchema = new Schema({
         type: String,
         required: [true, 'Please enter last name']
     },
-    middleName: {type: String},
-    dob: {type: Date},
+    middleName: String,
+    dob: {type:Date, default: Date.Now},
     gender: {
         type: String,
         required: [true, 'Please enter gender']
     },
-    Phone: {type: String},
-    email: {type: String},
-    membershipDate: {type: Date},
-    title: {type: String},
+    Phone: String,
+    email: String,
+    membershipDate: {type: Date, default: Date.now },
+    title: String,
     roles: [String],
-    contactType: {type: String},
+    contactType: String,
     contributions: [{ type: Schema.Types.ObjectId, ref: 'contribution'}],
-    enteredBy: {type: String},
+    enteredBy: String,
 }, {timestamps: true});
 
 const Member = mongoose.model('member', memberSchema);

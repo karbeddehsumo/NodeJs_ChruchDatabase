@@ -12,24 +12,12 @@ const familySchema = new Schema({
     required: [true, 'Enter the names of the family patriot(s)']
   },
   familyMembers:[{ type: Schema.Types.ObjectId, ref: 'member'}],
-  address1: {
-      type: String
-  },
-  address2: {
-      type: String
-  },
-  city: {
-      type: String
-  },
-  state: {
-    type: String
-  },
-  zip: {
-      type: String
-  },
-  country: {
-      type: String
-  },
+  address1: String,
+  address2: String,
+  city: String,
+  state: String,
+  zip: String,
+  country: String,
   enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamp: true});
 
