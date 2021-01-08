@@ -1,10 +1,14 @@
 const Fund = require('../models/fund');
+const Bank = require('../models/bank');
 
 const fund_index = async (req, res) => {
     const id = req.params.id;
+    const banks = await Bank.findById(id);
+    console.log('inside fund function')
     await Fund.find({ Church: id }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('fund/index', { title: 'All fund', fund: result })
+      console.log('we are in the fund then region');
+      res.render('funds/index', { title: 'All fund', fund: result, churchId: id, banks })
     })
     .catch((err) => {
       console.log(err)

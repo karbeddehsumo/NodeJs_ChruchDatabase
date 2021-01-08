@@ -2,13 +2,15 @@ const Bank = require('../models/bank');
 
 const bank_index = async (req, res) => {
     const id = req.params.id;
-    await bank.find({ Church: id }).sort({ createdAt: -1 })
-    .then((result) => {
-      res.render('bank/index', { title: 'All bank', bank: result })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    console.log('in the bank index function');
+    //console.log(Bank);
+    // await Bank.find({ Church: id }).sort({ createdAt: -1 })
+    // .then((result) => {
+    //   res.render('bank/index', { title: 'All bank', bank: result })
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    // })
 }
 
 const bank_details = async (req, res) => {

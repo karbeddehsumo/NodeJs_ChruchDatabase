@@ -5,7 +5,7 @@ const bankSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church' },
     accountName: String,
     accountNumber: String,
-    description: String ,
+    description: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user' }
 }, {timestamp: true});
 

@@ -7,7 +7,15 @@
         <div class="create-blog content">
             <form action="/funds" method="POST">
                 <input type="hidden" id="churchId" name="churchId" required>
-                <input type="hidden" id="bankId" name="bankId" required>
+                <select name="bank">
+                    <option value="None"></option>
+                    <% if(banks.length > 0) { %>
+                        <% banks.forEach(bank => { %>
+                        <option value="<%= bank._id %>"><%= bank.accountName %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+
                 <label for="name">Fund Name</label>
                 <input type="text" id="name" name="name" required>
                 <label for="category">Category</label>
