@@ -6,7 +6,7 @@
         <div class="blogs content">
             <a href="/families/church/<%= churchId %>">Add Member</a>
             <h2>All Members</h2>
-            <% if(members === null) { %>
+            <% if(members !== null) { %>
                  <p>No member data available</p>
                 <% } else { %>
             <% if(members.length > 0) { %>

@@ -5,7 +5,7 @@
           
         <div class="blogs content">
             <h2>All Attendances</h2>
-            <% if(attendances === null) { %>
+            <% if(attendances !== undefined) { %>
                 <p>No attendances data available</p>
                <% } else { %>
                 <% if(attendances.length > 0) { %>

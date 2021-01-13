@@ -1,16 +1,14 @@
 const Bank = require('../models/bank');
 
 const bank_index = async (req, res) => {
-    const id = req.params.id;
-    console.log('in the bank index function');
-    //console.log(Bank);
-    // await Bank.find({ Church: id }).sort({ createdAt: -1 })
-    // .then((result) => {
-    //   res.render('bank/index', { title: 'All bank', bank: result })
-    // })
-    // .catch((err) => {
-    //   console.log(err)
-    // })
+    const churchId = req.params.id;
+    await Bank.find({ Church: churchId }).sort({ createdAt: -1 })
+    .then((result) => {
+      res.render('banks/index', { title: 'All bank', banks: result, churchId })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 const bank_details = async (req, res) => {
@@ -25,15 +23,19 @@ const bank_details = async (req, res) => {
 }
 
 const bank_create_get = (req, res) => {
-    res.render('bank/create', {title: 'Create a New bank'});
+  const churchId = req.params.id;
+    res.render('banks/create', {title: 'Create a New bank', churchId});
 }
 
 const bank_create_post = (req, res) => {
+  console.log("Here is teh body data");
+  console.log(req.body.churchId);
   const bank = new Bank(req.body);
-  
+  bank.church = req.body.churchId;
+
   bank.save()
   .then((result) => {
-    res.redirect("/bank");
+    res.redirect("/banks/church/" + req.body.churchId);
   })
   .catch((err) => {
     console.log(err);

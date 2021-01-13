@@ -5,7 +5,7 @@
           
         <div class="blogs content">
             <h2>All Incomes</h2>
-            <% if(incomes === null) { %>
+            <% if(incomes !== undefined ) { %>
                 <p>No incomes data available</p>
                <% } else { %>
                 <% if(incomes.length > 0) { %>

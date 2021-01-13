@@ -10,4 +10,4 @@ const bankSchema = new Schema({
 }, {timestamp: true});
 
 const Bank = mongoose.model('bank', bankSchema);
-module.export = Bank;
+module.exports = Bank;

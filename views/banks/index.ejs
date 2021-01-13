@@ -4,8 +4,9 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
+            <a href="/banks/create/<%= churchId %>">Add Bank Account</a>
             <h2>All Bank Accounts</h2>
-            <% if(banks === null) { %>
+            <% if( banks !== undefined) { %>
                 <p>No bank account data available</p>
                <% } else { %>
                 <% if(banks.length > 0) { %>

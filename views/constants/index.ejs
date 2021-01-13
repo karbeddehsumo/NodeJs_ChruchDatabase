@@ -6,7 +6,7 @@
         <div class="blogs content">
             <a href="/constants/create/<%= churchId %>">Add Constant</a>
             <h2>All Constants</h2>
-            <% if(constants === null) { %>
+            <% if(constants !== undefined) { %>
                 <p>No constants data available</p>
                <% } else { %>
                 <% if(constants.length > 0) { %>

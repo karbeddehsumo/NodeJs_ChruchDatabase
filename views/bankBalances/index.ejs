@@ -5,7 +5,7 @@
           
         <div class="blogs content">
             <h2>All Bank Balances</h2>
-            <% if(bankBalances === null) { %>
+            <% if(bankBalances !== undefined) { %>
                 <p>No bank balances data available</p>
                <% } else { %>
                 <% if(bankBalances.length > 0) { %>
