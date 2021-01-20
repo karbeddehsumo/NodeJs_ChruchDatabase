@@ -3,10 +3,11 @@
     <body>
 
         <%- include('../partials/nav.ejs') %>
-
+        <h1>Add New Fund</h1>
         <div class="create-blog content">
             <form action="/funds" method="POST">
-                <input type="hidden" id="churchId" name="churchId" required>
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="bank">Bank</label>
                 <select name="bank">
                     <option value="None"></option>
                     <% if(banks.length > 0) { %>
@@ -23,6 +24,7 @@
                     <option value="None"></option>
                     <option value="Income">Income</option>
                     <option value="Expense">Expense</option>
+                    <option value="Both">Both</option>
                 </select>
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" >

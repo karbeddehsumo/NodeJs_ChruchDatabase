@@ -28,8 +28,6 @@ const bank_create_get = (req, res) => {
 }
 
 const bank_create_post = (req, res) => {
-  console.log("Here is teh body data");
-  console.log(req.body.churchId);
   const bank = new Bank(req.body);
   bank.church = req.body.churchId;
 

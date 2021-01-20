@@ -2,13 +2,13 @@ const Fund = require('../models/fund');
 const Bank = require('../models/bank');
 
 const fund_index = async (req, res) => {
-    const id = req.params.id;
-    const banks = await Bank.findById(id);
+    const churchId = req.params.id;
+    const banks = await Bank.findById(churchId);
     console.log('inside fund function')
-    await Fund.find({ Church: id }).sort({ createdAt: -1 })
+    await Fund.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       console.log('we are in the fund then region');
-      res.render('funds/index', { title: 'All fund', fund: result, churchId: id, banks })
+      res.render('funds/index', { title: 'All fund', funds: result, churchId, banks })
     })
     .catch((err) => {
       console.log(err)
@@ -26,16 +26,23 @@ const fund_details = async (req, res) => {
     });
 }
 
-const fund_create_get = (req, res) => {
-    res.render('fund/create', {title: 'Create a New Fund'});
+const fund_create_get = async (req, res) => {
+    const churchId = req.params.id;
+    await Bank.find({ church: churchId }).sort({ createdAt: -1 })
+    .then((result) => {
+      res.render('funds/create', {title: 'Create a New Fund', churchId, banks: result});
+    })
+    .catch((err) => {
+      res.status(404).rednder('404', {title: 'Banks not found'});
+    })
 }
 
 const fund_create_post = (req, res) => {
   const fund = new Fund(req.body);
-  
+  fund.church = req.body.churchId;
   fund.save()
   .then((result) => {
-    res.redirect("/fund");
+    res.redirect("/funds/church/" + req.body.churchId);
   })
   .catch((err) => {
     console.log(err);
