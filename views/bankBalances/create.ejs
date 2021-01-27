@@ -6,8 +6,17 @@
 
         <div class="create-blog content">
             <form action="/bankBalances" method="POST">
-                <input type="hidden" id="churchId" name="churchId" required>
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
                 <input type="hidden" id="bankId" name="bankId" required>
+                <label for="bank">Bank</label>
+                <select name="bank">
+                    <option value="None"></option>
+                    <% if(banks.length > 0) { %>
+                        <% banks.forEach(bank => { %>
+                        <option value="<%= bank._id %>"><%= bank.accountName %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
                 <label for="beginDate">Begin Date</label>
                 <input type="date" id="beginDate" name="beginDate" required>
                 <label for="endDate">End Date</label>

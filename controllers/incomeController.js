@@ -1,10 +1,10 @@
 const Income = require('../models/income');
 
 const income_index = async (req, res) => {
-    const id = req.params.id;
-    await Income.find({ church: id }).sort({ createdAt: -1 })
+    const churchId = req.params.id;
+    await Income.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('incomes/index', { title: 'All Incomes', incomes: result })
+      res.render('incomes/index', { title: 'All Incomes', incomes: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -22,8 +22,13 @@ const income_details = async (req, res) => {
     });
 }
 
-const income_create_get = (req, res) => {
-    res.render('incomes/create', {title: 'Create a New Income'});
+const income_create_get = async (req, res) => {
+  console.log('I am in the come');
+  const churchId = req.params.id;
+  console.log('Income log');
+  console.log(churchId);
+  res.render('incomes/create', {title: 'Create a New income', churchId});
+
 }
 
 const income_create_post = (req, res) => {
