@@ -3,12 +3,11 @@ const Schema = mongoose.Schema;
 
 const incomeSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
-    fund: { type: Schema.Types.ObjectId, ref: 'constant'},
+    fund: { type: Schema.Types.ObjectId, ref: 'fund'},
     status: { type: Schema.Types.ObjectId, ref: 'constant'},
     cashAmount: Number,
     checkAmount: Number,
     coinAmount: Number,
-    checkNumber: Number,
     date:{
         type: Date, 
         default: Date.now,

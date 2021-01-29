@@ -6,18 +6,26 @@
 
         <div class="create-blog content">
             <form action="/incomes" method="POST">
-                <label for="fundId">Income Type</label>
-                <input type="text" id="fundId" name="fundId" required>
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="fundId">Fund</label>
+                <select name="fund">
+                    <option value="None"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
                 <label for="incomeDate">Date</label>
-                <input type="date" id="incomeDate" name="incomeDate" required>
+                <input type="date" id="incomeDate" name="incomeDate" value="<%= todayDate %>" required>
                 <label for="cashAmount">Cash Amount</label>
                 <input type="text" id="cashAmount" name="cashAmount" required>
                 <label for="checkAmount">Check Amount</label>
                 <input type="text" id="checkAmount" name="checkAmount" >
                 <label for="coinAmount">Coin Amount</label>
                 <input type="text" id="coinAmount" name="coinAmount" >
-                <label for="checkNumber">Check Number</label>
-                <input type="text" id="checkNumber" name="checkNumber" >
+                <label for="total">Total</label>
+                <input type="text" id="total" name="total"  readonly>
                 <label for="comment">Comment</label>
                 <input type="text" id="comment" name="comment" >
                 <button>Submit</button>
