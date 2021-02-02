@@ -1,10 +1,11 @@
 const Expense = require('../models/expense');
+const Fund = require('../models/fund');
 
 const expense_index = async (req, res) => {
-    const id = req.params.id;
-    await Expense.find({ church: id}).sort({ createdAt: -1 })
+    const churchId = req.params.id;
+    await Expense.find({ church: churchId}).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('expenses/index', { title: 'All expenses', expenses: result })
+      res.render('expenses/index', { title: 'All expenses', expenses: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -22,8 +23,18 @@ const expense_details = async (req, res) => {
     });
 }
 
-const expense_create_get = (req, res) => {
-    res.render('expenses/create', {title: 'Create a New expense'});
+const expense_create_get = async (req, res) => {
+    const churchId = req.params.id;
+    const todayDate = new Date();
+    await Fund.find({ church: churchId, category: ['Expense','Both']}).sort({ createdAt: -1 })
+    .then((result) => {
+      console.log('Here is the fund result');
+      console.log(result);
+      res.render('expenses/create', {title: 'Create a New expense', churchId, funds: result, todayDate});
+    })
+    .catch((err) => {
+      res.status(404).render('404', {title: 'Income not found'});
+    });
 }
 
 const expense_create_post = (req, res) => {

@@ -6,8 +6,16 @@
 
         <div class="create-blog content">
             <form action="/expense" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
                 <label for="fundId">Expense Type</label>
-                <input type="text" id="fundId" name="fundId" required>         
+                <select name="fund">
+                    <option value="None"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>        
                 <label for="payee">Payee</label>
                 <input type="text" id="payee" name="payee" required>
                 <label for="amount">Amount</label>

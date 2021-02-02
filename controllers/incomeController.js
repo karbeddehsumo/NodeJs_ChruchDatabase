@@ -26,7 +26,7 @@ const income_details = async (req, res) => {
 const income_create_get = async (req, res) => {
   const churchId = req.params.id;
   const todayDate = new Date();
-  await Fund.find({ church: churchId}).sort({ createdAt: -1 })
+  await Fund.find({ church: churchId, category: ['Income','Both']}).sort({ createdAt: -1 })
   .then((result) => {
     console.log('Here is the fund result');
     console.log(result);

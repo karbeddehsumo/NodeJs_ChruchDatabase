@@ -5,7 +5,7 @@ const expenseSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
     fund: { type: Schema.Types.ObjectId, ref: 'fund'},
     statusId: { type: Schema.Types.ObjectId, ref: 'constant'},
-    payee: { type: Schema.Types.ObjectId, ref: 'member'},
+    payee: String,
     amount: {
         type: Number,
         required: [true, 'Please enter amount']

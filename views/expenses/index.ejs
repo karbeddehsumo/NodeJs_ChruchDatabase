@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <a href="/expenses/create/<%= churchId %>">Add Expense</a>
+            <h2>All Expenses</h2>
+            <% if(expenses !== undefined ) { %>
+                <p>No expenses data available</p>
+               <% } else { %>
+                <% if(expenses.length > 0) { %>
+                    <% expenses.forEach(expense => { %>
+                        <a class="single" href="/expenses/<%= expense._id %>" >
+                    <h3 class="title"><%= expense.amount %> </h3>
+                    <p class="snippet"><%= expense.checkNumber %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
