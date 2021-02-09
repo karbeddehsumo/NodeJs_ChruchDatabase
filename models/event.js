@@ -9,6 +9,7 @@ const eventSchema = new Schema({
     endDate: { type: Schema.Types.ObjectId, ref: 'calendar'},
     startTime: String,
     endTime: String,
+    budget: [{item: String, cost: Number}],
     missionStatement: String,
     picture: { type: String},
     video: { type: String},

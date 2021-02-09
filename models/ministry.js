@@ -14,9 +14,13 @@ const ministrySchema = new Schema({
     picture: { type: Schema.Types.ObjectId, ref: 'picture'},
     video: { type: Schema.Types.ObjectId, ref: 'video'},
     members: [{ type: Schema.Types.ObjectId, ref: 'member'}],
+    events: { type: Schema.Types.ObjectId, ref: 'event'},
     ministryGoals: [{year: Number, goals:[{
         goal: String, schedule: [{task: String, assignTo: String, StartDate: Date, endDate: Date, comment: String}]
     }]}],
     meetings: [{meetingDate: Date, startTime: String, endTime: String, agenda: [{String}]}],
     calendar: { type: Schema.Types.ObjectId, ref: 'calendar'},
 },{timestamps: true});
+
+const Ministry = mongoose.model('ministry', ministrySchema);
+module.exports = Ministry;

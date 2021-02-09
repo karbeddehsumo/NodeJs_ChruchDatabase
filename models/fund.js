@@ -7,6 +7,7 @@ const fundSchema = new Schema({
     category: String,
     bank: { type: Schema.Types.ObjectId, ref: 'bank' },
     description: String,
+    isBudgeted: Boolean,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamp: true });
 
