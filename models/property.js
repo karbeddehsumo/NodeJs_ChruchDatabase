@@ -13,6 +13,7 @@ const propertySchema = new Schema({
     tagNumber: String,
     description: String,
     comment: String,
+    lastInventory: Date,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 

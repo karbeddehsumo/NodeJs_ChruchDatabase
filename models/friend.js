@@ -13,6 +13,7 @@ const friendSchema = new Schema({
     zipcode: String,
     phone: String,
     email: String,
+    status: String,
     lastVisit: [{program: String, date:Date}],
     offering: [{amount:Number, date:Date}]
 
