@@ -22,7 +22,7 @@ const announcementSchema = new Schema({
         type: String,
         required: [true, 'Please enter message']
     },
-    status: { type: Schema.Types.ObjectId, ref: 'constant'},
+    status: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 },{timestamps: true});
 
