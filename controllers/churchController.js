@@ -24,8 +24,7 @@ const church_details = async (req, res) => {
 
 const church_branch_create_get = (req, res) => {
   const churchId = req.params.id;
-  console.log('Here is the parent church id');
-  console.log(churchId);
+  
   res.render('Churches/createBranch', {title: 'Create a New Church Branch', parentId: churchId});
 }
 
