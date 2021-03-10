@@ -3,6 +3,7 @@ const Church = require('../models/church');
 const church_index = async (req, res) => {
     const id = req.params.id;
     await Church.find({ parentChurch: id }).sort({ createdAt: -1 })
+    .populate('branchChurches', 'name _id')
     .then((result) => {
       res.render('churches/index', { title: 'All Churches', churches: result })
     })
@@ -22,10 +23,20 @@ const church_details = async (req, res) => {
     });
 }
 
-const church_branch_create_get = (req, res) => {
+const church_branch_create_get = async (req, res) => {
   const churchId = req.params.id;
+   await Church.findById(churchId)
+   .populate('branchChurches', 'name city _id')
+   .then((result) => {
+     console.log('here are the branch churches');
+     console.log(result);
+     res.render('Churches/createBranch', {title: 'Create a New Church Branch', parentId: churchId,result});
+   })
+   .catch((err) => {
+    res.status(404).render('404', {title: 'Church not found'});
+   });
+
   
-  res.render('Churches/createBranch', {title: 'Create a New Church Branch', parentId: churchId});
 }
 
 const church_createBranch_post = async (req, res) => {

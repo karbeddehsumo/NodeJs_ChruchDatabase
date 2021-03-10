@@ -1,12 +1,20 @@
 const Member = require('../models/member');
 const Constant = require('../models/constant');
 const Family = require('../models/family');
+const Church = require('../models/church');
 
 const member_index = async (req, res) => {
   const id = req.params.id;  
+  const church = await Church.find({_id: id});
+  const churchName = church.name;
+  console.log('the church name');
+  console.log(church);
   await Member.find({ church: id }).sort({ createdAt: -1 })
+    .populate('church', '_id name')
     .then((result) => {
-      res.render('members/index', { title: 'All members', members: result, churchId: id })
+      console.log('Here is the member church');
+      console.log(result);
+      res.render('members/index', { title: 'All members', members: result, churchId: id, churchName })
     })
     .catch((err) => {
       console.log(err)

@@ -3,7 +3,8 @@
     <body>
 
         <%- include('../partials/nav.ejs') %>
-        <h1>Add New Branch Church</h1>
+        <h1><%= result.name %></h1>
+        <h3>Add New Branch</h3>
         <div class="create-blog content">
             <form action="/churches/createBranch" method="POST">
                 <input type="hidden" id="parentChurch" name="parentChurch" value="<%=parentId %>"" > 
@@ -35,6 +36,20 @@
                 <input type="text" id="picture" name="picture" > -->
                 <button>Submit</button>
             </form>
+            <div>
+                <% if(result === null) { %>
+                    <p>No church branch data available</p>
+                   <% } else { %>
+                    <% if(result.branchChurches.length > 0) { %>
+                        <h3>Existing Branches:</h3>
+                        <% result.branchChurches.forEach(church => { %>
+                            <a class="single" href="/churches/<%= church._id %>" >
+                        <p class="title"><%= church.name %> (<%= church.city %>) </p>
+                        </a>
+                        <% }) %>
+                    <% } %>
+               <% } %>
+            </div>
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>

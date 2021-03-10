@@ -39,6 +39,6 @@ const churchSchema = new Schema({
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 
-const Church = mongoose.model('Church', churchSchema);
+const Church = mongoose.model('church', churchSchema);
 
 module.exports = Church;
