@@ -5,15 +5,12 @@ const Church = require('../models/church');
 
 const member_index = async (req, res) => {
   const id = req.params.id;  
-  const church = await Church.find({_id: id});
+  const church = await Church.findById(id);
   const churchName = church.name;
-  console.log('the church name');
-  console.log(church);
+
   await Member.find({ church: id }).sort({ createdAt: -1 })
     .populate('church', '_id name')
     .then((result) => {
-      console.log('Here is the member church');
-      console.log(result);
       res.render('members/index', { title: 'All members', members: result, churchId: id, churchName })
     })
     .catch((err) => {

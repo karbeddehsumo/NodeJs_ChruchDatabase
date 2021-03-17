@@ -1,14 +1,18 @@
 const Contribution = require('../models/contribution');
 const Constant = require('../models/constant');
 const Member = require('../models/member');
+const Church = require('../models/church');
 
 //app.get('*', checkUser); //put user values in res.locals
 const contribution_index = async (req, res) => {
      const id = req.params.id;
+     const church = await Church.findById(id);
+     const churchName = church.name;
+
      const members = await Member.find({ church: id});
     await Contribution.find({ church: id}).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('contributions/index', { title: 'All contributions', contributions: result, members })
+      res.render('contributions/index', { title: 'All contributions', contributions: result, members, churchName })
     })
     .catch((err) => {
       console.log(err)
