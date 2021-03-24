@@ -4,6 +4,7 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
+            <h1><%= churchName %></h1>
             <a href="/constants/create/<%= churchId %>">Add Constant</a>
             <h2>All Constants</h2>
             <% if(constants !== undefined) { %>

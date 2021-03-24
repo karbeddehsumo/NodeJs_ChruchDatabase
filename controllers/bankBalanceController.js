@@ -1,11 +1,14 @@
 const BankBalance = require('../models/bankBalance');
 const Bank = require('../models/bank');
+const Church = require('../models/church');
 
 const bankBalance_index = async (req, res) => {
     const churchId = req.params.id;
+    const church = await Church.findById(churchId);
+    const churchName = church.name;
     await BankBalance.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('bankBalances/index', { title: 'All bank balances', bankBalances: result, churchId })
+      res.render('bankBalances/index', { title: 'All bank balances', bankBalances: result, churchId, churchName })
     })
     .catch((err) => {
       console.log(err)

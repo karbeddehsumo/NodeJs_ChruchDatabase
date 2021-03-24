@@ -4,6 +4,7 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
+            <h1><%= churchName %></h1>
             <a href="/incomes/create/<%= churchId %>">Add Income</a>
             <h2>All Incomes</h2>
             <% if(incomes !== undefined ) { %>
