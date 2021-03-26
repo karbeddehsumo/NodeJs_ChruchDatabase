@@ -12,7 +12,8 @@ const goalSchema = new Schema({
         endDate: Date, 
         status: String,
         comment: String
-    }]
+    }],
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 
 const Goal = mongoose.model('goal', goalSchema);

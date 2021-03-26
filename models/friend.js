@@ -10,11 +10,11 @@ const friendSchema = new Schema({
     address2: String,
     city: String,
     state: String,
-    zipcode: String,
+    zip: String,
     phone: String,
     email: String,
     status: String,
     lastVisit: [{program: String, date:Date}],
-    offering: [{amount:Number, date:Date}]
-
+    offering: [{amount:Number, date:Date}],
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamps: true});

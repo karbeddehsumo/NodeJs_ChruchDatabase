@@ -13,4 +13,5 @@ const eventSchema = new Schema({
     missionStatement: String,
     picture: { type: String},
     video: { type: String},
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamps: true});
