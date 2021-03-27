@@ -12,7 +12,7 @@ const staffSchema = new Schema({
     supervisor: String,
     picture: String,
     status: String,
-    dateHire: Date,
+    dateHired: Date,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 

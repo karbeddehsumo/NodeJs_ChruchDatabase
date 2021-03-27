@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const propertySchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
     title: String,
-    purchaseDate: Date,
+    purchasedDate: Date,
     value: Number,
     quantity: Number,
     location: String,

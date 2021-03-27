@@ -11,7 +11,8 @@ const storySchema = new Schema({
     publishEndDate: Date,
     author: String,
     pictures: [{ type: Schema.Types.ObjectId, ref: 'picture'}],
-    status: String
+    status: String,
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 
 const Story = mongoose.model('story', storySchema);
