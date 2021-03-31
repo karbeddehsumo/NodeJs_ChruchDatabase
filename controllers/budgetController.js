@@ -1,8 +1,11 @@
 const Budget = require('../models/budget');
 const Church = require('../models/church');
+const Constant = require('../models/constant');
+const Fund = require('../models/fund');
 
 const budget_index = async (req, res) => {
     const churchId = req.params.id;
+    console.log("Inside budget index");
     const church = await Church.findById(churchId);
      const churchName = church.name;
     await Budget.find({ Church: churchId }).sort({ createdAt: -1 })
@@ -25,15 +28,25 @@ const budget_details = async (req, res) => {
     });
 }
 
-const budget_create_get = (req, res) => {
+const budget_create_get = async (req, res) => {
   const churchId = req.params.id;
-    res.render('budgets/create', {title: 'Create a New budget', churchId});
+  const fundType = req.params.type;
+  let year = new Date().getFullYear();
+  var budgetYear = [year-1,year,year+1]
+  await Fund.find({ church: churchId, category: [fundType,'Both']}).sort({ createdAt: -1 })
+    .then((result) => {
+      res.render('budgets/create', {title: 'Create a New budget', churchId, funds: result, fundType, budgetYear })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 const budget_create_post = (req, res) => {
   const budget = new Budget(req.body);
   budget.church = req.body.churchId;
-
+  console.log('create budget');
+  console.log(req.body);
   budget.save()
   .then((result) => {
     res.redirect("/budgets/church/" + req.body.churchId);

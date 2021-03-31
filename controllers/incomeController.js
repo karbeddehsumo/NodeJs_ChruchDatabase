@@ -32,8 +32,6 @@ const income_create_get = async (req, res) => {
   const todayDate = new Date();
   await Fund.find({ church: churchId, category: ['Income','Both']}).sort({ createdAt: -1 })
   .then((result) => {
-    console.log('Here is the fund result');
-    console.log(result);
     res.render('incomes/create', {title: 'Create a New income', churchId, funds: result, todayDate});
   })
   .catch((err) => {

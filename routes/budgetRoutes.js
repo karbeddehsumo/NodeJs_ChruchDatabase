@@ -4,7 +4,7 @@ const router = express.Router();
   
   router.get('/church/:id', budgetController.budget_index);
   router.post('/', budgetController.budget_create_post);
-  router.get('/create/:id', budgetController.budget_create_get);
+  router.get('/create/:id/:type', budgetController.budget_create_get);
   router.post('/deleted/:id', budgetController.budget_delete);
   router.get('/delete/:id', budgetController.budget_delete_get);
   router.get('/:id', budgetController.budget_details);

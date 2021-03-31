@@ -1,0 +1,39 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h1>Add <%= fundType %> Budget</h1>
+            <form action="/budgets" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="type">Budget Type</label>
+                <input type="text" id="type" name="type" value="<%= fundType %>" readonly>
+                <label for="fund">Fund</label>
+                <select name="fund">
+                    <option value="None"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="year">Year</label>
+                <select name="fund">
+                    <option value="None"></option>
+                    <% if(budgetYear.length > 0) { %>
+                        <% budgetYear.forEach(year => { %>
+                        <option value="<%= year %>"><%= year %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" name="amount" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
