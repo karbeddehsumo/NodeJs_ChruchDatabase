@@ -4,8 +4,7 @@ const Church = require('../models/church');
 
 const expense_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-    const churchName = church.name;
+    const churchName = global.churchName;
     await Expense.find({ church: churchId}).sort({ createdAt: -1 })
     .then((result) => {
       res.render('expenses/index', { title: 'All expenses', expenses: result, churchId, churchName })
@@ -42,7 +41,7 @@ const expense_create_get = async (req, res) => {
 
 const expense_create_post = (req, res) => {
   const expense = new Expense(req.body);
-  
+  expense.enteredBy = global.userId;
   expense.save()
   .then((result) => {
     res.redirect("/expenses");

@@ -26,6 +26,7 @@ const familyRoutes = require('./routes/familyRoutes');
 const fundRoutes = require('./routes/fundRoutes');
 const incomeRoutes = require('./routes/incomeRoutes');
 const memberRoutes = require('./routes/memberRoutes');
+const ministryRoutes = require('./routes/ministryRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const userRoutes = require('./routes/userRoutes');
 
@@ -82,6 +83,7 @@ app.get('/welcome', requireAuth, (req, res) => res.render('welcome'));
   app.use('/funds', fundRoutes);
   app.use('/incomes', incomeRoutes);
   app.use('/members', memberRoutes);
+  app.use('/ministries', ministryRoutes);
   app.use('/roles', roleRoutes);
   app.use('/users', userRoutes);
   app.use(authRoutes);

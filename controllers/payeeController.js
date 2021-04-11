@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const payee_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Payee.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('payees/index', { title: 'All payee', payees: result, churchId, churchName })
@@ -33,7 +32,7 @@ const payee_create_get = (req, res) => {
 const payee_create_post = (req, res) => {
   const payee = new Payee(req.body);
   payee.church = req.body.churchId;
-
+  payee.enteredBy = global.userId;
   payee.save()
   .then((result) => {
     res.redirect("/payees/church/" + req.body.churchId);

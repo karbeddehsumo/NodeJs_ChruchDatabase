@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const friend_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Friend.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('friends/index', { title: 'All friend', friends: result, churchId, churchName })
@@ -33,7 +32,7 @@ const friend_create_get = (req, res) => {
 const friend_create_post = (req, res) => {
   const friend = new Friend(req.body);
   friend.church = req.body.churchId;
-
+  friend.enteredBy = global.userId;
   friend.save()
   .then((result) => {
     res.redirect("/friends/church/" + req.body.churchId);

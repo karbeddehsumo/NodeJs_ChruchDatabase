@@ -28,7 +28,8 @@ const announcement_create_get = (req, res) => {
 
 const announcement_create_post = (req, res) => {
   const announcement = new Announcement(req.body);
-  
+  announcement.enteredBy = global.userId;
+
   announcement.save()
   .then((result) => {
     res.redirect("/announcements");

@@ -29,7 +29,7 @@ const attendance_create_get = (req, res) => {
 const attendance_create_post = (req, res) => {
   const attendance = new Attendance(req.body);
   attendance.dateEntered = Date.now();
-  attendance.enteredBy = "4567890";
+  attedance.enteredBy = global.userId;
   attendance.save()
   .then((result) => {
     res.redirect("/attendances");

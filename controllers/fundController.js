@@ -5,10 +5,9 @@ const Church = require('../models/church');
 const fund_index = async (req, res) => {
     const churchId = req.params.id;
     const banks = await Bank.findById(churchId);
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
 
-    await Fund.find({ Church: churchId }).sort({ createdAt: -1 })
+    await Fund.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('funds/index', { title: 'All fund', funds: result, churchId, banks, churchName })
     })
@@ -42,6 +41,7 @@ const fund_create_get = async (req, res) => {
 const fund_create_post = (req, res) => {
   const fund = new Fund(req.body);
   fund.church = req.body.churchId;
+  fund.enteredBy = global.userId;
   fund.save()
   .then((result) => {
     res.redirect("/funds/church/" + req.body.churchId);

@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const goal_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Goal.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('goals/index', { title: 'All goal', goals: result, churchId, churchName })
@@ -33,7 +32,7 @@ const goal_create_get = (req, res) => {
 const goal_create_post = (req, res) => {
   const goal = new Goal(req.body);
   goal.church = req.body.churchId;
-
+  goal.enteredBy = global.userId;
   goal.save()
   .then((result) => {
     res.redirect("/goals/church/" + req.body.churchId);

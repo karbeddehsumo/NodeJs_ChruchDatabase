@@ -4,8 +4,7 @@ const Church = require('../models/church');
 
 const income_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
 
     await Income.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
@@ -42,10 +41,9 @@ const income_create_get = async (req, res) => {
 }
 
 const income_create_post = (req, res) => {
-  console.log("Her is teh income data");
-  console.log(req.body)
   const income = new Income(req.body);
   income.church = req.body.churchId;
+  income.enteredBy = global.userId;
 
   income.save()
   .then((result) => {

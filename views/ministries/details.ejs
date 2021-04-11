@@ -5,16 +5,16 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="details content">
-            <h2><%= budget.year %></h2>
+            <h1><%= churchName %></h1>
+            <h2><%= ministry.name %></h2>
             <div class="content" >
-                <p><%= budget.type %></p>
-                <p><%= budget.fund.name %></p>
-                <p><%= budget.amount %></p>
-            <a class="edit blogs" href="/budgets/edit/<%= budget._id %>">
+                <p><%= ministry.contact %></p>
+    
+            <a class="edit blogs" href="/ministries/edit/<%= ministry._id %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/budgets/delete/<%= budget._id %>">
+           <a class="delete blogs" href="/ministries/delete/<%= ministry._id %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     

@@ -5,8 +5,7 @@ const Church = require('../models/church');
 
 const member_index = async (req, res) => {
   const id = req.params.id;  
-  const church = await Church.findById(id);
-  const churchName = church.name;
+  const churchName = global.churchName;
 
   await Member.find({ church: id }).sort({ createdAt: -1 })
     .populate('church', '_id name')
@@ -43,6 +42,7 @@ const member_create_post = async (req, res) => {
   const family = await Family.findById(req.body.familyId);
   member.family = req.body.familyId;
   member.church = family.church;
+  member.enteredBy = global.userId;
   member.save()
   .then((result) => {
     family.familyMembers.push(member._id);

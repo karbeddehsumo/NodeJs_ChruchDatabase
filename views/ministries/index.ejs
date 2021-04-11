@@ -1,0 +1,27 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= churchName %></h1>
+            <a href="/ministries/create/<%= churchId %>">Add New Ministry</a>
+            <h2>Ministry List</h2>
+            <% if( ministries === null) { %>
+                <p>No ministry data available</p>
+               <% } else { %>
+                <% if(ministries.length > 0) { %>
+                    <% ministries.forEach(ministry => { %>
+                        <a class="single" href="/ministries/<%= ministry._id %>" >
+                    <h3 class="title"><%= ministry.name %> </h3>
+                    <p class="snippet"><%= ministry.contact %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

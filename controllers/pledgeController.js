@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const pledge_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Pledge.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('pledges/index', { title: 'All pledge', pledges: result, churchId, churchName })
@@ -33,7 +32,7 @@ const pledge_create_get = (req, res) => {
 const pledge_create_post = (req, res) => {
   const pledge = new Pledge(req.body);
   pledge.church = req.body.churchId;
-
+  pledge.enteredBy = global.userId;
   pledge.save()
   .then((result) => {
     res.redirect("/pledges/church/" + req.body.churchId);

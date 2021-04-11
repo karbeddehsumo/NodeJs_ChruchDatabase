@@ -6,8 +6,7 @@ const Church = require('../models/church');
 //app.get('*', checkUser); //put user values in res.locals
 const contribution_index = async (req, res) => {
      const id = req.params.id;
-     const church = await Church.findById(id);
-     const churchName = church.name;
+     const churchName = global.churchName;
 
      const members = await Member.find({ church: id});
     await Contribution.find({ church: id}).sort({ createdAt: -1 })
@@ -46,10 +45,6 @@ const contribution_create_post = async (req, res) => {
   const contribution = new Contribution(req.body);
   contribution.enteredBy = global.userId;
   contribution.church = member.church;
-
-  console.log('Here is the contribution member id');
-  console.log(member.church);
-  console.log(global.userId);
 
   contribution.status = "Active";
   contribution.save()

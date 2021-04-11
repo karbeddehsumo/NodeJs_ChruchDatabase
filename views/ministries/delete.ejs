@@ -5,16 +5,17 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="details content">
-            <h2><%= budget.year %></h2>
+            <h1><%= churchName %></h1>
+            <h2><%= ministry.name %></h2>
             <div class="content" >
-                <p><%= budget.fund %></p>
+                <p><%= ministry.contact %></p>
             </div>
-             <p>Are you sure you want to delete this record?</p>>
-            <form method="post" action="/budgets/deleted/<%= budget._id %>">
+             <p>Are you sure you want to delete this record?</p>
+            <form method="post" action="/ministries/deleted/<%= ministry._id %>">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit">Commit Delete</button>
                 </form>
-                <a href="/budget" >Cancel Delete</a>
+                <a href="/ministries" >Cancel Delete</a>
         </div>
         <%- include('../partials/footer.ejs') %>
 

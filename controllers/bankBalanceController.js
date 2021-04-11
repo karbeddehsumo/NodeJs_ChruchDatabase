@@ -4,8 +4,7 @@ const Church = require('../models/church');
 
 const bankBalance_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-    const churchName = church.name;
+    const churchName = global.churchName;
     await BankBalance.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('bankBalances/index', { title: 'All bank balances', bankBalances: result, churchId, churchName })
@@ -40,8 +39,7 @@ const bankBalance_create_get = async (req, res) => {
 
 const bankBalance_create_post = (req, res) => {
   const bank = new BankBalance(req.body);
-  console.log('Here is the bank Balance');
-  console.log(req.body);
+  bank.enteredBy = global.userId;
 
   bank.save()
   .then((result) => {

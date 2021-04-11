@@ -26,7 +26,7 @@ const memberSchema = new Schema({
     roles: [String],
     contactType: String,
     contributions: [{ type: Schema.Types.ObjectId, ref: 'contribution'}],
-    enteredBy: String,
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamps: true});
 
 const Member = mongoose.model('member', memberSchema);

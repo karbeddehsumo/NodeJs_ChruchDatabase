@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ministrySchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
     parentMinistry: { type: Schema.Types.ObjectId, ref: 'ministry'},
-    ministryName: String,
+    name: String,
     description: String,
     contact: String,
     email: String,
@@ -17,7 +17,8 @@ const ministrySchema = new Schema({
     events: [{ type: Schema.Types.ObjectId, ref: 'event'}],
     goals: [{ type: Schema.Types.ObjectId, ref: 'goal'}],
     meetings: [{ type: Schema.Types.ObjectId, ref: 'meeting'}],
-    calendars: [{ type: Schema.Types.ObjectId, ref: 'calendar'}]
+    calendars: [{ type: Schema.Types.ObjectId, ref: 'calendar'}],
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 },{timestamps: true});
 
 const Ministry = mongoose.model('ministry', ministrySchema);

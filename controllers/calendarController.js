@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const calendar_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Calendar.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('calendars/index', { title: 'All calendar', calendars: result, churchId, churchName })
@@ -33,7 +32,7 @@ const calendar_create_get = (req, res) => {
 const calendar_create_post = (req, res) => {
   const calendar = new Calendar(req.body);
   calendar.church = req.body.churchId;
-
+  calendar.enteredBy = global.userId;
   calendar.save()
   .then((result) => {
     res.redirect("/calendars/church/" + req.body.churchId);

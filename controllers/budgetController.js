@@ -5,10 +5,9 @@ const Fund = require('../models/fund');
 
 const budget_index = async (req, res) => {
     const churchId = req.params.id;
-    console.log("Inside budget index");
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
-    await Budget.find({ Church: churchId }).sort({ createdAt: -1 })
+     const churchName = global.churchName;
+    await Budget.find({ church: churchId }).sort({ createdAt: -1 })
+    .populate('fund','name _id')
     .then((result) => {
       res.render('budgets/index', { title: 'All budget', budgets: result, churchId, churchName })
     })
@@ -20,8 +19,11 @@ const budget_index = async (req, res) => {
 const budget_details = async (req, res) => {
     const id = req.params.id;
     await Budget.findById(id)
+    .populate('fund','name _id')
      .then((result) => {
-      res.render("budget/details", { budget: result, title: 'budget Details'})
+       console.log('Here is the budget item');
+       console.log(result);
+      res.render("budgets/details", { budget: result, title: 'budget Details'})
     })
     .catch((err) => {
       res.status(404).render('404', {title: 'budget not found'});
@@ -45,8 +47,7 @@ const budget_create_get = async (req, res) => {
 const budget_create_post = (req, res) => {
   const budget = new Budget(req.body);
   budget.church = req.body.churchId;
-  console.log('create budget');
-  console.log(req.body);
+  budget.enteredBy = global.userId;
   budget.save()
   .then((result) => {
     res.redirect("/budgets/church/" + req.body.churchId);
@@ -60,7 +61,7 @@ const budget_delete = async (req, res) => {
  const id = req.params.id;
   await Budget.findByIdAndDelete(id)
   .then((result) => {
-    res.redirect("/budget");
+    res.redirect("/budgets");
   })
   .catch((err) => {
     console.log(err);
@@ -70,17 +71,30 @@ const budget_delete = async (req, res) => {
 const budget_delete_get = async (req, res) => {
   const id = req.params.id;
     await Budget.findById(id)
+    .polupate('fund', 'name')
     .then(result => {
-      res.render('budget/delete', {budget: result, title: 'Delete budget'});
+      console.log('here is the fund pop');
+      console.log(result);
+      res.render('budgets/delete', {budget: result, title: 'Delete budget'});
     })
     .catch(err => console.log(err));
 }
 
 const budget_edit_get = async (req, res) => {
   const id = req.params.id;
+  const budget = await Budget.findById(id);
+  const funds =  await Fund.find({ church: budget.church, category: [budget.type, 'Both']}).sort({ createdAt: -1 });
+  console.log('Here is the funds');
+  console.log(funds);
+
     await Budget.findById(id)
+    .populate('fund', 'name _id')
     .then(result => {
-      res.render('budget/edit', {budget: result, title: 'Edit budget'});
+      console.log('Here is the budget item');
+      console.log(result);
+      const title = 'Edit ' + result.type + ' Budget';
+      
+      res.render('budgets/edit', {budget: result, funds, title});
     })
     .catch(err => console.log(err));
 }
@@ -96,7 +110,7 @@ await Budget.findById(id)
   result.amount = budget.amount;
   result.enteredBy = budget.enteredBy;
   result.save();
-  res.redirect('/budget');
+  res.redirect('/budgets');
 })
 .catch(err => console.log(err));
   

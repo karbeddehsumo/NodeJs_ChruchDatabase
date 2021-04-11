@@ -16,6 +16,8 @@ const church_details = async (req, res) => {
     const id = req.params.id;
     await Church.findById(id)
      .then((result) => {
+       global.churchName = result.name;
+       global.churchId = result._id;
       res.render("churches/details", { church: result, title: 'Church Details'})
     })
     .catch((err) => {
@@ -26,10 +28,8 @@ const church_details = async (req, res) => {
 const church_branch_create_get = async (req, res) => {
   const churchId = req.params.id;
    await Church.findById(churchId)
-   .populate('branchChurches', 'name city _id')
+   .populate('branchChurches', 'name city _id') //church branches
    .then((result) => {
-     console.log('here are the branch churches');
-     console.log(result);
      res.render('Churches/createBranch', {title: 'Create a New Church Branch', parentId: churchId,result});
    })
    .catch((err) => {
@@ -61,10 +61,7 @@ const church_create_get = (req, res) => {
 
 const church_create_post = (req, res) => {
   const church = new Church(req.body);
-  console.log('Here is the church data');
-  console.log(church);
-  
-
+  church.enteredBy = global.userId;
   church.save()
   .then((result) => {
     res.redirect("/churches");

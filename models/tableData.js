@@ -14,6 +14,7 @@ const tableDataSchema = new Schema({
     data8: String,
     data9: String,
     data10: String,
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
     }]
 }, { timestamps: true});
 

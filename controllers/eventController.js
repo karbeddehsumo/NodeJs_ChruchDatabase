@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const event_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Event.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('events/index', { title: 'All event', events: result, churchId, churchName })
@@ -33,7 +32,7 @@ const event_create_get = (req, res) => {
 const event_create_post = (req, res) => {
   const event = new Event(req.body);
   event.church = req.body.churchId;
-
+  event.enteredBy = global.userId;
   event.save()
   .then((result) => {
     res.redirect("/events/church/" + req.body.churchId);

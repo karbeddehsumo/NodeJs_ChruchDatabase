@@ -8,7 +8,8 @@ const meetingSchema = new Schema({
     startTime: String,
     endTime: String,
     agenda: [{String}],
-    status: String
+    status: String,
+    enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 
 const Meeting = mongoose.model('meeting', meetingSchema);

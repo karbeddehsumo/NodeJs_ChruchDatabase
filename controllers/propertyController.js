@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const property_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Property.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('propertys/index', { title: 'All property', propertys: result, churchId, churchName })
@@ -33,7 +32,7 @@ const property_create_get = (req, res) => {
 const property_create_post = (req, res) => {
   const property = new Property(req.body);
   property.church = req.body.churchId;
-
+  property.enteredBy = global.userId;
   property.save()
   .then((result) => {
     res.redirect("/propertys/church/" + req.body.churchId);

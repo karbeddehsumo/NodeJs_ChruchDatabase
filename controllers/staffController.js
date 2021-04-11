@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const staff_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Staff.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('staffs/index', { title: 'All staff', staffs: result, churchId, churchName })
@@ -33,7 +32,7 @@ const staff_create_get = (req, res) => {
 const staff_create_post = (req, res) => {
   const staff = new Staff(req.body);
   staff.church = req.body.churchId;
-
+  staff.enteredBy = global.userId;
   staff.save()
   .then((result) => {
     res.redirect("/staffs/church/" + req.body.churchId);

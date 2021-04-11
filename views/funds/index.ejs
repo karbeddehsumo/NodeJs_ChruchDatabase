@@ -7,7 +7,7 @@
             <h1><%= churchName %></h1>
             <a href="/funds/create/<%= churchId %>">Add Fund</a>
             <h2>All Funds</h2>
-            <% if(funds !== undefined ) { %>
+            <% if(funds === null ) { %>
                 <p>No funds data available</p>
                <% } else { %>
                 <% if(funds.length > 0) { %>

@@ -30,6 +30,7 @@ const family_create_get = (req, res) => {
 const family_create_post = async (req, res) => {
   const family = new Family(req.body);
   family.church = req.body.churchId;
+  family.enteredBy = global.userId;
   family.familyMembers = [];
 
   family.save()

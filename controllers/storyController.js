@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const story_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await Story.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('storys/index', { title: 'All story', storys: result, churchId, churchName })
@@ -33,7 +32,7 @@ const story_create_get = (req, res) => {
 const story_create_post = (req, res) => {
   const story = new Story(req.body);
   story.church = req.body.churchId;
-
+  story.enteredBy = global.userId;
   story.save()
   .then((result) => {
     res.redirect("/storys/church/" + req.body.churchId);

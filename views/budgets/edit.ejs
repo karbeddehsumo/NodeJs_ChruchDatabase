@@ -1,0 +1,39 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/budgets/edited/<%= budget._id %>" method="post">
+                        <input type="hidden" id="church" name="church" value="<%= budget.church %>"" required>
+                        <input type="hidden" id="type" name="type" value="<%= budget.type %>"" required>
+                        <label for="year">Year</label>
+                        <input type="text" id="year" name="year" value="<%= budget.year %>"" required>
+                        <label for="fund">Fund</label>
+                        <select name="fund">
+                            <option value="None"></option>
+                            <% if(funds.length > 0) { %>
+                                <% funds.forEach(fund => { %>
+                                    <!-- <option <%= <%= fund._id %>==<%= budget.fund._id %> ? "selected" : "" %> value="<%= budget.fund._id %>" ><%= fund.name %></option>  -->
+                                    <option <%= <%= fund._id %>==<%= budget.fund._id %>
+                                        ? "selected" : "" %> value="<%= budget.fund._id %>
+                                       "><%= fund.name %></option> 
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <label for="amount">Amount</label>
+                        <input type="text" id="amount" name="amount" value="<%= budget.amount %>"" required>
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

@@ -7,14 +7,16 @@
             <h1><%= churchName %></h1>
             <a href="/budgets/create/<%= churchId %>/Income">Add Income Budget</a>
             <a href="/budgets/create/<%= churchId %>/Expense">Add Expense Budget</a>
-            <h2>All Church Budget</h2>
-            <% if( budgets !== undefined) { %>
+            <h2>Church Budget</h2>
+            <% if( budgets === null) { %>
                 <p>No budget data available</p>
                <% } else { %>
                 <% if(budgets.length > 0) { %>
                     <% budgets.forEach(budget => { %>
                         <a class="single" href="/budgets/<%= budget._id %>" >
-                    <h3 class="title"><%= budget.nameame %> </h3>
+                    <h3 class="title"><%= budget.year %> </h3>
+                    <p class="snippet"><%= budget.type %></p>
+                    <p class="snippet"><%= budget.fund.name %></p>
                     <p class="snippet"><%= budget.amount %></p>
                     </a>
                     <% }) %>

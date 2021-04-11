@@ -7,7 +7,7 @@
             <h1><%= churchName %></h1>
             <a href="/banks/create/<%= churchId %>">Add Bank Account</a>
             <h2>All Bank Accounts</h2>
-            <% if( banks !== undefined) { %>
+            <% if( banks === null) { %>
                 <p>No bank account data available</p>
                <% } else { %>
                 <% if(banks.length > 0) { %>

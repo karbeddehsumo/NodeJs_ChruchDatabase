@@ -3,9 +3,8 @@ const Church = require('../models/church');
 
 const bank_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
-    await Bank.find({ Church: churchId }).sort({ createdAt: -1 })
+     const churchName = global.churchName;
+    await Bank.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('banks/index', { title: 'All bank', banks: result, churchId, churchName })
     })
@@ -18,7 +17,7 @@ const bank_details = async (req, res) => {
     const id = req.params.id;
     await Bank.findById(id)
      .then((result) => {
-      res.render("bank/details", { bank: result, title: 'bank Details'})
+      res.render("banks/details", { bank: result, title: 'bank Details'})
     })
     .catch((err) => {
       res.status(404).render('404', {title: 'bank not found'});
@@ -33,6 +32,7 @@ const bank_create_get = (req, res) => {
 const bank_create_post = (req, res) => {
   const bank = new Bank(req.body);
   bank.church = req.body.churchId;
+  bank.enteredBy = global.userId;
 
   bank.save()
   .then((result) => {
@@ -47,7 +47,7 @@ const bank_delete = async (req, res) => {
  const id = req.params.id;
   await Bank.findByIdAndDelete(id)
   .then((result) => {
-    res.redirect("/bank");
+    res.redirect("/banks");
   })
   .catch((err) => {
     console.log(err);
@@ -57,7 +57,7 @@ const bank_delete_get = async (req, res) => {
   const id = req.params.id;
     await Bank.findById(id)
     .then(result => {
-      res.render('bank/delete', {bank: result, title: 'Delete bank'});
+      res.render('banks/delete', {bank: result, title: 'Delete bank'});
     })
     .catch(err => console.log(err));
 }
@@ -66,7 +66,7 @@ const bank_edit_get = async (req, res) => {
   const id = req.params.id;
     await Bank.findById(id)
     .then(result => {
-      res.render('bank/edit', {bank: result, title: 'Edit bank'});
+      res.render('banks/edit', {bank: result, title: 'Edit bank'});
     })
     .catch(err => console.log(err));
 }
@@ -82,7 +82,7 @@ await Bank.findById(id)
   result.description = bank.description;
   result.enteredBy = bank.enteredBy;
   result.save();
-  res.redirect('/bank');
+  res.redirect('/banks');
 })
 .catch(err => console.log(err));
   

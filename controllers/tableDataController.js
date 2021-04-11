@@ -3,8 +3,7 @@ const Church = require('../models/church');
 
 const tableData_index = async (req, res) => {
     const churchId = req.params.id;
-    const church = await Church.findById(churchId);
-     const churchName = church.name;
+     const churchName = global.churchName;
     await TableData.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('tableDatas/index', { title: 'All tableData', tableDatas: result, churchId, churchName })
@@ -33,7 +32,7 @@ const tableData_create_get = (req, res) => {
 const tableData_create_post = (req, res) => {
   const tableData = new TableData(req.body);
   tableData.church = req.body.churchId;
-
+  tableData.enteredBy = global.userId;
   tableData.save()
   .then((result) => {
     res.redirect("/tableDatas/church/" + req.body.churchId);
