@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
@@ -10,6 +9,7 @@ const User = require('./models/user');
 
 const { render } = require('ejs');
 const methodOverride = require('method-override');
+
 
 
 const announcementRoutes = require('./routes/announcementRoutes');
@@ -32,12 +32,14 @@ const roleRoutes = require('./routes/roleRoutes');
 const userRoutes = require('./routes/userRoutes');
 
 
-
 const app = express();
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ssjpy.mongodb.net/${process.env.DB_DATABASENAME}`, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+const dbURI = 'mongodb+srv://gfumbah:zorzor1964@cluster0.ssjpy.mongodb.net/ChurchDB';
+               
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 .then((result) => app.listen(3000))
- .catch((err) => console.log(err));
+.catch((err) => console.log(err));
+
 
 //Register view engine
 app.set('view engine', 'ejs');
