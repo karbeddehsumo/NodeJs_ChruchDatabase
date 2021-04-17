@@ -1,0 +1,28 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= churchName %></h1>
+            <a href="/calendars/create/<%= churchId %>">Add New Calendar</a>
+            <h2>Calendar List</h2>
+            <% if( calendars === null) { %>
+                <p>No calendar data available</p>
+               <% } else { %>
+                <% if(calendars.length > 0) { %>
+                    <% calendars.forEach(calendar => { %>
+                        <a class="single" href="/calendars/<%= calendar._id %>" >
+                    <h3 class="title"><%= calendar.title %> </h3>
+                    <p class="snippet"><%= calendar.startDate %></p>
+                    <p class="snippet"><%= calendar.endDate %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,0 +1,46 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h1>Add New Calendar</h1>
+            <form action="/calendars" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+            <label for="ministry">Ministry</label>
+                <select name="ministry">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
+                <label for="startDate">Start Date</label>
+                <input type="datetime-local" id="startDate" name="startDate" >
+                <label for="endDate">End Date</label>
+                <input type="datetime-local" id="endDate" name="endDate" >
+                <label for="agendaURL">Agenda URL</label>
+                <input type="text" id="agendaURL" name="agendaURL" >
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" >
+                <label for="venue">Location</label>
+                <select name="venue">
+                    <option value="None"></option>
+                    <% if(venues.length > 0) { %>
+                        <% venues.forEach(venue => { %>
+                        <option value="<%= venue._id %>"><%= venue.value1 %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

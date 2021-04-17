@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 const churchSchema = new Schema({
     branchChurches: [{ type: Schema.Types.ObjectId, ref: 'church'}],
     parentChurch: { type: Schema.Types.ObjectId, ref: 'church'},
+    constants: [{ type: Schema.Types.ObjectId, ref: 'constant'}],
+    ministries: [{ type: Schema.Types.ObjectId, ref: 'ministry'}],
+
     title: String,
     name: {
         type: String,

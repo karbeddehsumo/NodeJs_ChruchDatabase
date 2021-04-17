@@ -1,10 +1,12 @@
 const Calendar = require('../models/calendar');
 const Church = require('../models/church');
+const Constant = require('../models/constant');
+const Ministry = require("../models/ministry");
 
 const calendar_index = async (req, res) => {
     const churchId = req.params.id;
      const churchName = global.churchName;
-    await Calendar.find({ Church: churchId }).sort({ createdAt: -1 })
+    await Calendar.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('calendars/index', { title: 'All calendar', calendars: result, churchId, churchName })
     })
@@ -15,6 +17,7 @@ const calendar_index = async (req, res) => {
 
 const calendar_details = async (req, res) => {
     const id = req.params.id;
+    
     await Calendar.findById(id)
      .then((result) => {
       res.render("calendar/details", { calendar: result, title: 'calendar Details'})
@@ -24,14 +27,22 @@ const calendar_details = async (req, res) => {
     });
 }
 
-const calendar_create_get = (req, res) => {
+const calendar_create_get = async (req, res) => {
   const churchId = req.params.id;
-    res.render('calendars/create', {title: 'Create a New calendar', churchId});
-}
+  console.log('We are in here');
+  const ministries = await Ministry.find({church: churchId},'_id name').sort({ createdAt: -1 });
+  const venues = await Constant.find({church: churchId},'_id category name value1').sort({ createdAt: -1 });
+
+    console.log('Here is te calendar data');
+    console.log(venues);
+    res.render('calendars/create', {title: 'Create a New calendar', churchId, ministries, venues});
+
+    }
 
 const calendar_create_post = (req, res) => {
   const calendar = new Calendar(req.body);
   calendar.church = req.body.churchId;
+  calendar.ministries = req.body.ministry;
   calendar.enteredBy = global.userId;
   calendar.save()
   .then((result) => {

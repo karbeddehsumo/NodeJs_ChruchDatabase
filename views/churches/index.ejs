@@ -3,24 +3,37 @@
     <body>
           <%- include('../partials/nav.ejs') %>
           
-        <div class="blogs content">
-            <a href="/churches/create">Add New Church Branch</a>
-            <h2>All Churches</h2>
-            <% if(churches === null) { %>
-                <p>No church branch data available</p>
-               <% } else { %>
-                <% if(churches.length > 0) { %>
-                    <% churches.forEach(church => { %>
-                        <a class="single" href="/churches/<%= church._id %>" >
-                    <h3 class="title"><%= church.name %> </h3>
-                    <p class="snippet"><%= church.title %></p>
-                    </a>
-                    <% }) %>
-                <% } %>
-           <% } %>
+        <div class="grid-container">
+            <div class="grid-item grid-item-1">
+                <a href="/churches/create">Add New Church Branch</a>
+            </div>
+            <div class="grid-item grid-item-2">
+                <h2>All Churches</h2>
+            </div>
+            <div class="grid-item grid-item-3">
+                <% if(churches === null) { %>
+                    <p>No church branch data available</p>
+                   <% } else { %>
+                    <% if(churches.length > 0) { %>
+                        <% churches.forEach(church => { %>
+                            <a class="single" href="/churches/<%= church._id %>" >
+                        <h3 class="title"><%= church.name %> </h3>
+                        <p class="snippet"><%= church.title %></p>
+                        </a>
+                        <% }) %>
+                    <% } %>
+               <% } %>
+            </div>
+            <div class="grid-item grid-item-4"></div>
+            <div class="grid-item grid-item-4">
+                <%- include('../partials/footer.ejs') %>
+            </div>
+            
+            
+            
             
         </div>
-        <%- include('../partials/footer.ejs') %>
+        
     </body>
 
 </html>

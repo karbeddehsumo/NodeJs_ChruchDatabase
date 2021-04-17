@@ -19,6 +19,7 @@ const bankRoutes = require('./routes/bankRoutes');
 const bankBalanceRoutes = require('./routes/bankBalanceRoutes');
 const budgetRoutes = require('./routes/budgetRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const calendarRoutes = require('./routes/calendarRoutes');
 const churchRoutes = require('./routes/churchRoutes');
 const constantRoutes = require('./routes/constantRoutes');
 const contributionRoutes = require('./routes/contributionRoutes');
@@ -36,6 +37,7 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ssjpy.mongodb.net/${process.env.DB_DATABASENAME}`, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+//mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 .then((result) => app.listen(3000))
  .catch((err) => console.log(err));
 
@@ -75,6 +77,7 @@ app.get('/welcome', requireAuth, (req, res) => res.render('welcome'));
   app.use('/bankBalances', bankBalanceRoutes);
   app.use('/blogs', blogRoutes);
   app.use('/budgets', budgetRoutes);
+  app.use('/calendars', calendarRoutes);
   app.use('/churches', churchRoutes);
   app.use('/constants', constantRoutes);
   app.use('/contributions', contributionRoutes);
