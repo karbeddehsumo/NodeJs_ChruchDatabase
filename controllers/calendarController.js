@@ -29,20 +29,33 @@ const calendar_details = async (req, res) => {
 
 const calendar_create_get = async (req, res) => {
   const churchId = req.params.id;
-  console.log('We are in here');
-  const ministries = await Ministry.find({church: churchId},'_id name').sort({ createdAt: -1 });
-  const venues = await Constant.find({church: churchId},'_id category name value1').sort({ createdAt: -1 });
-
+  const churchName = global.churchName;
+  const ministries = await Ministry.find({church: churchId},'_id name').sort({ name: 1 });
+  const venues = await Constant.find({church: churchId, category: 'Venue'},'_id category name value1').sort({ sort: -1 });
+  const access = await Constant.find({church: churchId, category: 'Calendar Access'}, '_id category name value1').sort({ sort: 1});
     console.log('Here is te calendar data');
     console.log(venues);
-    res.render('calendars/create', {title: 'Create a New calendar', churchId, ministries, venues});
+    res.render('calendars/create', {title: 'Create a New calendar', churchId, ministries, venues, access, churchName});
 
     }
 
 const calendar_create_post = (req, res) => {
   const calendar = new Calendar(req.body);
   calendar.church = req.body.churchId;
-  calendar.ministries = req.body.ministry;
+  if (req.body.ministry1 != 'None')
+  {
+    calendar.ministries.push(req.body.ministry1);
+  }
+  if (req.body.ministry2 != 'None')
+  {
+    calendar.ministries.push(req.body.ministry2);
+  }
+  if (req.body.ministry3 != 'None')
+  {
+    calendar.ministries.push(req.body.ministry3);
+  }
+  console.log('Here are the calendar ministries');
+  console.log(req.body);
   calendar.enteredBy = global.userId;
   calendar.save()
   .then((result) => {

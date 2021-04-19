@@ -7,14 +7,13 @@
             <h1><%= churchName %></h1>
             <a href="/constants/create/<%= churchId %>">Add Constant</a>
             <h2>All Constants</h2>
-            <% if(constants !== undefined) { %>
+            <% if(constants === null) { %>
                 <p>No constants data available</p>
                <% } else { %>
                 <% if(constants.length > 0) { %>
                     <% constants.forEach(constant => { %>
                         <a class="single" href="/constants/<%= constant._id %>" >
-                    <h3 class="title"><%= constant.name %> </h3>
-                    <p class="snippet"><%= constant.category %></p>
+                    <h3 class="title"><%= constant.category %> | <%= constant.name %> | <%= constant.value1 %> </h3>
                     </a>
                     <% }) %>
                 <% } %>
