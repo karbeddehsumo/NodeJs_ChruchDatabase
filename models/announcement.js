@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const announcementSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
-    ministry: { type: Schema.Types.ObjectId, ref: 'ministry'},
+    ministries: [{ type: Schema.Types.ObjectId, ref: 'ministry'}],
     document: { type: Schema.Types.ObjectId, ref: 'document'},
     title: {
         type: String,
@@ -22,6 +22,7 @@ const announcementSchema = new Schema({
         type: String,
         required: [true, 'Please enter message']
     },
+    access: String,
     status: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 },{timestamps: true});

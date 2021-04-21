@@ -4,8 +4,10 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
+            <h1><%= churchName %></h1>
+            <a href="/announcements/create/<%= churchId %>">Add New Announcement</a>
             <h2>All Announcements</h2>
-            <% if(announcements !== undefined) { %>
+            <% if(announcements === null) { %>
                 <p>No announcements data available</p>
                <% } else { %>
                 <% if(announcements.length > 0) { %>

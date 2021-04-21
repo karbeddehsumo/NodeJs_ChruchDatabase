@@ -33,8 +33,6 @@ const calendar_create_get = async (req, res) => {
   const ministries = await Ministry.find({church: churchId},'_id name').sort({ name: 1 });
   const venues = await Constant.find({church: churchId, category: 'Venue'},'_id category name value1').sort({ sort: -1 });
   const access = await Constant.find({church: churchId, category: 'Calendar Access'}, '_id category name value1').sort({ sort: 1});
-    console.log('Here is te calendar data');
-    console.log(venues);
     res.render('calendars/create', {title: 'Create a New calendar', churchId, ministries, venues, access, churchName});
 
     }
@@ -54,8 +52,7 @@ const calendar_create_post = (req, res) => {
   {
     calendar.ministries.push(req.body.ministry3);
   }
-  console.log('Here are the calendar ministries');
-  console.log(req.body);
+  
   calendar.enteredBy = global.userId;
   calendar.save()
   .then((result) => {

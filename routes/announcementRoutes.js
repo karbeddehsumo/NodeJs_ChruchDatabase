@@ -4,7 +4,7 @@ const router = express.Router();
   
   router.get('/church/:id', announcementController.announcement_index);
   router.post('/', announcementController.announcement_create_post);
-  router.get('/create', announcementController.announcement_create_get);
+  router.get('/create/:id', announcementController.announcement_create_get);
   router.post('/deleted/:id', announcementController.announcement_delete);
   router.get('/delete/:id', announcementController.announcement_delete_get);
   router.get('/:id', announcementController.announcement_details);

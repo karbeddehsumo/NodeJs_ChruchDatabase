@@ -1,10 +1,13 @@
 const Announcement = require('../models/announcement');
+const Ministry = require('../models/ministry');
+const Constant = require('../models/constant');
 
-const announcement_index = (req, res) => {
-    const id = req.params.id;
-    Announcement.find({ church: id }).sort({ createdAt: -1 })
+const announcement_index = async (req, res) => {
+    const churchId = req.params.id;
+    const churchName = global.churchName;
+    await Announcement.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('announcements/index', { title: 'All Announcements', announcements: result })
+      res.render('announcements/index', { title: 'All Announcements', announcements: result, churchName, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -22,17 +25,36 @@ const announcement_details = (req, res) => {
     });
 }
 
-const announcement_create_get = (req, res) => {
-    res.render('announcements/create', {title: 'Create a New Announcement'});
+const announcement_create_get = async (req, res) => {
+  const churchId = req.params.id;
+  const churchName = global.churchName;
+  const ministries = await Ministry.find({church: churchId},'_id name').sort({ name: 1 });
+  const access = await Constant.find({church: churchId, category: 'Calendar Access'}, '_id category name value1').sort({ sort: 1});
+console.log('announcement data');
+console.log(churchId);
+    res.render('announcements/create', {title: 'Create a New Announcement', ministries, access, churchName, churchId});
 }
 
 const announcement_create_post = (req, res) => {
   const announcement = new Announcement(req.body);
   announcement.enteredBy = global.userId;
 
+  if (req.body.ministry1 != 'None')
+  {
+    announcement.ministries.push(req.body.ministry1);
+  }
+  if (req.body.ministry2 != 'None')
+  {
+    announcement.ministries.push(req.body.ministry2);
+  }
+  if (req.body.ministry3 != 'None')
+  {
+    announcement.ministries.push(req.body.ministry3);
+  }
+  
   announcement.save()
   .then((result) => {
-    res.redirect("/announcements");
+    res.redirect("/announcements/church");
   })
   .catch((err) => {
     console.log(err);
