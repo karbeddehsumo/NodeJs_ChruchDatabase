@@ -1,0 +1,74 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h1><%= churchName %></h1>
+            <h2>Add New Event</h2>
+            <form action="/calendars" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
+                <label for="startDate">Start Date</label>
+                <input type="datetime-local" id="startDate" name="startDate" >
+                <label for="endDate">End Date</label>
+                <input type="datetime-local" id="endDate" name="endDate" >
+                <label>Select Host Ministries:</label>
+                <label for="ministry1">Ministry 1</label>
+                <select name="ministry1">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="ministry2">Ministry 2</label>
+                <select name="ministry2">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="ministry3">Ministry 3</label>
+                <select name="ministry3">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>              
+                <label for="agendaURL">Agenda URL</label>
+                <input type="text" id="agendaURL" name="agendaURL" >
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" >
+                <label for="venue">Location</label>
+                <select name="venue">
+                    <option value="None"></option>
+                    <% if(venues.length > 0) { %>
+                        <% venues.forEach(venue => { %>
+                        <option value="<%= venue._id %>"><%= venue.value1 %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="access">Access By</label>
+                <select name="access">
+                    <option value="None"></option>
+                    <% if(access.length > 0) { %>
+                        <% access.forEach(acces => { %>
+                        <option value="<%= acces._id %>"><%= acces.value1 %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

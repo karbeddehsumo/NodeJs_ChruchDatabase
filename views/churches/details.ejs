@@ -1,22 +1,11 @@
 <html lang="en">
     <%- include('../partials/head.ejs') %>
     <body>
-        
         <%- include('../partials/nav.ejs') %>
-
-        <div class="details content">
-            <h2><%= church.name %></h2>
-            <div class="content" >
-                <p><%= church.title %></p>
-    
-            <a class="edit blogs" href="/churches/edit/<%= church._id %>">
-                <img src="/pencil.svg" alt="edit icon">
-            </a>
-           
-           <a class="delete blogs" href="/churches/delete/<%= church._id %>">
-            <img src="/trashcan.svg" alt="delete icon">
-        </a>
-                <a href="/churches/branch/<%= church._id %>">Add New Church Branch</a>|
+        <div class="body1_NavHeaderBody3SectionFooter">
+        <aside class="aside1">
+            <h2>Aside</h2>>
+            <a href="/churches/branch/<%= church._id %>">Add New Church Branch</a>|
                 <a href="/members/church/<%= church._id %>">Members</a>|
                 <a href="/contributions/church/<%= church._id %>">Contributions</a>|
                 <a href="/constants/church/<%= church._id %>">Constant</a>|
@@ -28,11 +17,41 @@
                 <a href="/budgets/church/<%= church._id %>">Budget</a> |
                 <a href="/ministries/church/<%= church._id %>">Ministry</a>|
                 <a href="/calendars/church/<%= church._id %>">Calendar</a> |
-                <a href="/announcements/church/<%= church._id %>">Announcement</a>
-            </div>
+                <a href="/announcements/church/<%= church._id %>">Announcement</a> |
+                <a href="/events/church/<%= church._id %>">Event</a> |
+                <a href="/visitors/church/<%= church._id %>">Visitor</a>
+        </aside>
+        <header class="header1">
+            <h2>header</h2>
+            <h2><%= church.name %></h2>
+            <p><%= church.title %></p>
+        </header>
+        <main class="main1">
+            <h2>Main</h2>
+        </main>
+        <section class="section11">
+            <h2>Section 1</h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, nisi sint ipsam possimus dolor delectus soluta facilis ea eius ad magnam vero architecto voluptate maxime?
+            <!-- <a  href="/churches/edit/<%= church._id %>">
+                <img src="/pencil.svg" alt="edit icon">
+            </a>
+           
+           <a  href="/churches/delete/<%= church._id %>">
+            <img src="/trashcan.svg" alt="delete icon"> -->
+        </section>
+        <section class="section12">
+            <h2>section 2</h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis quod possimus, consectetur quas id ea hic odio itaque iure ratione repellendus! Culpa aperiam doloribus, ipsam tempora nostrum vero. Dicta, aliquam!
+        </section>
+        <section class="section13">
+            <h2>section 3</h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit alias error accusamus accusantium aperiam quae harum nisi molestias, animi dolorem maiores laudantium facere modi consequatur!
+        </section>
+        <div class="footer1">
+            <p>The cat is walking all over the plaec!</p>>
         </div>
-        <%- include('../partials/footer.ejs') %>
-            
+    </div>
+    <%- include('../partials/footer.ejs') %>
     </body>
 
 </html>

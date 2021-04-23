@@ -207,3 +207,115 @@ form button {
   grid-template-rows: 1fr 1fr 1fr;
   gap: 10px;
 }
+
+
+.body_HeaderFooter {
+  margin: 0;
+}
+
+.body1_NavHeaderBody3SectionFooter {
+ height: 100vh;
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 27% 27% 27%;
+  grid-template-rows: 8% 60% auto 10%;
+  grid-template-areas:
+      "sidebar header header header"
+      "sidebar main main main"
+      "sidebar sect1 sect2 sect3"  
+      "sidebar footer footer footer";
+  gap: 10px;
+}
+
+.body2_HeaderBody4SectionsFooter {
+  margin: 0;
+}
+
+.body3_Header2SectionsFooter {
+  margin: 0;
+}
+
+.body4_HeaderBodyNavFooter {
+  margin: 0;
+}
+
+
+.aside1 {
+  grid-area: sidebar;
+  background-color:blueviolet;
+}
+
+.header1 {
+  grid-area: header;
+  background-color:darkkhaki;
+}
+.main1 {
+  grid-area: main;
+  background-color:cornsilk;
+}
+
+.section11 {
+  grid-area: sect1;
+  background-color:dimgray;
+  justify-content: center;
+  align-content: center;
+}
+
+.section12 {
+  grid-area: sect2;
+  background-color:fuchsia;
+}
+
+.section13 {
+  grid-area: sect3;
+  background-color:greenyellow;
+}
+
+.footer1 {
+  grid-area: footer;
+  background-color:lightgoldenrodyellow;
+  border: 1px solid red;
+  justify-items: start;
+}
+
+
+/* @media only screen and (min-width: 600px) {
+  p {
+    font-size: 1.25rem;
+  }
+  .body1_NavHeaderBody3SectionFooter {
+    height: 100vh;
+     margin: 0;
+     display: grid;
+     grid-template-columns: 100%;
+     grid-template-rows: repeat(auto, 5);
+     grid-template-areas:
+         "main"
+         "sect1"
+        "sect2" 
+        "sect3"  
+        "footer";
+     gap: 10px;
+   }
+}
+
+@media only screen and (min-width: 800px) {
+  p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+  }
+  .body1_NavHeaderBody3SectionFooter {
+    height: 100vh;
+     margin: 0;
+     display: grid;
+     grid-template-columns: 100%;
+     grid-template-rows: repeat(auto, 5);
+     grid-template-areas:
+         "main"
+         "sect1"
+        "sect2" 
+        "sect3"  
+        "footer";
+     gap: 10px;
+   }
+  } */

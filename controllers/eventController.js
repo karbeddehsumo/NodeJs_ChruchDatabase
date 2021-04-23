@@ -4,7 +4,7 @@ const Church = require('../models/church');
 const event_index = async (req, res) => {
     const churchId = req.params.id;
      const churchName = global.churchName;
-    await Event.find({ Church: churchId }).sort({ createdAt: -1 })
+    await Event.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       res.render('events/index', { title: 'All event', events: result, churchId, churchName })
     })

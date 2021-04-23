@@ -24,6 +24,7 @@ const churchRoutes = require('./routes/churchRoutes');
 const constantRoutes = require('./routes/constantRoutes');
 const contributionRoutes = require('./routes/contributionRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 const familyRoutes = require('./routes/familyRoutes');
 const fundRoutes = require('./routes/fundRoutes');
 const incomeRoutes = require('./routes/incomeRoutes');
@@ -31,6 +32,7 @@ const memberRoutes = require('./routes/memberRoutes');
 const ministryRoutes = require('./routes/ministryRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const userRoutes = require('./routes/userRoutes');
+const visitorRoutes = require('./routes/visitorRoutes');
 
 
 
@@ -82,6 +84,7 @@ app.get('/welcome', requireAuth, (req, res) => res.render('welcome'));
   app.use('/constants', constantRoutes);
   app.use('/contributions', contributionRoutes);
   app.use('/expenses', expenseRoutes);
+  app.use('/events', eventRoutes);
   app.use('/families', familyRoutes);
   app.use('/funds', fundRoutes);
   app.use('/incomes', incomeRoutes);
@@ -89,6 +92,7 @@ app.get('/welcome', requireAuth, (req, res) => res.render('welcome'));
   app.use('/ministries', ministryRoutes);
   app.use('/roles', roleRoutes);
   app.use('/users', userRoutes);
+  app.use('/visitors', visitorRoutes);
   app.use(authRoutes);
   
 

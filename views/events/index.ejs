@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= churchName %></h1>
+            <a href="/events/create/<%= churchId %>">Add New Event</a>
+            <h2>Event List</h2>
+            <% if( events === null) { %>
+                <p>No event data available</p>
+               <% } else { %>
+                <% if(events.length > 0) { %>
+                    <% events.forEach(event => { %>
+                        <a class="single" href="/events/<%= event._id %>" >
+                    <h3 class="title"><%= event.title %> </h3>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

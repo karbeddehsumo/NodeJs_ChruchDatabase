@@ -1,0 +1,46 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= churchName %></h1>
+        <h1>Add New Visitor</h1>
+        <div class="create-blog content">
+            <form action="/visitors" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <label for="title">Title</label>
+                <select name="title">
+                    <option value="None"></option>
+                    <% if(visitorTitles.length > 0) { %>
+                        <% visitorTitles.forEach(title => { %>
+                        <option value="<%= title._id %>"><%= title.value1 %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="address1">Address1</label>
+                <input type="text" id="address1" name="address1" >
+                <label for="address2">Address2</label>
+                <input type="text" id="address2" name="address2" >
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" >
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" >
+                <label for="zipcode">Zip Code</label>
+                <input type="text" id="zipcode" name="zipcode" >
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" > 
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" >
+                <label for="email">Email</label>
+                 <input type="email" id="email" name="email" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,0 +1,28 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= churchName %></h1>
+            <a href="/visitors/create/<%= churchId %>">Add New Visitor</a>
+            <h2>visitor List</h2>
+            <% if( visitors === null) { %>
+                <p>No visitor data available</p>
+               <% } else { %>
+                <% if(visitors.length > 0) { %>
+                    <% visitors.forEach(visitor => { %>
+                        <a class="single" href="/visitors/<%= visitor._id %>" >
+                    <h3 class="title"><%= visitor.firstName %> </h3>
+                    <p class="snippet"><%= visitor.lastName %></p>
+                    <p class="snippet"><%= visitor.phone %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

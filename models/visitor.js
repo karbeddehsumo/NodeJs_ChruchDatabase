@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const friendSchema = new Schema({
+const visitorSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
     firstName: String,
     lastName: String,
@@ -10,11 +10,14 @@ const friendSchema = new Schema({
     address2: String,
     city: String,
     state: String,
-    zip: String,
+    zipCode: String,
     phone: String,
     email: String,
     status: String,
-    lastVisit: [{program: String, date:Date}],
+    lastVisited: [{program: String, date:Date}],
     offering: [{amount:Number, date:Date}],
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, {timestamps: true});
+
+const Visitor = mongoose.model('visitor', visitorSchema);
+module.exports = Visitor;

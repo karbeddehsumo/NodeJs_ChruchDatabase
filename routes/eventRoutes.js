@@ -3,7 +3,7 @@ const eventController = require('../controllers/eventController');
 const router = express.Router();
   
   router.get('/church/:id', eventController.event_index);
-  router.post('/', eventController.event_create_post);
+  router.post('/:id', eventController.event_create_post);
   router.get('/create/:id', eventController.event_create_get);
   router.post('/deleted/:id', eventController.event_delete);
   router.get('/delete/:id', eventController.event_delete_get);
