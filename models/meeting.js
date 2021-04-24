@@ -8,6 +8,7 @@ const meetingSchema = new Schema({
     startTime: String,
     endTime: String,
     agenda: [{String}],
+    minutes: string,
     status: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});

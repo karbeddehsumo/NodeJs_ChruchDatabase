@@ -8,7 +8,7 @@ const payeeSchema = new Schema({
     phone: String,
     email: String,
     url: String,
-    frequency: Number,
+    frequency: { type: Schema.Types.ObjectId, ref: 'constant'},
     description: String,
     payeeType: String,
     status: String,

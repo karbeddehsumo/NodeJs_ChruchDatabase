@@ -4,11 +4,9 @@ const Church = require('../models/church');
 
 const income_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
-
     await Income.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('incomes/index', { title: 'All Incomes', incomes: result, churchId, churchName })
+      res.render('incomes/index', { title: 'All Incomes', incomes: result, churchId })
     })
     .catch((err) => {
       console.log(err)

@@ -5,11 +5,10 @@ const Fund = require('../models/fund');
 
 const budget_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
     await Budget.find({ church: churchId }).sort({ createdAt: -1 })
     .populate('fund','name _id')
     .then((result) => {
-      res.render('budgets/index', { title: 'All budget', budgets: result, churchId, churchName })
+      res.render('budgets/index', { title: 'All budget', budgets: result, churchId })
     })
     .catch((err) => {
       console.log(err)

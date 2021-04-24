@@ -4,11 +4,9 @@ const Church = require("../models/church");
 //app.get('*', checkUser); //put user values in res.locals
 const constant_index = async (req, res) => {
     const id = req.params.id;
-     const churchName = global.churchName;
-
     Constant.find({ church: id }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('constants/index', { title: 'All constants', constants: result, churchId: id, churchName })
+      res.render('constants/index', { title: 'All constants', constants: result, churchId: id })
     })
     .catch((err) => {
       console.log(err)

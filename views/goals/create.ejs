@@ -1,0 +1,45 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h1>Add New Goal</h1>
+        <div class="create-blog content">
+            <form action="/goals" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="ministry">Ministry</label>
+                <select name="ministry">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="year">Year</label>
+                <select name="year">
+                    <option value="None"></option>
+                    <% if(goalYear.length > 0) { %>
+                        <% goalYear.forEach(year => { %>
+                        <option value="<%= year %>"><%= year %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="goal">Goal</label>
+                <input type="text" id="goal" name="goal" required>
+                <!-- <label for="task">Task</label>
+                <input type="text" id="task" name="task" required>
+                <label for="assignedTo">Assigned To</label>
+                <input type="text" id="assignedTo" name="assignedTo" >
+                <label for="startDate">Start Date</label>
+                <input type="text" id="startDate" name="startDate" >
+                <label for="endDate">End Date</label>
+                <input type="text" id="endDate" name="endDate" > -->
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

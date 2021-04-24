@@ -1,0 +1,27 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/goals/create/<%= churchId %>">Add New Goal</a>
+            <h2>Goal List</h2>
+            <% if( goals === null) { %>
+                <p>No goal data available</p>
+               <% } else { %>
+                <% if(goals.length > 0) { %>
+                    <% goals.forEach(goal => { %>
+                    <a class="single" href="/goals/<%= goal._id %>" >
+                    <h3 class="title"><%= goal.year %> </h3>
+                    <p class="snippet"><%= goal.goal %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

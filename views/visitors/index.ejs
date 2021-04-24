@@ -4,7 +4,7 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
-            <h1><%= churchName %></h1>
+            <h1><%= global.churchName %></h1>
             <a href="/visitors/create/<%= churchId %>">Add New Visitor</a>
             <h2>visitor List</h2>
             <% if( visitors === null) { %>

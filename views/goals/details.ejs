@@ -3,20 +3,22 @@
     <body>
         
         <%- include('../partials/nav.ejs') %>
-
+        <h1><%= global.churchName %></h1>
+        <h2><%= goal.ministry.name %> Goal(s)</h2>
+        <h2></h2>
         <div class="details content">
-            <h2><%= contribution.contributionType %></h2>
+            <h2></h2>
             <div class="content" >
-                <p><%= contribution.amount %></p>
+                <p><%= goal.year %> - <%= goal.goal %> - 
     
-            <a class="edit blogs" href="/calendars/edit/<%= contribution._id %>">
+            <a  href="/goals/edit/<%= goal._id %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/calendars/delete/<%= contribution._id %>">
+           <a  href="/goals/delete/<%= goal._id %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
-    
+    </p>
             </div>
         </div>
         <%- include('../partials/footer.ejs') %>

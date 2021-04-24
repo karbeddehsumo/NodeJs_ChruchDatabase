@@ -4,10 +4,9 @@ const Constant = require('../models/constant');
 
 const announcement_index = async (req, res) => {
     const churchId = req.params.id;
-    const churchName = global.churchName;
     await Announcement.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('announcements/index', { title: 'All Announcements', announcements: result, churchName, churchId })
+      res.render('announcements/index', { title: 'All Announcements', announcements: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -27,12 +26,11 @@ const announcement_details = (req, res) => {
 
 const announcement_create_get = async (req, res) => {
   const churchId = req.params.id;
-  const churchName = global.churchName;
   const ministries = await Ministry.find({church: churchId},'_id name').sort({ name: 1 });
   const access = await Constant.find({church: churchId, category: 'Calendar Access'}, '_id category name value1').sort({ sort: 1});
 console.log('announcement data');
 console.log(churchId);
-    res.render('announcements/create', {title: 'Create a New Announcement', ministries, access, churchName, churchId});
+    res.render('announcements/create', {title: 'Create a New Announcement', ministries, access, churchId});
 }
 
 const announcement_create_post = (req, res) => {

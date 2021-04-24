@@ -1,0 +1,55 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Pledge</h2>
+        <div class="create-blog content">
+            <form action="/pledges" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="year">Year</label>
+                <select name="year">
+                    <option value="None"></option>
+                    <% if(pledgeYear.length > 0) { %>
+                        <% pledgeYear.forEach(year => { %>
+                        <option value="<%= year %>"><%= year %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="member">Member</label>
+                <select name="type">
+                    <option value="None"></option>
+                    <% if(members.length > 0) { %>
+                        <% members.forEach(member => { %>
+                        <option value="<%= member._id %>"><%= member.lastName %>, <%= member.firstName %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="fund">Fund</label>
+                <select name="fund">
+                    <option value="None"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" name="amount" >
+                <label for="frequency">Frequency</label>
+                <select name="frequency">
+                    <option value="None"></option>
+                    <% if(frequencies.length > 0) { %>
+                        <% frequencies.forEach(frequency => { %>
+                        <option value="<%= frequency._id %>"><%= frequency.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

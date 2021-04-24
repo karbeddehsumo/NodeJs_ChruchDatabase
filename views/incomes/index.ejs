@@ -4,18 +4,20 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
-            <h1><%= churchName %></h1>
+            <h1><%= global.churchName %></h1>
             <a href="/incomes/create/<%= churchId %>">Add Income</a>
             <h2>All Incomes</h2>
-            <% if(incomes !== undefined ) { %>
+            <% if(incomes == null ) { %>
                 <p>No incomes data available</p>
                <% } else { %>
                 <% if(incomes.length > 0) { %>
                     <% incomes.forEach(income => { %>
                         <a class="single" href="/incomes/<%= income._id %>" >
+                    <h3 class="title"><%= income.fund.name %> </h3>
                     <h3 class="title"><%= income.cashAmount %> </h3>
                     <p class="snippet"><%= income.checkNumber %></p>
                     </a>
+
                     <% }) %>
                 <% } %>
            <% } %>

@@ -1,12 +1,17 @@
 const Pledge = require('../models/pledge');
 const Church = require('../models/church');
+const Member = require('../models/member');
+const Fund = require('../models/fund');
+const Constant = require('../models/constant');
 
 const pledge_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
+
     await Pledge.find({ Church: churchId }).sort({ createdAt: -1 })
+    .populate('member','firstName lastName _id')
+    .populate('fund','name _id')
     .then((result) => {
-      res.render('pledges/index', { title: 'All pledge', pledges: result, churchId, churchName })
+      res.render('pledges/index', { title: 'All pledge', pledges: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -24,9 +29,15 @@ const pledge_details = async (req, res) => {
     });
 }
 
-const pledge_create_get = (req, res) => {
+const pledge_create_get = async (req, res) => {
   const churchId = req.params.id;
-    res.render('pledges/create', {title: 'Create a New pledge', churchId});
+  let year = new Date().getFullYear();
+  var pledgeYear = [year-1,year,year+1]
+  const members = await Member.find({church: churchId},'_id firstName lastName').sort({ sort: -1 });
+  const frequencies = await Constant.find({church: churchId, category: 'Payee Frequency'},'_id category name value1').sort({ sort: -1 });
+  const funds = await Fund.find({church: churchId},'_id name').sort({ name: 1 });
+
+    res.render('pledges/create', {title: 'Create a New pledge', churchId, members, frequencies, funds, pledgeYear});
 }
 
 const pledge_create_post = (req, res) => {

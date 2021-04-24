@@ -7,7 +7,7 @@ const goalSchema = new Schema({
     goal: String,
     schedule: [{
         task: String, 
-        assignTo: String, 
+        assignedTo: String, 
         StartDate: Date, 
         endDate: Date, 
         status: String,

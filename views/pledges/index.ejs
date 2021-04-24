@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/pledges/create/<%= churchId %>">Add New Pledge</a>
+            <h2>Pledge List</h2>
+            <% if( pledges === null) { %>
+                <p>No pledge data available</p>
+               <% } else { %>
+                <% if(pledges.length > 0) { %>
+                    <% pledges.forEach(pledge => { %>
+                        <a class="single" href="/pledges/<%= pledge._id %>" >
+                    <h3 class="title"><%= pledge.member.lastName %>, <%= pledge.member.firstName %> - <%= pledge.amount %> </h3>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

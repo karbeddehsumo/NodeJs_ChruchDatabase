@@ -5,10 +5,9 @@ const Ministry = require("../models/ministry");
 
 const calendar_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
     await Calendar.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('calendars/index', { title: 'All calendar', calendars: result, churchId, churchName })
+      res.render('calendars/index', { title: 'All calendar', calendars: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -29,11 +28,10 @@ const calendar_details = async (req, res) => {
 
 const calendar_create_get = async (req, res) => {
   const churchId = req.params.id;
-  const churchName = global.churchName;
   const ministries = await Ministry.find({church: churchId},'_id name').sort({ name: 1 });
   const venues = await Constant.find({church: churchId, category: 'Venue'},'_id category name value1').sort({ sort: -1 });
   const access = await Constant.find({church: churchId, category: 'Calendar Access'}, '_id category name value1').sort({ sort: 1});
-    res.render('calendars/create', {title: 'Create a New calendar', churchId, ministries, venues, access, churchName});
+    res.render('calendars/create', {title: 'Create a New calendar', churchId, ministries, venues, access});
 
     }
 

@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/payees/create/<%= churchId %>">Add New Payee</a>
+            <h2>Payee List</h2>
+            <% if( payees === null) { %>
+                <p>No payee data available</p>
+               <% } else { %>
+                <% if(payees.length > 0) { %>
+                    <% payees.forEach(payee => { %>
+                        <a class="single" href="/payees/<%= payee._id %>" >
+                    <h3 class="title"><%= payee.payee %> - <%= payee.fund.name %> </h3>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

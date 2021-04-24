@@ -3,10 +3,9 @@ const Church = require('../models/church');
 
 const staff_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
     await Staff.find({ Church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('staffs/index', { title: 'All staff', staffs: result, churchId, churchName })
+      res.render('staffs/index', { title: 'All staff', staffs: result, churchId })
     })
     .catch((err) => {
       console.log(err)

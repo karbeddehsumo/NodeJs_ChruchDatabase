@@ -4,7 +4,7 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
-            <h1><%= churchName %></h1>
+            <h1><%= global.churchName %></h1>
             <a href="/expenses/create/<%= churchId %>">Add Expense</a>
             <h2>All Expenses</h2>
             <% if(expenses !== undefined ) { %>

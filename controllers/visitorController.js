@@ -4,10 +4,9 @@ const Constant = require('../models/constant');
 
 const visitor_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
     await Visitor.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('visitors/index', { title: 'All visitor', visitors: result, churchId, churchName })
+      res.render('visitors/index', { title: 'All visitor', visitors: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -27,9 +26,8 @@ const visitor_details = async (req, res) => {
 
 const visitor_create_get = async (req, res) => {
   const churchId = req.params.id;
-  const churchName = global.churchName;
   const visitorTitles = await Constant.find({church: churchId, category: 'Visitor Title'},'_id category name value1').sort({ sort: -1 });
-  res.render('visitors/create', {title: 'Create a New visitor', churchId, visitorTitles, churchName});
+  res.render('visitors/create', {title: 'Create a New visitor', churchId, visitorTitles});
 }
 
 const visitor_create_post = (req, res) => {

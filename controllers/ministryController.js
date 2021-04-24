@@ -3,12 +3,11 @@ const Church = require('../models/church');
 
 const ministry_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
     await Ministry.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
       console.log('Here are the list of ministries');
       console.log(result);
-      res.render('ministries/index', { title: 'All ministry', ministries: result, churchId, churchName })
+      res.render('ministries/index', { title: 'All ministry', ministries: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -17,10 +16,9 @@ const ministry_index = async (req, res) => {
 
 const ministry_details = async (req, res) => {
     const id = req.params.id;
-    const churchName = global.churchName;
     await Ministry.findById(id)
      .then((result) => {
-      res.render("ministries/details", { ministry: result, title: 'ministry Details', churchName})
+      res.render("ministries/details", { ministry: result, title: 'ministry Details'})
     })
     .catch((err) => {
       res.status(404).render('404', {title: 'ministry not found'});
@@ -29,8 +27,7 @@ const ministry_details = async (req, res) => {
 
 const ministry_create_get = (req, res) => {
   const churchId = req.params.id;
-  const churchName = global.churchName;
-    res.render('ministries/create', {title: 'Create a New ministry', churchId, churchName});
+    res.render('ministries/create', {title: 'Create a New ministry', churchId});
 }
 
 const ministry_create_post = (req, res) => {
@@ -59,20 +56,18 @@ const ministry_delete = async (req, res) => {
 
 const ministry_delete_get = async (req, res) => {
   const id = req.params.id;
-  const churchName = global.churchName;
     await Ministry.findById(id)
     .then(result => {
-      res.render('ministries/delete', {ministry: result, title: 'Delete ministry', churchName});
+      res.render('ministries/delete', {ministry: result, title: 'Delete ministry'});
     })
     .catch(err => console.log(err));
 }
 
 const ministry_edit_get = async (req, res) => {
   const id = req.params.id;
-  const churchName = global.churchName;
     await Ministry.findById(id)
     .then(result => {
-      res.render('ministries/edit', {ministry: result, title: 'Edit Ministry', churchName});
+      res.render('ministries/edit', {ministry: result, title: 'Edit Ministry'});
     })
     .catch(err => console.log(err));
 }

@@ -1,12 +1,16 @@
 const Payee = require('../models/payee');
 const Church = require('../models/church');
+const Constant = require('../models/constant');
+const Fund = require('../models/fund');
+const { populate } = require('../models/church');
 
 const payee_index = async (req, res) => {
     const churchId = req.params.id;
-     const churchName = global.churchName;
-    await Payee.find({ Church: churchId }).sort({ createdAt: -1 })
+    await Payee.find({ church: churchId }).sort({ createdAt: -1 })
+    .populate('fund','name _id)')
+    .populate('constant','name _id')
     .then((result) => {
-      res.render('payees/index', { title: 'All payee', payees: result, churchId, churchName })
+      res.render('payees/index', { title: 'All payee', payees: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -16,17 +20,21 @@ const payee_index = async (req, res) => {
 const payee_details = async (req, res) => {
     const id = req.params.id;
     await Payee.findById(id)
+    .populate('fund','name _id')
      .then((result) => {
-      res.render("payee/details", { payee: result, title: 'payee Details'})
+      res.render("payees/details", { payee: result, title: 'payee Details'})
     })
     .catch((err) => {
       res.status(404).render('404', {title: 'payee not found'});
     });
 }
 
-const payee_create_get = (req, res) => {
+const payee_create_get = async  (req, res) => {
   const churchId = req.params.id;
-    res.render('payees/create', {title: 'Create a New payee', churchId});
+  const funds = await Fund.find({church: churchId},'_id name').sort({ name: 1 });
+  const types = await Constant.find({church: churchId, category: 'Payee Type'},'_id category name value1').sort({ sort: -1 });
+  const frequencies = await Constant.find({church: churchId, category: 'Payee Frequency'},'_id category name value1').sort({ sort: -1 });
+  res.render('payees/create', {title: 'Create a New payee', churchId, types, funds, frequencies});
 }
 
 const payee_create_post = (req, res) => {

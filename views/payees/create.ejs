@@ -1,0 +1,54 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Payee</h2>
+        <div class="create-blog content">
+            <form action="/payees" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="payee">Payee Name</label>
+                <input type="text" id="payee" name="payee" required>
+                <label for="type">Type</label>
+                <select name="type">
+                    <option value="None"></option>
+                    <% if(types.length > 0) { %>
+                        <% types.forEach(type => { %>
+                        <option value="<%= type._id %>"><%= type.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="fund">Fund</label>
+                <select name="fund">
+                    <option value="None"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" > 
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" >
+                <label for="url">URL</label>
+                <input type="text" id="url" name="url" >
+                <label for="frequency">Frequency</label>
+                <select name="frequency">
+                    <option value="None"></option>
+                    <% if(frequencies.length > 0) { %>
+                        <% frequencies.forEach(frequency => { %>
+                        <option value="<%= frequency._id %>"><%= frequency.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
