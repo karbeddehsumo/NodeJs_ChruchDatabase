@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/staffs/create/<%= churchId %>">Add New Staff</a>
+            <h2>Staff List</h2>
+            <% if( staffs === null) { %>
+                <p>No staff data available</p>
+               <% } else { %>
+                <% if(staffs.length > 0) { %>
+                    <% staffs.forEach(staff => { %>
+                        <a class="single" href="/staffs/<%= staff._id %>" >
+                    <h3 class="title"><%= staff.firstName %> <%= staff.lastName %>), <%= property.title %></h3>
+                            </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

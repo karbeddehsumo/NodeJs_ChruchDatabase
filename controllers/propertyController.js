@@ -1,11 +1,12 @@
 const Property = require('../models/property');
 const Church = require('../models/church');
+const Constant = require('../models/constant');
 
 const property_index = async (req, res) => {
     const churchId = req.params.id;
-    await Property.find({ Church: churchId }).sort({ createdAt: -1 })
+    await Property.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('propertys/index', { title: 'All property', propertys: result, churchId })
+      res.render('properties/index', { title: 'All property', properties: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -16,16 +17,17 @@ const property_details = async (req, res) => {
     const id = req.params.id;
     await Property.findById(id)
      .then((result) => {
-      res.render("property/details", { property: result, title: 'property Details'})
+      res.render("properties/details", { property: result, title: 'property Details'})
     })
     .catch((err) => {
       res.status(404).render('404', {title: 'property not found'});
     });
 }
 
-const property_create_get = (req, res) => {
+const property_create_get = async (req, res) => {
   const churchId = req.params.id;
-    res.render('propertys/create', {title: 'Create a New property', churchId});
+  const conditions = await Constant.find({church: churchId, category: 'Property Condition'},'_id category name value1').sort({ sort: -1 });
+    res.render('properties/create', {title: 'Create a New property', churchId, conditions});
 }
 
 const property_create_post = (req, res) => {
@@ -34,7 +36,7 @@ const property_create_post = (req, res) => {
   property.enteredBy = global.userId;
   property.save()
   .then((result) => {
-    res.redirect("/propertys/church/" + req.body.churchId);
+    res.redirect("/properties/church/" + req.body.churchId);
   })
   .catch((err) => {
     console.log(err);
@@ -45,7 +47,7 @@ const property_delete = async (req, res) => {
  const id = req.params.id;
   await Property.findByIdAndDelete(id)
   .then((result) => {
-    res.redirect("/property");
+    res.redirect("/properties");
   })
   .catch((err) => {
     console.log(err);
@@ -56,7 +58,7 @@ const property_delete_get = async (req, res) => {
   const id = req.params.id;
     await Property.findById(id)
     .then(result => {
-      res.render('property/delete', {property: result, title: 'Delete property'});
+      res.render('properties/delete', {property: result, title: 'Delete property'});
     })
     .catch(err => console.log(err));
 }
@@ -65,7 +67,7 @@ const property_edit_get = async (req, res) => {
   const id = req.params.id;
     await Property.findById(id)
     .then(result => {
-      res.render('property/edit', {property: result, title: 'Edit property'});
+      res.render('properties/edit', {property: result, title: 'Edit property'});
     })
     .catch(err => console.log(err));
 }

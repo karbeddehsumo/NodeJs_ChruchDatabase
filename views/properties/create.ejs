@@ -1,0 +1,46 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Property</h2>
+        <div class="create-blog content">
+            <form action="/properties" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" >
+                <label for="purchaseDate">Purchase Date</label>
+                <input type="date" id="purchaseDate" name="purchaseDate" >
+                <label for="value">Value</label>
+                <input type="text" id="value" name="value" >
+                <label for="quantity">Quantity</label>
+                <input type="text" id="quantity" name="quantity" >
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" >
+                <label for="assignedTo">Assigned To</label>
+                <input type="text" id="assignedTo" name="assignedTo" >
+                <label for="assignedDate">Assigned Date</label>
+                <input type="date" id="assignedDate" name="assignedDate" >
+                <label for="condition">Condition</label>
+                <select name="condition">
+                    <option value="None"></option>
+                    <% if(conditions.length > 0) { %>
+                        <% conditions.forEach(condition => { %>
+                        <option value="<%= condition._id %>"><%= condition.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="tagNumber">Tag Number</label>
+                <input type="text" id="tagNumber" name="tagNumber" >
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" >
+                <label for="comment">Comment</label>
+                <input type="text" id="comment" name="comment" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,5 +1,6 @@
 const Staff = require('../models/staff');
 const Church = require('../models/church');
+const Constant = require('../models/constant');
 
 const staff_index = async (req, res) => {
     const churchId = req.params.id;
@@ -23,9 +24,10 @@ const staff_details = async (req, res) => {
     });
 }
 
-const staff_create_get = (req, res) => {
+const staff_create_get = async (req, res) => {
   const churchId = req.params.id;
-    res.render('staffs/create', {title: 'Create a New staff', churchId});
+  const departments = await Constant.find({church: churchId, category: 'Job Department'},'_id category name value1').sort({ sort: -1 });
+    res.render('staffs/create', {title: 'Create a New staff', churchId, departments});
 }
 
 const staff_create_post = (req, res) => {

@@ -6,8 +6,7 @@ const Constant = require('../models/constant');
 
 const pledge_index = async (req, res) => {
     const churchId = req.params.id;
-
-    await Pledge.find({ Church: churchId }).sort({ createdAt: -1 })
+    await Pledge.find({ church: churchId }).sort({ createdAt: -1 })
     .populate('member','firstName lastName _id')
     .populate('fund','name _id')
     .then((result) => {
@@ -21,8 +20,10 @@ const pledge_index = async (req, res) => {
 const pledge_details = async (req, res) => {
     const id = req.params.id;
     await Pledge.findById(id)
+    .populate('member','firstName lastName _id')
+    .populate('fund','name _id')
      .then((result) => {
-      res.render("pledge/details", { pledge: result, title: 'pledge Details'})
+      res.render("pledges/details", { pledge: result, title: 'pledge Details'})
     })
     .catch((err) => {
       res.status(404).render('404', {title: 'pledge not found'});

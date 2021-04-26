@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/properties/create/<%= churchId %>">Add New Property</a>
+            <h2>property List</h2>
+            <% if( properties === null) { %>
+                <p>No property data available</p>
+               <% } else { %>
+                <% if(properties.length > 0) { %>
+                    <% properties.forEach(property => { %>
+                        <a class="single" href="/properties/<%= property._id %>" >
+                    <h3 class="title"><%= property.title %> (<%= property.quantity %>), <%= property.location %></h3>
+                            </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
