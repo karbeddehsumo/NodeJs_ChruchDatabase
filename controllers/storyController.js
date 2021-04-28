@@ -1,11 +1,12 @@
 const Story = require('../models/story');
 const Church = require('../models/church');
+const Ministry = require('../models/ministry');
 
 const story_index = async (req, res) => {
     const churchId = req.params.id;  
-     await Story.find({ Church: churchId }).sort({ createdAt: -1 })
+     await Story.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('storys/index', { title: 'All story', storys: result, churchId })
+      res.render('stories/index', { title: 'All story', stories: result, churchId })
     })
     .catch((err) => {
       console.log(err)
@@ -16,16 +17,17 @@ const story_details = async (req, res) => {
     const id = req.params.id;
     await Story.findById(id)
      .then((result) => {
-      res.render("story/details", { story: result, title: 'story Details'})
+      res.render("stories/details", { story: result, title: 'story Details'})
     })
     .catch((err) => {
       res.status(404).render('404', {title: 'story not found'});
     });
 }
 
-const story_create_get = (req, res) => {
+const story_create_get = async (req, res) => {
   const churchId = req.params.id;
-    res.render('storys/create', {title: 'Create a New story', churchId});
+  const ministries = await Ministry.find({church: churchId},'_id name').sort({ name: 1 });
+    res.render('stories/create', {title: 'Create a New story', churchId, ministries});
 }
 
 const story_create_post = (req, res) => {
@@ -34,7 +36,7 @@ const story_create_post = (req, res) => {
   story.enteredBy = global.userId;
   story.save()
   .then((result) => {
-    res.redirect("/storys/church/" + req.body.churchId);
+    res.redirect("/stories/church/" + req.body.churchId);
   })
   .catch((err) => {
     console.log(err);
@@ -45,7 +47,7 @@ const story_delete = async (req, res) => {
  const id = req.params.id;
   await Story.findByIdAndDelete(id)
   .then((result) => {
-    res.redirect("/story");
+    res.redirect("/stories");
   })
   .catch((err) => {
     console.log(err);
@@ -56,7 +58,7 @@ const story_delete_get = async (req, res) => {
   const id = req.params.id;
     await Story.findById(id)
     .then(result => {
-      res.render('story/delete', {story: result, title: 'Delete story'});
+      res.render('stories/delete', {story: result, title: 'Delete story'});
     })
     .catch(err => console.log(err));
 }
@@ -65,7 +67,7 @@ const story_edit_get = async (req, res) => {
   const id = req.params.id;
     await Story.findById(id)
     .then(result => {
-      res.render('story/edit', {story: result, title: 'Edit story'});
+      res.render('stories/edit', {story: result, title: 'Edit story'});
     })
     .catch(err => console.log(err));
 }
@@ -91,7 +93,7 @@ await Story.findById(id)
 
   result.enteredBy = story.enteredBy;
   result.save();
-  res.redirect('/story');
+  res.redirect('/stories');
 })
 .catch(err => console.log(err));
   

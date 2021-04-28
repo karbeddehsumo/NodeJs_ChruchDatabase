@@ -3,9 +3,7 @@ const Schema = mongoose.Schema;
 
 const visitorSchema = new Schema({
     church: { type: Schema.Types.ObjectId, ref: 'church'},
-    firstName: String,
-    lastName: String,
-    title: String,
+    name: String,
     address1: String,
     address2: String,
     city: String,

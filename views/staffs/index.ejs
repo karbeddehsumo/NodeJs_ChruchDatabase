@@ -13,7 +13,7 @@
                 <% if(staffs.length > 0) { %>
                     <% staffs.forEach(staff => { %>
                         <a class="single" href="/staffs/<%= staff._id %>" >
-                    <h3 class="title"><%= staff.firstName %> <%= staff.lastName %>), <%= property.title %></h3>
+                    <h3 class="title"><%= staff.firstName %> <%= staff.lastName %>), <%= staff.title %></h3>
                             </a>
                     <% }) %>
                 <% } %>

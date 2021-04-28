@@ -1,0 +1,41 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Property</h2>
+        <div class="create-blog content">
+            <form action="/stories" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="ministry">Ministry</label>
+                <select name="ministry">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" >
+                <label for="subTitle">SubTitle</label>
+                <input type="text" id="subTitle" name="subTitle" >
+                <label for="intro">Intro</label>
+                <textarea type="text" id="intro" name="intro" cols="40" rows="3"></textarea>
+                <label for="story">Story</label>
+                <textarea type="text" id="story" name="story" cols="40" rows="7"></textarea>
+    
+                <label for="publishStartDate">Publish Start Date</label>
+                <input type="date" id="publishStartDate" name="publishStartDate" >  
+                <label for="publishEndDate">Publish End Date</label>
+                <input type="date" id="publishEndDate" name="publishEndDate" >
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" >
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

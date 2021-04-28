@@ -26,8 +26,7 @@ const visitor_details = async (req, res) => {
 
 const visitor_create_get = async (req, res) => {
   const churchId = req.params.id;
-  const visitorTitles = await Constant.find({church: churchId, category: 'Visitor Title'},'_id category name value1').sort({ sort: -1 });
-  res.render('visitors/create', {title: 'Create a New visitor', churchId, visitorTitles});
+   res.render('visitors/create', {title: 'Create a New visitor', churchId});
 }
 
 const visitor_create_post = (req, res) => {
@@ -80,9 +79,7 @@ const visitor = new Visitor(req.body);
 await Visitor.findById(id)
 .then(result => {
   result.church = visitor.church;
-  result.lastName = visitor.lastName;
-  result.firstName = visitor.firstName;
-  result.title = visitor.title;
+  result.name = visitor.name;
 
   result.address1 = visitor.address1;
   result.address2 = visitor.address2;

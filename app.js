@@ -36,6 +36,7 @@ const pledgeRoutes = require('./routes/pledgeRoutes');
 const propertyRoutes = require('./routes/propertyRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const staffRoutes = require('./routes/staffRoutes');
+const storyRoutes = require('./routes/storyRoutes');
 const userRoutes = require('./routes/userRoutes');
 const visitorRoutes = require('./routes/visitorRoutes');
 
@@ -101,6 +102,7 @@ app.get('/welcome', requireAuth, (req, res) => res.render('welcome'));
   app.use('/properties', propertyRoutes);
   app.use('/roles', roleRoutes);
   app.use('/staffs', staffRoutes);
+  app.use('/stories', storyRoutes);
   app.use('/users', userRoutes);
   app.use('/visitors', visitorRoutes);
   app.use(authRoutes);
