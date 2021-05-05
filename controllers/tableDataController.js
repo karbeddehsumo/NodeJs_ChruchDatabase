@@ -86,6 +86,7 @@ await TableData.findById(id)
   result.row.data8 = tableData.rowle.data8;
   result.row.data9 = tableData.row.data9;
   result.row.data10 = tableData.row.data10;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/tableData');
 })

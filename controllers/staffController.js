@@ -92,7 +92,7 @@ await Staff.findById(id)
   result.status = staff.status;
   
 
-  result.enteredBy = staff.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/staff');
 })

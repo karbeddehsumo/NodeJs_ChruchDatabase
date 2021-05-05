@@ -91,7 +91,7 @@ await BankBalance.findById(id)
   result.income = bankBalance.income;
   result.expense = bankBalance.expense;
   result.revenueAmount = bankBalance.revenueAmount;
-  result.enteredBy = bankBalance.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/bankBalance');
 })

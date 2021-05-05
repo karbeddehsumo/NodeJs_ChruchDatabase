@@ -92,7 +92,7 @@ await Property.findById(id)
   result.comment = property.comment;
   result.lastInventory = property.lastInventory;
 
-  result.enteredBy = property.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/property');
 })

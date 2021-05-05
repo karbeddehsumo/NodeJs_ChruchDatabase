@@ -12,6 +12,22 @@ const church_index = async (req, res) => {
     })
 }
 
+const church_tagname_get = async (req, res) => {
+  const tagName = req.params.name;
+  await Church.find({ tagName: tagName }).sort({ createdAt: -1 })
+  .populate('branchChurches', 'name _id')
+  .then((result) => {
+    let id = '';
+    result.forEach(one => {
+     id = one._id;
+    });
+    res.redirect(req.baseUrl + '/' + id); //, { title: 'All Churches', churches: result })
+  })
+  .catch((err) => {
+   res.status(404).render('404', {title: 'Church not found'});
+  });
+}
+
 const church_details = async (req, res) => {
     const id = req.params.id;
     await Church.findById(id)
@@ -24,6 +40,8 @@ const church_details = async (req, res) => {
       res.status(404).render('404', {title: 'Church not found'});
     });
 }
+
+
 
 const church_branch_create_get = async (req, res) => {
   const churchId = req.params.id;
@@ -116,6 +134,7 @@ await Church.findById(id)
   result.email = church.email;
   result.parent = church.parent;
   result.picture = church.picture;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/churches');
 })
@@ -133,5 +152,6 @@ module.exports = {
     church_edit_get,
     church_edit,
     church_branch_create_get,
-    church_createBranch_post
+    church_createBranch_post,
+    church_tagname_get
 }

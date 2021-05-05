@@ -1,0 +1,28 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/banks/edited/<%= bank._id %>" method="post">
+                        <input type="hidden" id="church" name="church" value="<%= bank.church %>"" required>
+                         <label for="accountName">Account Name</label>
+                        <input type="text" id="accountName" name="accountName" value="<%= bank.accountName %>"" required>                        
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" id="accountNumber" name="accountNumber" value="<%= bank.accountNumber %>"" required>
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" value="<%= bank.description %>"" required>                        
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

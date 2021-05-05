@@ -86,7 +86,7 @@ await Event.findById(id)
   result.budget = event.budget;
   result.missionStatement = event.missionStatement;
   
-  result.enteredBy = event.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/event');
 })

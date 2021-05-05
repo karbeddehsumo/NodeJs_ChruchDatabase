@@ -95,7 +95,7 @@ await contribution.findById(id)
   result.value3 = contribution.value3;
   result.sort = contribution.sort;
   result.status = contribution.status;
-  result.enteredBy = contribution.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/contributions');
 })

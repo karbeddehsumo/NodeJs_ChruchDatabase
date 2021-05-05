@@ -91,7 +91,7 @@ await Story.findById(id)
   result.picture = story.picture;
   result.status = story.status;
 
-  result.enteredBy = story.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/stories');
 })

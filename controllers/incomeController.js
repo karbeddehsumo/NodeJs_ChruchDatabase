@@ -93,7 +93,7 @@ await Income.findById(id)
   result.incomeDate = income.incomeDate;
   result.checkNumber = income.checkNumber;
   result.comment = income.comment;
-  result.enteredBy = income.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/incomes');
 })

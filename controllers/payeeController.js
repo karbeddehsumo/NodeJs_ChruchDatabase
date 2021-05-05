@@ -96,7 +96,7 @@ await Payee.findById(id)
   result.status = payee.status;
 
 
-  result.enteredBy = payee.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/payee');
 })

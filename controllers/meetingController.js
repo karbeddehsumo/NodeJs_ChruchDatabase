@@ -79,7 +79,7 @@ await Meeting.findById(id)
   result.fund = meeting.fund;
   result.year = meeting.year;
   result.amount = meeting.amount;
-  result.enteredBy = meeting.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/meeting');
 })

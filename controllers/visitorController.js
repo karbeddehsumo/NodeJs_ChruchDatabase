@@ -93,7 +93,7 @@ await Visitor.findById(id)
   result.lastVisit = visitor.lastVisit;
   result.offering = visitor.offering;
 
-  result.enteredBy = visitor.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/visitor');
 })

@@ -64,9 +64,10 @@ const constant_delete_get = async (req, res) => {
 
 const constant_edit_get = async (req, res) => {
   const id = req.params.id;
+  const status = await Constant.find({category: 'Status'}, '_id category name value1').sort({ sort: 1});
     await Constant.findById(id)
     .then(result => {
-      res.render('constants/edit', {constant: result, title: 'Edit constant'});
+      res.render('constants/edit', {constant: result, title: 'Edit constant', status});
     })
     .catch(err => console.log(err));
 }
@@ -84,9 +85,9 @@ await Constant.findById(id)
   result.value3 = constant.value3;
   result.sort = constant.sort;
   result.status = constant.status;
-  result.enteredBy = constant.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
-  res.redirect('/constants');
+  res.redirect("/constants/church/" + req.body.church);
 })
 .catch(err => console.log(err));
   

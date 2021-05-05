@@ -93,7 +93,7 @@ await Pledge.findById(id)
   result.frequency = pledge.frequency;
   result.amount = pledge.amount;
   result.year = pledge.year;
-  result.enteredBy = pledge.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/pledge');
 })

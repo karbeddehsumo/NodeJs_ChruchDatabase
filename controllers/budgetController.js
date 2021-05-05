@@ -8,6 +8,8 @@ const budget_index = async (req, res) => {
     await Budget.find({ church: churchId }).sort({ createdAt: -1 })
     .populate('fund','name _id')
     .then((result) => {
+      console.log('budget data here');
+      console.log(result);
       res.render('budgets/index', { title: 'All budget', budgets: result, churchId })
     })
     .catch((err) => {
@@ -107,9 +109,9 @@ await Budget.findById(id)
   result.fund = budget.fund;
   result.year = budget.year;
   result.amount = budget.amount;
-  result.enteredBy = budget.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
-  res.redirect('/budgets');
+  res.redirect('/budgets/' + id);
 })
 .catch(err => console.log(err));
   

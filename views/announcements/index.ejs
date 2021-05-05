@@ -14,7 +14,7 @@
                     <% announcements.forEach(announcement => { %>
                         <a class="single" href="/announcements/<%= announcement._id %>" >
                     <h3 class="title"><%= announcement.title %> </h3>
-                    <p class="snippet"><%= announcement.calendarId %></p>
+                    <p class="snippet"><%= announcement.message %></p>
                     </a>
                     <% }) %>
                 <% } %>

@@ -15,6 +15,16 @@
                 <input type="datetime-local" id="startDate" name="startDate" >
                 <label for="endDate">End Date</label>
                 <input type="datetime-local" id="endDate" name="endDate" >
+                <label for="access">Access By</label>
+                <select name="access" onchange="showMinistry(this);">
+                    <option value="None"></option>
+                    <% if(access.length > 0) { %>
+                        <% access.forEach(acces => { %>
+                        <option value="<%= acces._id %>"><%= acces.value1 %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <div id="ministryDiv">
                 <label>Select Host Ministries:</label>
                 <label for="ministry1">Ministry 1</label>
                 <select name="ministry1">
@@ -42,7 +52,8 @@
                         <option value="<%= ministry._id %>"><%= ministry.name %></option>
                         <% }) %>
                     <% } %>
-                </select>              
+                </select>
+                </div>              
                 <label for="agendaURL">Agenda URL</label>
                 <input type="text" id="agendaURL" name="agendaURL" >
                 <label for="description">Description</label>
@@ -56,19 +67,24 @@
                         <% }) %>
                     <% } %>
                 </select>
-                <label for="access">Access By</label>
-                <select name="access">
-                    <option value="None"></option>
-                    <% if(access.length > 0) { %>
-                        <% access.forEach(acces => { %>
-                        <option value="<%= acces._id %>"><%= acces.value1 %></option>
-                        <% }) %>
-                    <% } %>
-                </select>
+                
                 <button>Submit</button>
             </form>
         </div>
         <%- include('../partials/footer.ejs') %>
+
+        <script type="text/javascript">
+            function showMinistry(sel)
+            {
+                var n = sel.options[sel.selectedIndex].text;
+                var x = document.getElementById("ministryDiv");
+                if (n === "Ministry") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display =  "none";
+  }
+            }
+            </script>
     </body>
 
 </html>

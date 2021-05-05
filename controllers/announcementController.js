@@ -1,11 +1,14 @@
 const Announcement = require('../models/announcement');
 const Ministry = require('../models/ministry');
 const Constant = require('../models/constant');
+const moment = require('moment');
 
 const announcement_index = async (req, res) => {
     const churchId = req.params.id;
     await Announcement.find({ church: churchId }).sort({ createdAt: -1 })
     .then((result) => {
+      console.log('Inside announcement');
+      console.log(result);
       res.render('announcements/index', { title: 'All Announcements', announcements: result, churchId })
     })
     .catch((err) => {
@@ -28,15 +31,17 @@ const announcement_create_get = async (req, res) => {
   const churchId = req.params.id;
   const ministries = await Ministry.find({church: churchId},'_id name').sort({ name: 1 });
   const access = await Constant.find({church: churchId, category: 'Calendar Access'}, '_id category name value1').sort({ sort: 1});
-console.log('announcement data');
-console.log(churchId);
-    res.render('announcements/create', {title: 'Create a New Announcement', ministries, access, churchId});
+  const status = await Constant.find({category: 'Status'}, '_id category name value1').sort({ sort: 1}); 
+  res.render('announcements/create', {title: 'Create a New Announcement', ministries, access, churchId, status});
 }
 
 const announcement_create_post = (req, res) => {
   const announcement = new Announcement(req.body);
-  announcement.enteredBy = global.userId;
+  announcement.access = req.body.access;
 
+  announcement.enteredBy = global.userId;
+  announcement.church = req.body.churchId;
+  announcement.enteredBy = global.userId;
   if (req.body.ministry1 != 'None')
   {
     announcement.ministries.push(req.body.ministry1);
@@ -52,7 +57,7 @@ const announcement_create_post = (req, res) => {
   
   announcement.save()
   .then((result) => {
-    res.redirect("/announcements/church");
+    res.redirect("/announcements/church/" + req.body.churchId);
   })
   .catch((err) => {
     console.log(err);
@@ -80,9 +85,19 @@ const announcement_delete_get = async (req, res) => {
 
 const announcement_edit_get = async (req, res) => {
   const id = req.params.id;
-    await Announcement.findById(id)
+  const status = await Constant.find({category: 'Status'}, '_id category name value1').sort({ sort: 1});
+  const access = await Constant.find({ category: 'Calendar Access'}, '_id category name value1').sort({ sort: 1});
+  const ministries = await Ministry.find({church: global.churchId},'_id name').sort({ name: 1 });
+  await Announcement.findById(id)
+    .populate('church','name _id')
+    .populate('ministries','name _id')
     .then(result => {
-      res.render('announcements/edit', {announcement: result, title: 'Edit Announcement'});
+
+      //result.startDate = result.moment().format('l');
+      //result.endDate = moment(result.endDate).utc().format("mm-dd-yyyy");
+      console.log('Here in announcement access');
+      console.log(result);
+      res.render('announcements/edit', {announcement: result, title: 'Edit Announcement', moment, status, access, ministries});
     })
     .catch(err => console.log(err));
 }
@@ -99,7 +114,7 @@ await Announcement.findById(id)
   result.endDate = announcement.endDate;
   result.message = announcement.message;
   result.statusId = announcement.statusId;
-  result.enteredBy = announcement.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/announcements');
 })

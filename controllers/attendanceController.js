@@ -75,7 +75,7 @@ await Attendance.findById(id)
   result.memberId = attendance.memberId;
   result.calenderId = attendance.calenderId;
   result.rollCall = attendance.rollCall;
-  result.enteredBy = attendance.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/attendances');
 })

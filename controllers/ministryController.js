@@ -88,7 +88,7 @@ await Ministry.findById(id)
 
   result.missionStatement = ministry.missionStatement;
 
-  result.enteredBy = ministry.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect("/ministries/church/" + req.body.churchId);
 })

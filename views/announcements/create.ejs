@@ -16,11 +16,11 @@
                 <label for="endDate">End Date</label>
                 <input type="date" id="endDate" name="endDate" >
                 <label for="access">Access By</label>
-                <select id="accessId" name="access" onchange="showMinistry(this);">
+                <select id="access" name="access" onchange="showMinistry(this);">
                     <option value="None"></option>
                     <% if(access.length > 0) { %>
                         <% access.forEach(acces => { %>
-                        <option value="<%= acces._id %>"><%= acces.value1 %></option>
+                        <option value="<%= acces._id %>"><%= acces.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
@@ -58,6 +58,7 @@
                 <input type="text" id="documentId" name="documentId">
                 <label for="message">Enter Message</label>
                 <textarea type="text" id="message" name="message" cols="40" rows="5"></textarea>
+                 <input type="hidden" id="status" name="status"  value="Active" >
                 <button>Submit</button>
             </form>
         </div>

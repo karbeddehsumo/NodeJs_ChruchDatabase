@@ -85,7 +85,7 @@ await Goal.findById(id)
   result.year = goal.year;
   result.goal = goal.goal;
   result.schedule = goal.schedule 
-  result.enteredBy = goal.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/goal');
 })

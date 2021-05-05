@@ -1,0 +1,131 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h1><%= global.churchName %></h1>
+            <h2>Update Calendar</h2>
+            <form action="/calendars/edited/<%= calendar._id %>" method="POST">
+                <input type="hidden" id="church" name="church" value="<%= calendar.church %>">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="<%= calendar.title %>"" required>
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" name="startDate" value="<%= moment(calendar.startDate).format('YYYY-MM-DD') %>" required >
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" name="endDate" value="<%= moment(calendar.endDate).format('YYYY-MM-DD') %>"" required>
+                <label for="access">Access By</label>
+                <select id="myaccess" name="access" onchange="showMinistry(this);">
+                    <option value="None"></option>
+                    <% if(access.length > 0) { %>
+                        <% access.forEach(acces => { %>
+                            <option <%= acces._id==calendar.access.toString() ? "selected" : "" %> value="<%= acces._id %>"><%= acces.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <div id="ministryDiv">
+                <% if( !calendar.ministries.length === null) { %>
+                <label>Select Host Ministries:</label>
+                <label for="ministry1">Ministry 1</label>
+                <select name="ministry1">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                            <option <%= ministry._id==calendar.ministries[0]._id.toString() ? "selected" : "" %> value="<%= ministry._id %>"><%= ministry.name %></option>
+                            <% }) %>
+                    <% } %>
+                <% } else { %>
+                    <label for="ministry1">Ministry 1</label>
+                <select name="ministry1">
+                    <option value="None"></option>
+                    <% if(calendar.ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <% } %>
+                </select>
+                <% if( calendar.ministries[1] != null) { %>
+                <label for="ministry2">Ministry 2-1</label>
+                <select name="ministry2">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                            <option <%= ministry._id==calendar.ministries[1]._id.toString() ? "selected" : "" %> value="<%= ministry._id %>"><%= ministry.name %></option>
+                            <% }) %>
+                    <% } %>
+                </select>
+                <% } else { %>
+                    <label for="ministry2">Ministry 2</label>
+                <select name="ministry2">
+                    <option value="None"></option>
+                    <% if(calendar.ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <% } %>
+                <% if( calendar.ministries[2] != null) { %>
+                <label for="ministry3">Ministry 3</label>
+                <select name="ministry3">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                            <option <%= ministry._id==calendar.ministries[2].toString() ? "selected" : "" %> value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select> 
+                <% } else { %>
+                    <label for="ministry3">Ministry 3</label>
+                <select name="ministry3">
+                    <option value="None"></option>
+                    <% if(calendar.ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>    
+                <% } %>  
+                </div>           
+                <label for="agendaURL">Agenda URL</label>
+                <input type="text" id="agendaURL" name="agendaURL" value="<%= calendar.agendaURL %>"" >
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" value="<%= calendar.description %>"" >
+                <label for="venue">Location</label>
+                <select name="venue">
+                    <option value="None"></option>
+                    <% if(venues.length > 0) { %>
+                        <% venues.forEach(venue => { %>
+                        <option <%= venue._id==calendar.venue.toString() ? "selected" : "" %> value="<%= venue._id %>"><%= venue.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+        <script type="text/javascript">
+            window.onload = (event) => {
+            //alert('page is fully loaded');
+            var x = document.getElementById("myaccess");
+            showMinistry(x);
+            };
+
+            function showMinistry(sel)
+            {
+                var n = sel.options[sel.selectedIndex].text;
+                var x = document.getElementById("ministryDiv");
+                if (n === "Ministry") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display =  "none";
+  }
+            }
+            </script>
+    </body>
+
+</html>

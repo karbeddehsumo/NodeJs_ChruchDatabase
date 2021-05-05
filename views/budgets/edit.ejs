@@ -17,10 +17,11 @@
                             <option value="None"></option>
                             <% if(funds.length > 0) { %>
                                 <% funds.forEach(fund => { %>
-                                    <!-- <option <%= <%= fund._id %>==<%= budget.fund._id %> ? "selected" : "" %> value="<%= budget.fund._id %>" ><%= fund.name %></option>  -->
-                                    <option <%= <%= fund._id %>==<%= budget.fund._id %>
-                                        ? "selected" : "" %> value="<%= budget.fund._id %>
-                                       "><%= fund.name %></option> 
+                                    <% if(fund.name === budget.fund.name) { %>
+                                        <option value= "<%= fund._id %>" selected ><%= fund.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= fund._id %>"><%= fund.name %></option> 
+                                    <% } %>
                                 <% }) %>
                             <% } %>
                         </select>

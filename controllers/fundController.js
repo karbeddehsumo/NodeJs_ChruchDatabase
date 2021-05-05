@@ -87,7 +87,7 @@ await Fund.findById(id)
   result.category = fund.category;
   result.bank = fund.bank;
   result.description = fund.description;
-  result.enteredBy = fund.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/fund');
 })

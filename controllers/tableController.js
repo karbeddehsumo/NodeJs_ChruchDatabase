@@ -89,7 +89,7 @@ await Table.findById(id)
   result.field8 = table.field8;
   result.field9 = table.field9;
   result.field10 = table.field10;
-  result.enteredBy = table.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/table');
 })

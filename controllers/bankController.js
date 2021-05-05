@@ -79,9 +79,9 @@ await Bank.findById(id)
   result.accountName = bank.accountName;
   result.accountNumber = bank.accountNumber;
   result.description = bank.description;
-  result.enteredBy = bank.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
-  res.redirect('/banks');
+  res.redirect('/banks/church/' + req.body.church);
 })
 .catch(err => console.log(err));
   

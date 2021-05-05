@@ -83,6 +83,7 @@ await Family.findById(id)
   result.state = family.state;
   result.zip = family.zip;
   result.country = family.country;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/families');
 })

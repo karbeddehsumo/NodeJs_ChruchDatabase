@@ -8,20 +8,98 @@
             <h2><%= title %></h2>
             
                     <form action="/announcements/edited/<%= announcement._id %>" method="post"> 
-                        <label for="ministryId">Enter Ministry</label>
-                        <input type="text" id="ministryId" name="ministryId" value="<%= announcement.ministryId %>"" required>
-                        <label for="documentId">Document</label>
-                        <input type="text" id="documentId" name="documentId" value="<%= announcement.documentId %>"" required>
-                        <label for="title">Title</label>
+                         <label for="title">Title</label>
                         <input type="text" id="title" name="title" value="<%= announcement.title %>"" required>
                         <label for="beginDate">Begin Date</label>
-                        <input type="date" id="beginDate" name="beginDate" value="<%= announcement.beginDate %>"" >
+                        <input type="date" id="beginDate" name="beginDate" value="<%= moment(announcement.beginDate).format('YYYY-MM-DD') %>"" >
                         <label for="endDate">End Date</label>
-                        <input type="date" id="endDate" name="endDate" value="<%= announcement.endDate %>"" >
+                        <input type="date" id="endDate" name="endDate" value="<%= moment(announcement.endDate).format('YYYY-MM-DD') %>"" >
+                        <label for="access">Access By</label>
+                        <select name="access" onchange="showMinistry(this);">
+                            <option value="None"></option>
+                            <% if(access.length > 0) { %>
+                                <% access.forEach(aces => { %>
+                                    <option <%= aces._id==announcement.access.toString() ? "selected" : "" %> value="<%= aces._id %>"><%= aces.name %></option>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <div id="ministryDiv">
+                            <label>Select Host Ministries:</label>
+                            <% if(announcement.ministries.length > 0) {%>
+                                <label for="ministry1">Ministry 1</label>
+                                <select name="ministry1">
+                                    <option value="None"></option>
+                                    <% if(ministries.length > 0) { %>
+                                        <% ministries.forEach(ministry => { %>
+                                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select>
+                                <label for="ministry2">Ministry 2</label>
+                                <select name="ministry2">
+                                    <option value="None"></option>
+                                    <% if(ministries.length > 0) { %>
+                                        <% ministries.forEach(ministry => { %>
+                                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select>
+                                <label for="ministry3">Ministry 3</label>
+                                <select name="ministry3">
+                                    <option value="None"></option>
+                                    <% if(ministries.length > 0) { %>
+                                        <% ministries.forEach(ministry => { %>
+                                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select>   
+                            <% } else { %>
+                                <label for="ministry1">Ministry 1</label>
+                                <select name="ministry1">
+                                    <option value="None"></option>
+                                    <% if(ministries.length > 0) { %>
+                                        <% ministries.forEach(ministry => { %>
+                                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select>
+                                <label for="ministry2">Ministry 2</label>
+                                <select name="ministry2">
+                                    <option value="None"></option>
+                                    <% if(ministries.length > 0) { %>
+                                        <% ministries.forEach(ministry => { %>
+                                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select>
+                                <label for="ministry3">Ministry 3</label>
+                                <select name="ministry3">
+                                    <option value="None"></option>
+                                    <% if(ministries.length > 0) { %>
+                                        <% ministries.forEach(ministry => { %>
+                                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select> 
+                            <% } %>                            
+                        </div> 
+                        <label for="documentId">Document</label>
+                        <input type="text" id="documentId" name="documentId" value="<%= announcement.documentId %>"" required>  
                         <label for="message">Enter Message</label>
-                        <input type="textbox" id="message" name="message" value="<%= announcement.message %>"" >
-                        <label for="statusId">Status</label>
-                        <input type="text" id="statusId" name="statusId" value="<%= announcement.statusId %>"" >
+                        <textarea id="message"><%= announcement.message %></textarea>
+                        <label for="status">Status</label>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === announcement.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
                         <button>Submit</button>
                     </form>
               
@@ -29,7 +107,18 @@
         </div>
         <%- include('../partials/footer.ejs') %>
 
-    
+        <script type="text/javascript">
+            function showMinistry(sel)
+            {
+                var n = sel.options[sel.selectedIndex].text;
+                var x = document.getElementById("ministryDiv");
+                if (n === "Ministry") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display =  "none";
+  }
+            }
+            </script>
     </body>
 
 </html>

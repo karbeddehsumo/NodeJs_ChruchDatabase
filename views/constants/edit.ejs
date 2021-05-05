@@ -8,6 +8,7 @@
             <h2><%= title %></h2>
             
                     <form action="/constants/edited/<%= constant._id %>" method="post">
+                        <input type="hidden" id="church" name="church" value="<%= constant.church %>"" required>
                         <label for="cateory">Constant Category</label>
                         <input type="text" id="category" name="category" value="<%= constant.category %>"" required>
                         <label for="name">Name</label>
@@ -32,13 +33,19 @@
                         </select>
 
                         <label for="status">Status</label>                      
-                        <select id="status">
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Not Active</option>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === constant.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
                         </select>
-                        
-                        <label for="enteredBy">Entered By</label>
-                        <input type="text" id="enteredBy" name="enteredBy" value="<%= constant.enteredBy %>"" >
+                        <input type="hidden" id="enteredBy" name="enteredBy" value="<%= constant.enteredBy %>"" >
                         <button>Submit</button>
                     </form>
               

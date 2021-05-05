@@ -99,7 +99,7 @@ await Member.findById(id)
   result.membershipDate = member.membershipDate;
   result.title = member.title;
   result.contactType = member.contactType;
-  result.enteredBy = member.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/members');
 })

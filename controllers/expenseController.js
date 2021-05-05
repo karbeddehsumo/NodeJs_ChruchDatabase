@@ -91,7 +91,7 @@ await Expense.findById(id)
   result.expenseDate = expense.expenseDate;
   result.reconcile = expense.reconcile;
   result.comment = expense.comment;
-  result.enteredBy = expense.enteredBy;
+  result.enteredBy = global.userId;
   result.save();
   res.redirect('/expenses');
 })

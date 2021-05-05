@@ -6,7 +6,8 @@ const router = express.Router();
   router.post('/', churchController.church_create_post);
   router.get('/branch/:id', churchController.church_branch_create_get);
   router.post('/createBranch', churchController.church_createBranch_post);
-
+  
+  router.get('/tagname/:name', churchController.church_tagname_get);
   router.get('/create', churchController.church_create_get);
   
 

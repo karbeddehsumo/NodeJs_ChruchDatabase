@@ -12,6 +12,7 @@ const churchSchema = new Schema({
         type: String,
         required: [true, 'Enter the name.']
     },
+    tagName: String,
     founded: {
         type: Date,
         default: Date.now ,
