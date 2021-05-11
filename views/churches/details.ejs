@@ -5,44 +5,62 @@
         <div class="body1_NavHeaderBody3SectionFooter">
         <aside class="aside1">
             <h2>Aside</h2>>
-            <a href="/churches/branch/<%= church._id %>">Add New Church Branch</a>|
-                <a href="/members/church/<%= church._id %>">Members</a>|
-                <a href="/contributions/church/<%= church._id %>">Contributions</a>|
-                <a href="/constants/church/<%= church._id %>">Constant</a>|
-                <a href="/funds/church/<%= church._id %>">Funds</a>|
-                <a href="/banks/church/<%= church._id %>">Banks</a>|
-                <a href="/bankBalances/church/<%= church._id %>">Bank Balance</a>|
-                <a href="/incomes/church/<%= church._id %>">Income</a>|
-                <a href="/expenses/church/<%= church._id %>">Expense</a>|
-                <a href="/budgets/church/<%= church._id %>">Budget</a> |
-                <a href="/ministries/church/<%= church._id %>">Ministry</a>|
-                <a href="/calendars/church/<%= church._id %>">Calendar</a> |
-                <a href="/announcements/church/<%= church._id %>">Announcement</a> |
-                <a href="/events/church/<%= church._id %>">Event</a> |
-                <a href="/visitors/church/<%= church._id %>">Visitor</a> |
-                <a href="/goals/church/<%= church._id %>">Goal</a> |
-                <a href="/payees/church/<%= church._id %>">Payee</a> |
-                <a href="/pledges/church/<%= church._id %>">Pledge</a> |
-                <a href="/properties/church/<%= church._id %>">Property</a> |
-                <a href="/staffs/church/<%= church._id %>">Staff</a> |
-                <a href="/stories/church/<%= church._id %>">Story</a>
+            <a href="/churches/branch/<%= church.churchId %>">Add Church Branch</a>|
+                <a href="/members/church/<%= church.churchId %>">Members</a>|
+                <a href="/contributions/church/<%= church.churchId %>">Contributions</a>|
+                <a href="/constants/church/<%= church.churchId %>">Constant</a>|
+                <a href="/funds/church/<%= church.churchId %>">Funds</a>|
+                <a href="/banks/church/<%= church.churchId %>">Banks</a>|
+                <a href="/bankBalances/church/<%= church.churchId %>">Bank Balance</a>|
+                <a href="/incomes/church/<%= church.churchId %>">Income</a>|
+                <a href="/expenses/church/<%= church.churchId %>">Expense</a>|
+                <a href="/budgets/church/<%= church.churchId %>">Budget</a> |
+                <a href="/ministries/church/<%= church.churchId %>">Ministry</a>|
+                <a href="/calendars/church/<%= church.churchId %>">Calendar</a> |
+                <a href="/announcements/church/<%= church.churchId %>">Announcement</a> |
+                <a href="/events/church/<%= church.churchId %>">Event</a> |
+                <a href="/visitors/church/<%= church.churchId %>">Visitor</a> |
+                <a href="/goals/church/<%= church.churchId %>">Goal</a> |
+                <a href="/payees/church/<%= church.churchId %>">Payee</a> |
+                <a href="/pledges/church/<%= church.churchId %>">Pledge</a> |
+                <a href="/properties/church/<%= church.churchId %>">Property</a> |
+                <a href="/staffs/church/<%= church.churchId %>">Staff</a> |
+                <a href="/stories/church/<%= church.churchId %>">Story</a>
         </aside>
         <header class="header1">
-            <h2>header</h2>
-            <h2><%= church.name %></h2>
+            
+            <h2><%= global.churchName %></h2>
             <p><%= church.title %></p>
         </header>
         <main class="main1">
             <h2>Main</h2>
+            <a href="/churches/edit/<%= church.churchId %>">
+                <img src="/pencil.svg" alt="edit icon">
+            </a>
+
+             <div>
+                <% if(branches === undefined) { %>
+                    <p>No church branch available</p>
+                   <% } else { %>
+                    <% if(branches.length != 0) { %>
+                        <span><br>Branches:</span>
+                        <% branches.forEach(church => { %>
+                            <a class="single" href="/churches/<%= church.churchId %>" >
+                        <p class="title"><%= church.name %> (<%= church.city %>) </p>
+                        </a>
+                        <% }) %>
+                    <% } %>
+               <% } %>
+            </div>
         </main>
         <section class="section11">
             <h2>Section 1</h2>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, nisi sint ipsam possimus dolor delectus soluta facilis ea eius ad magnam vero architecto voluptate maxime?
-            <!-- <a  href="/churches/edit/<%= church._id %>">
+            <!-- <a  href="/churches/edit/<%= church.churchId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a  href="/churches/delete/<%= church._id %>">
+           <a  href="/churches/delete/<%= church.churchId %>">
             <img src="/trashcan.svg" alt="delete icon"> -->
         </section>
         <section class="section12">

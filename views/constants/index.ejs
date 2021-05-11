@@ -12,7 +12,7 @@
                <% } else { %>
                 <% if(constants.length > 0) { %>
                     <% constants.forEach(constant => { %>
-                        <a class="single" href="/constants/<%= constant._id %>" >
+                        <a class="single" href="/constants/<%= constant.constantId %>" >
                     <h3 class="title"><%= constant.category %> | <%= constant.name %> | <%= constant.value1 %> </h3>
                     </a>
                     <% }) %>

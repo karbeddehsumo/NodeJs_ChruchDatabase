@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser }  = require('./middleware/authMiddleware');
+const mysql = require('mysql');
 
 const User = require('./models/user');
 
@@ -48,6 +49,22 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS
 //mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 .then((result) => app.listen(3000))
  .catch((err) => console.log(err));
+
+
+//  //connection pool
+//  const pool = mysql.createPool({
+//     //connection-limit: 100
+//     host:  process.env.MYSQL_HOST,
+//     database: process.env.MYSQL_DBNAME,
+//     user:  process.env.MYSQL_USERNAME,
+//     password: process.env.MYSQL_PASSWORD
+//  });
+
+//  //connect to mysql db
+//  pool.getConnection((err, connection) => {
+//    if(err) throw err; //not connected
+//    console.log('Connected to MySQL @ ' + connection.threadId);
+//  })
 
 //Register view engine
 app.set('view engine', 'ejs');

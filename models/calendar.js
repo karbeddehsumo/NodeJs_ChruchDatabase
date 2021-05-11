@@ -14,6 +14,7 @@ const calendarSchema = new Schema({
     access: String,
     approvePublicAcces: { type: Boolean, default: false },
     picture: String,
+    status: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user' }
 }, {timestamp: true});
 

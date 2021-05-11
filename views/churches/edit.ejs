@@ -5,15 +5,19 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
+            <h1><%= global.churchName %></h1>
             <h2><%= title %></h2>
             
-                    <form action="/churches/edited/<%= church._id %>" method="post">
+                    <form action="/churches/edited/<%= church.churchId %>" method="post">
+                        <input type="hidden" id="churchId" name="churchId" value="<%= church.churchId %>">
                         <label for="name">Church Name</label>
                         <input type="text" id="name" name="name" value="<%= church.name %>"" required>
                         <label for="title">Church Title</label>
-                        <input type="text" id="title" name="title" value="<%= church.title %>"" required>
+                        <input type="text" id="title" name="title" value="<%= church.title %>"" >
+                        <label for="tagName">Tag Name</label>
+                        <input type="text" id="tagName" name="tagName" value="<%= church.tagName%>"" required>
                         <label for="founded">Date Founded</label>
-                        <input type="date" id="founded" name="founded" value="<%= church.founded %>"" required>
+                        <input type="date" id="founded" name="founded" value="<%= moment(church.founded).format('YYYY-MM-DD') %>"" required>
                         <label for="address1">Address1</label>
                         <input type="text" id="address1" name="address1" value="<%= church.address1 %>"" >
                         <label for="address2">Address2</label>
@@ -30,12 +34,22 @@
                         <input type="phone" id="phone" name="phone" value="<%= church.phone %>"" >
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" value="<%= church.email %>"" >
-                        <label for="parent">Parent Church</label>
-                        <input type="text" id="parent" name="parent" value="<%= church.parent %>"" >
-                        <label for="picture">Picture</label>
-                        <input type="text" id="picture" name="picture" value="<%= church.picture %>"" >
-                        <label for="statusId">Status</label>
-                        <input type="text" id="statusId" name="statusId" value="<%= church.picture %>""  >
+                        <label for="vision">Vision</label>
+                        <textarea type="text" id="vision" name="vision"><%= church.vision %></textarea>
+         
+                        <label for="status">Status</label>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === church.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>                        
                         <button>Submit</button>
                     </form>
               

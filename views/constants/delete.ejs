@@ -5,16 +5,16 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="details content">
-            <h2><%= constant.name %></h2>
+            <h2><%= constant.category %></h2>
             <div class="content" >
-                <p><%= constant.Value1 %></p>
+                <p><%= constant.name %></p>
             </div>
-             <p>Are you sure you want to delete this record?</p>>
-            <form method="post" action="/constants/deleted/<%= constant._id %>">
+             <p>Are you sure you want to delete this record?</p>
+            <form method="post" action="/constants/deleted/<%= constant.constantId %>">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit">Commit Delete</button>
                 </form>
-                <a href="/constants" >Cancel Delete</a>
+                <a href="/constants/<%= constant.constantId %>" >Cancel Delete</a>
         </div>
         <%- include('../partials/footer.ejs') %>
 

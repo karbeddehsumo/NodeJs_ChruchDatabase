@@ -27,6 +27,19 @@
                         </select>
                         <label for="amount">Amount</label>
                         <input type="text" id="amount" name="amount" value="<%= budget.amount %>"" required>
+                        <label for="status">Status</label>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === budget.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
                         <button>Submit</button>
                     </form>
               

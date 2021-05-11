@@ -7,6 +7,7 @@ const budgetSchema = new Schema({
     type: String,
     year: String,
     amount: Number,
+    status: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 

@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const churchSchema = new Schema({
     branchChurches: [{ type: Schema.Types.ObjectId, ref: 'church'}],
     parentChurch: { type: Schema.Types.ObjectId, ref: 'church'},
-    constants: [{ type: Schema.Types.ObjectId, ref: 'constant'}],
     ministries: [{ type: Schema.Types.ObjectId, ref: 'ministry'}],
 
     title: String,
@@ -39,7 +38,8 @@ const churchSchema = new Schema({
         required: [true, 'Enter the email.']
     },
     pictures: [{ type: Schema.Types.ObjectId, ref: 'picture'}],
-    moto:  String,
+    vision:  String,
+    status: String,
     enteredBy: { type: Schema.Types.ObjectId, ref: 'user'}
 }, { timestamps: true});
 

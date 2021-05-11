@@ -1,26 +1,46 @@
-const Constant = require('../models/constant');
-const Church = require("../models/church");
-
 //app.get('*', checkUser); //put user values in res.locals
+
+const mysql = require('mysql');
+  const pool = mysql.createPool({
+    host:  process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DBNAME,
+    user:  process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD
+  });
+
+
 const constant_index = async (req, res) => {
-    const id = req.params.id;
-    Constant.find({ church: id }).sort({ createdAt: -1 })
-    .then((result) => {
-      res.render('constants/index', { title: 'All constants', constants: result, churchId: id })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  const churchId = req.params.id;
+    pool.getConnection((err, connection) => {
+      if(err) throw err; 
+      connection.query('SELECT * FROM constant WHERE churchId = ?',[churchId], (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+        }
+        else
+        {
+            res.render('constants/index', { title: 'All constants', constants: result, churchId: churchId })
+        }
+    });
+    });
 }
 
 const constant_details = (req, res) => {
-    const id = req.params.id;
-    Constant.findById(id)
-     .then((result) => {
-      res.render("constants/details", { constant: result, title: 'constant Details'})
-    })
-    .catch((err) => {
-      res.status(404).render('404', {title: 'constant not found'});
+    const constantId = req.params.id;
+    pool.getConnection((err, connection) => {
+      if(err) throw err;
+      connection.query('SELECT * FROM constant WHERE constantId = ?', [constantId], (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+          console.log(err);
+        }
+        else
+        {
+          res.render("constants/details", { constant: result[0], title: 'constant Details'})
+        }
+    });
     });
 }
 
@@ -30,67 +50,131 @@ const constant_create_get = (req, res) => {
 }
 
 const constant_create_post = async (req, res) => {
-  const constant = new Constant(req.body);
-  constant.enteredBy = global.userId;
-  constant.church = req.body.churchId;
-  constant.status = "Active";
-  constant.save()
-  .then((result) => {
-    res.redirect("/constants/church/" + req.body.churchId);
-  })
-  .catch((err) => {
-    console.log(err);
+  const constantId = req.params.id;
+  pool.getConnection((err, connection) => {
+    if(err) throw err; 
+    connection.query('INSERT INTO constant SET churchId = ?, category = ?, name = ?, value1 = ?, value2 = ?, value3 = ?, sort = ?, status = ?, enteredBy = ?, dateEntered = ?',
+    [
+      req.body.churchId,
+      req.body.category,
+      req.body.name,
+      req.body.value1,
+      req.body.value2,
+      req.body.value3,
+      req.body.sort,
+      req.body.status,
+      global.userId,
+      Date.now()
+    ],
+    (err, result) => {
+      connection.release();
+      if(err){
+        console.log('we have mysql error');
+        console.log(err);
+      }
+      else
+      {
+        res.redirect("constants/church/" + constantId);
+      }
+  });
   });
 }
 
 const constant_delete = async (req, res) => {
- const id = req.params.id;
- await Constant.findByIdAndDelete(id)
-  .then((result) => {
-    res.redirect("/constants");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  console.log('Inside delete');
+  console.log(req.params.id);
+ const constantId = req.params.id;
+ pool.getConnection((err, connection) => {
+  if(err) throw err;
+  connection.query('DELETE FROM constant WHERE constantId = ?', [constantId], (err, result) => {
+    connection.release();
+    if(err){
+      console.log('we have mysql error');
+      console.log(err);
+    }
+    else
+    {
+      res.redirect("/constants/church/" + global.churchId);
+    }
+});
+});
 }
+
+
 const constant_delete_get = async (req, res) => {
-  const id = req.params.id;
-  await Constant.findById(id)
-    .then(result => {
-      res.render('constants/delete', {constant: result, title: 'Delete constant'});
-    })
-    .catch(err => console.log(err));
+  const constantId = req.params.id;
+  pool.getConnection((err, connection) => {
+    if(err) throw err;
+    connection.query('SELECT * FROM constant WHERE constantId = ?', [constantId], (err, result) => {
+      connection.release();
+      if(err){
+        console.log('we have mysql error');
+        console.log(err);
+      }
+      else
+      {
+        res.render("constants/delete", { constant: result[0], title: 'Delete Constant'})
+      }
+  });
+});
 }
 
 const constant_edit_get = async (req, res) => {
-  const id = req.params.id;
-  const status = await Constant.find({category: 'Status'}, '_id category name value1').sort({ sort: 1});
-    await Constant.findById(id)
-    .then(result => {
-      res.render('constants/edit', {constant: result, title: 'Edit constant', status});
-    })
-    .catch(err => console.log(err));
-}
+  const constantId = req.params.id;
+    pool.getConnection((err, connection) => {
+      let _status;
+      if(err) throw err;
+     connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
+          _status = status;
+      });
+      connection.query('SELECT * FROM constant WHERE constantId = ?', [constantId], (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+          console.log(err);
+        }
+        else
+        {
+          res.render("constants/edit", { constant: result[0], title: 'Edit Constant', status: _status})
+        }
+    });
+    });
+  }
 
 const constant_edit = async (req, res) => {
-const id = req.params.id;
-const constant = new Constant(req.body);
-console.log(constant);
-await Constant.findById(id)
-.then(result => {
-  result.category = constant.category;
-  result.name = constant.name;
-  result.value1 = constant.value1;
-  result.value2 = constant.value2;
-  result.value3 = constant.value3;
-  result.sort = constant.sort;
-  result.status = constant.status;
-  result.enteredBy = global.userId;
-  result.save();
-  res.redirect("/constants/church/" + req.body.church);
-})
-.catch(err => console.log(err));
-  
+  console.log('Inside edit constatn');
+  console.log(req.body);
+  console.log('params');
+  console.log(req.params.id);
+ const constantId = req.params.id;
+pool.getConnection((err, connection) => {
+  if(err) throw err;
+  connection.query('UPDATE constant SET churchId = ?, category = ?, name = ?, value1 = ?, value2 = ?, value3 = ?, sort = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE constantID = ?',
+  [
+    req.body.churchId,
+    req.body.category,
+    req.body.name,
+    req.body.value1,
+    req.body.value2,
+    req.body.value3,
+    req.body.sort,
+    req.body.status,
+    global.userId,
+    Date.now(),
+    constantId
+  ],
+  (err, result) => {
+    connection.release();
+    if(err){
+      console.log('we have mysql error');
+      console.log(err);
+    }
+    else
+    {
+      res.redirect("/constants/church/" + req.body.churchId);
+    }
+});
+});
 }
 
 module.exports = {

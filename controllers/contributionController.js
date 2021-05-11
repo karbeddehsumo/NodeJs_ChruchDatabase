@@ -2,14 +2,17 @@ const Contribution = require('../models/contribution');
 const Constant = require('../models/constant');
 const Member = require('../models/member');
 const Church = require('../models/church');
+const moment = require('moment');
 
 //app.get('*', checkUser); //put user values in res.locals
 const contribution_index = async (req, res) => {
      const id = req.params.id;
      const members = await Member.find({ church: id});
+     const contributionTypes = await Constant.find({church: global.churchId, category: 'contribution type'},'_id category name value1').sort({ name: -1 });
+
     await Contribution.find({ church: id}).sort({ createdAt: -1 })
     .then((result) => {
-      res.render('contributions/index', { title: 'All contributions', contributions: result, members })
+      res.render('contributions/index', { title: 'All contributions', contributions: result, members, contributionTypes })
     })
     .catch((err) => {
       console.log(err)
@@ -77,7 +80,7 @@ const contribution_edit_get = async (req, res) => {
   const id = req.params.id;
   await Contribution.findById(id)
     .then(result => {
-      res.render('contributions/edit', {contribution: result, title: 'Edit contribution'});
+      res.render('contributions/edit', {contribution: result, title: 'Edit contribution', moment});
     })
     .catch(err => console.log(err));
 }

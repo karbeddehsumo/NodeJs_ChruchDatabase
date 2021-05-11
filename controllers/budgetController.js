@@ -84,18 +84,14 @@ const budget_delete_get = async (req, res) => {
 const budget_edit_get = async (req, res) => {
   const id = req.params.id;
   const budget = await Budget.findById(id);
+  const status = await Constant.find({category: 'Status'}, '_id category name value1').sort({ sort: 1}); 
   const funds =  await Fund.find({ church: budget.church, category: [budget.type, 'Both']}).sort({ createdAt: -1 });
-  console.log('Here is the funds');
-  console.log(funds);
-
     await Budget.findById(id)
     .populate('fund', 'name _id')
     .then(result => {
-      console.log('Here is the budget item');
-      console.log(result);
       const title = 'Edit ' + result.type + ' Budget';
       
-      res.render('budgets/edit', {budget: result, funds, title});
+      res.render('budgets/edit', {budget: result, funds, title, PermissionStatus});
     })
     .catch(err => console.log(err));
 }

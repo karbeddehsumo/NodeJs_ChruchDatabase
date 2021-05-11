@@ -26,12 +26,13 @@
     "express": "^4.17.1",
     "joi": "^17.2.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "material-design-icons": "^3.0.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.4",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "validator": "^13.1.1"
   }
 }

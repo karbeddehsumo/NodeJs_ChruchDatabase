@@ -16,9 +16,8 @@
                    <% } else { %>
                     <% if(churches.length > 0) { %>
                         <% churches.forEach(church => { %>
-                            <a class="single" href="/churches/<%= church._id %>" >
+                            <a class="single" href="/churches/<%= church.churchId %>" >
                         <h3 class="title"><%= church.name %> </h3>
-                        <p class="snippet"><%= church.title %></p>
                         </a>
                         <% }) %>
                     <% } %>

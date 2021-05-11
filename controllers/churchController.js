@@ -1,146 +1,276 @@
-const Church = require('../models/church');
+const moment = require('moment');
+const mysql = require('mysql');
+const pool = mysql.createPool({
+  host:  process.env.MYSQL_HOST,
+  database: process.env.MYSQL_DBNAME,
+  user:  process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD
+});
+
 
 const church_index = async (req, res) => {
-    const id = req.params.id;
-    await Church.find({ parentChurch: id }).sort({ createdAt: -1 })
-    .populate('branchChurches', 'name _id')
-    .then((result) => {
-      res.render('churches/index', { title: 'All Churches', churches: result })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-const church_tagname_get = async (req, res) => {
-  const tagName = req.params.name;
-  await Church.find({ tagName: tagName }).sort({ createdAt: -1 })
-  .populate('branchChurches', 'name _id')
-  .then((result) => {
-    let id = '';
-    result.forEach(one => {
-     id = one._id;
-    });
-    res.redirect(req.baseUrl + '/' + id); //, { title: 'All Churches', churches: result })
-  })
-  .catch((err) => {
-   res.status(404).render('404', {title: 'Church not found'});
+const churchId = req.params.id;
+  pool.getConnection((err, connection) => {
+    if(err) throw err; 
+    connection.query('SELECT * FROM church WHERE status = ? AND parentChurchId = ?',['Active',0], (err, result) => { 
+    connection.release();
+      if(err){
+        console.log('we have mysql error');
+      }
+      else
+      {
+          res.render('churches/index', { title: 'All churches', churches: result, churchId: churchId })
+      }
+  });
   });
 }
 
-const church_details = async (req, res) => {
-    const id = req.params.id;
-    await Church.findById(id)
-     .then((result) => {
-       global.churchName = result.name;
-       global.churchId = result._id;
-      res.render("churches/details", { church: result, title: 'Church Details'})
-    })
-    .catch((err) => {
-      res.status(404).render('404', {title: 'Church not found'});
-    });
-}
-
-
-
-const church_branch_create_get = async (req, res) => {
+const church_details = (req, res) => {
   const churchId = req.params.id;
-   await Church.findById(churchId)
-   .populate('branchChurches', 'name city _id') //church branches
-   .then((result) => {
-     res.render('Churches/createBranch', {title: 'Create a New Church Branch', parentId: churchId,result});
-   })
-   .catch((err) => {
-    res.status(404).render('404', {title: 'Church not found'});
+  let branches;
+  pool.getConnection((err, connection) => {
+    if(err) throw err;
+    connection.query('SELECT name, city, churchId FROM church WHERE parentChurchId = ? ',[churchId], (err, _branches) => {
+      branches = _branches;
    });
-
+    connection.query('SELECT * FROM church WHERE churchId = ?', [churchId], (err, result) => {
+      connection.release();
+      if(err){
+        console.log('we have mysql error');
+        console.log(err);
+      }
+      else
+      {
+        
+          global.churchId = result[0].churchId;
+          global.churchName = result[0].name;
+          console.log('Inside church details');
+        console.log(global.churchId);
+        console.log(global.churchName);
   
-}
-
-const church_createBranch_post = async (req, res) => {
-  const church = new Church(req.body);
-  const parentChurch = await Church.findById(req.body.parentChurch);
- 
-  church.save()
-  .then((result) => {
-    parentChurch.branchChurches.push(church._id);
-    parentChurch.save();
-    res.redirect("/churches");
-  })
-  .catch((err) => {
-    console.log(err);
+        res.render("churches/details", { church: result[0], title: 'church Details', branches})
+      }
+  });
   });
 }
 
 const church_create_get = (req, res) => {
-    res.render('Churches/create', {title: 'Create a New Church'});
+  const churchId = req.params.id;
+  res.render('churches/create', {title: 'Create a New church', churchId});
 }
 
-
-const church_create_post = (req, res) => {
-  const church = new Church(req.body);
-  church.enteredBy = global.userId;
-  church.save()
-  .then((result) => {
-    res.redirect("/churches");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const church_create_post = async (req, res) => {
+const churchId = req.params.id;
+pool.getConnection((err, connection) => {
+  if(err) throw err; 
+  connection.query('INSERT INTO church SET parentChurchId = ?, title = ?, name = ?, tagName = ?, founded = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, phone = ?, email = ?, vision = ?, motto = ?,  status = ?, enteredBy = ?, dateEntered = ? WHERE churchID = ?',
+  [
+    0,
+  req.body.title,
+  req.body.name,
+  req.body.tagName,
+  req.body.founded,
+  req.body.address1,
+  req.body.address2,
+  req.body.city,
+  req.body.state,
+  req.body.zipcode,
+  req.body.country,
+  req.body.phone,
+  req.body.email,
+  req.body.vision,
+  req.body.motto,
+  req.body.status,
+  global.userId,
+  Date.now(),
+  churchId
+  ],
+  (err, result) => {
+    connection.release();
+    if(err){
+      console.log('we have mysql error');
+      console.log(err);
+    }
+    else
+    {
+      res.redirect("churches/" + churchId);
+    }
+});
+});
 }
 
 const church_delete = async (req, res) => {
- const id = req.params.id;
-  await Church.findByIdAndDelete(id)
-  .then((result) => {
-    res.redirect("/churches");
-  })
-  .catch((err) => {
+console.log('Inside delete');
+console.log(req.params.id);
+const churchId = req.params.id;
+pool.getConnection((err, connection) => {
+if(err) throw err;
+connection.query('DELETE FROM church WHERE churchId = ?', [churchId], (err, result) => {
+  connection.release();
+  if(err){
+    console.log('we have mysql error');
     console.log(err);
-  });
+  }
+  else
+  {
+    res.redirect("/churches/church/" + global.churchId);
+  }
+});
+});
 }
+
+
 const church_delete_get = async (req, res) => {
-  const id = req.params.id;
-    await Church.findById(id)
-    .then(result => {
-      res.render('churches/delete', {church: result, title: 'Delete Church'});
-    })
-    .catch(err => console.log(err));
+const churchId = req.params.id;
+pool.getConnection((err, connection) => {
+  if(err) throw err;
+  connection.query('SELECT * FROM church WHERE churchId = ?', [churchId], (err, result) => {
+    connection.release();
+    if(err){
+      console.log('we have mysql error');
+      console.log(err);
+    }
+    else
+    {
+      res.render("churches/delete", { church: result[0], title: 'Delete church', moment})
+    }
+});
+});
 }
 
 const church_edit_get = async (req, res) => {
-  const id = req.params.id;
-    await Church.findById(id)
-    .then(result => {
-      res.render('churches/edit', {church: result, title: 'Edit Church'});
-    })
-    .catch(err => console.log(err));
+const churchId = req.params.id;
+  pool.getConnection((err, connection) => {
+    let _status;
+    if(err) throw err;
+   connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
+        _status = status;
+    });
+    connection.query('SELECT * FROM church WHERE churchId = ?', [churchId], (err, result) => {
+      connection.release();
+      if(err){
+        console.log('we have mysql error');
+        console.log(err);
+      }
+      else
+      {
+        res.render("churches/edit", { church: result[0], title: 'Edit church', status: _status, moment})
+      }
+  });
+  });
 }
 
 const church_edit = async (req, res) => {
-const id = req.params.id;
-const church = new Church(req.body);
-await Church.findById(id)
-.then(result => {
-  result.title = church.title;
-  result.name = church.name;
-  result.founded = church.founded;
-  result.address1 = church.address1;
-  result.address2 = church.address2;
-  result.city = church.city;
-  result.state = church.state;
-  result.country = church.country;
-  result.phone = church.phone;
-  result.email = church.email;
-  result.parent = church.parent;
-  result.picture = church.picture;
-  result.enteredBy = global.userId;
-  result.save();
-  res.redirect('/churches');
-})
-.catch(err => console.log(err));
-  
+const churchId = req.params.id;
+pool.getConnection((err, connection) => {
+if(err) throw err;
+connection.query('UPDATE church SET parentChurchId = ?, title = ?, name = ?, tagName = ?, founded = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, phone = ?, email = ?, vision = ?, motto = ?,  status = ?, enteredBy = ?, dateEntered = ? WHERE churchID = ?',
+[
+  req.body.parentChurchId,
+  req.body.title,
+  req.body.name,
+  req.body.tagName,
+  req.body.founded,
+  req.body.address1,
+  req.body.address2,
+  req.body.city,
+  req.body.state,
+  req.body.zipcode,
+  req.body.country,
+  req.body.phone,
+  req.body.email,
+  req.body.vision,
+  req.body.motto,
+  req.body.status,
+  global.userId,
+  Date.now(),
+  churchId
+],
+(err, result) => {
+  connection.release();
+  if(err){
+    console.log('we have mysql error');
+    console.log(err);
+  }
+  else
+  {
+    res.redirect("/churches/" + req.body.churchId);
+  }
+});
+});
 }
+
+ const church_tagname_get = async (req, res) => {
+const tagName = req.params.name;
+console.log('Inside tagname method');
+      console.log(tagName);
+pool.getConnection((err, connection) => {
+  if(err) throw err; 
+  connection.query('SELECT * FROM church WHERE status = ? AND tagName = ?',['Active',tagName], (err, result) => { 
+  connection.release();
+    if(err){
+      console.log('we have mysql error');
+    }
+    else
+    {
+      
+      let id = result[0].churchId;
+      // result.forEach(one => {
+      //  id = one._id;
+      // });
+      res.redirect(req.baseUrl + '/' + id); //, { title: 'All Churches', churches: result })
+    }
+});
+});
+   }
+  
+   const church_branch_create_get = async (req, res) => {
+     const churchId = req.params.id;
+     res.render('Churches/createBranch', {title: 'Create a New Church Branch', parentChurchId: churchId}); 
+   }
+  
+   const church_createBranch_post = async (req, res) => {
+     console.log('Inside the create branch');
+     console.log(req.body);
+    const churchId = req.params.id;
+    pool.getConnection((err, connection) => {
+      if(err) throw err; 
+      connection.query('INSERT INTO church SET parentChurchId = ?, title = ?, name = ?, tagName = ?, founded = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, phone = ?, email = ?, vision = ?, motto = ?,  status = ?, enteredBy = ?, dateEntered = ?',
+      [
+        req.body.parentChurchId,
+        req.body.title,
+        req.body.name,
+        req.body.tagName,
+        req.body.founded,
+        req.body.address1,
+        req.body.address2,
+        req.body.city,
+        req.body.state,
+        req.body.zipcode,
+        req.body.country,
+        req.body.phone,
+        req.body.email,
+        req.body.vision,
+        req.body.motto,
+        req.body.status,
+        global.userId,
+        Date.now(),
+        churchId
+      ],
+      (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+          console.log(err);
+        }
+        else
+        {
+          res.redirect("churches/" + churchId);
+        }
+    });
+    });
+   }
+  
 
 module.exports = {
     church_index,
