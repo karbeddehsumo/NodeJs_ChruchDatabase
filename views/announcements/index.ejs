@@ -12,7 +12,7 @@
                <% } else { %>
                 <% if(announcements.length > 0) { %>
                     <% announcements.forEach(announcement => { %>
-                        <a class="single" href="/announcements/<%= announcement._id %>" >
+                        <a class="single" href="/announcements/<%= announcement.churchID %>" >
                     <h3 class="title"><%= announcement.title %> </h3>
                     <p class="snippet"><%= announcement.message %></p>
                     </a>

@@ -12,8 +12,8 @@
                <% } else { %>
                 <% if(ministries.length > 0) { %>
                     <% ministries.forEach(ministry => { %>
-                        <a class="single" href="/ministries/<%= ministry._id %>" >
-                    <h3 class="title"><%= ministry.name %> </h3>
+                        <a class="single" href="/ministries/<%= ministry.ministryId %>" >
+                    <h3 class="title"><%= ministry.name %></h3>
                     <p class="snippet"><%= ministry.contact %></p>
                     </a>
                     <% }) %>

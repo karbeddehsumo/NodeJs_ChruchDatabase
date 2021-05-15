@@ -8,11 +8,24 @@
             <h1><%= global.churchName %></h1>
             <h2><%= title %></h2>
             
-                    <form action="/ministries/edited/<%= ministry._id %>" method="post">
+                    <form action="/ministries/edited/<%= ministry.ministryId %>" method="post">
+                        <label for="parentMinistryId">Parent Ministry</label>
+                        <select name="parentMinistryId">
+                            <option value="0"></option>
+                            <% if(parentMinistries.length > 0) { %>
+                                <% parentMinistries.forEach(parent => { %>
+                                    <% if(parent.ministryId === ministry.ministryId) { %>
+                                        <option value= "<%= parent.ministryId %>" selected ><%= parent.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= parent.ministryId %>"><%= parent.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>     
                         <label for="name">Ministry Name</label>
                         <input type="text" id="name" name="name" value="<%= ministry.name %>"" required>
                         <label for="description">Description</label>
-                        <input type="text" id="description" name="description" value="<%= ministry.description %>"" required>
+                        <textarea id="description"><%= ministry.description %></textarea>
                         <label for="contact">Contact</label>
                         <input type="text" id="contact" name="contact" value="<%= ministry.contact %>"" required>
                         <label for="email">Email Address</label>
@@ -20,7 +33,20 @@
                         <label for="phone">Phone</label>
                         <input type="text" id="phone" name="phone" value="<%= ministry.phone %>"" >
                         <label for="MissionStatement">Mission Statement</label>
-                        <input type="text" id="missionStatement" name="missionStatement" value="<%= ministry.missionStatement %>"" >
+                        <textarea id="MissionStatement"><%= ministry.missionStatement %></textarea>
+                        <label for="status">Status</label>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === ministry.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>     
                         <button>Submit</button>
                     </form>
               

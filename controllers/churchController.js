@@ -40,14 +40,9 @@ const church_details = (req, res) => {
         console.log(err);
       }
       else
-      {
-        
+      {  
           global.churchId = result[0].churchId;
           global.churchName = result[0].name;
-          console.log('Inside church details');
-        console.log(global.churchId);
-        console.log(global.churchName);
-  
         res.render("churches/details", { church: result[0], title: 'church Details', branches})
       }
   });
@@ -55,15 +50,15 @@ const church_details = (req, res) => {
 }
 
 const church_create_get = (req, res) => {
-  const churchId = req.params.id;
+  const churchId = 0;
   res.render('churches/create', {title: 'Create a New church', churchId});
 }
 
 const church_create_post = async (req, res) => {
-const churchId = req.params.id;
+//const churchId = req.params.id;
 pool.getConnection((err, connection) => {
   if(err) throw err; 
-  connection.query('INSERT INTO church SET parentChurchId = ?, title = ?, name = ?, tagName = ?, founded = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, phone = ?, email = ?, vision = ?, motto = ?,  status = ?, enteredBy = ?, dateEntered = ? WHERE churchID = ?',
+  connection.query('INSERT INTO church SET parentChurchId = ?, title = ?, name = ?, tagName = ?, founded = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, phone = ?, email = ?, vision = ?, motto = ?,  status = ?, enteredBy = ?, dateEntered = ?',
   [
     0,
   req.body.title,
@@ -82,8 +77,7 @@ pool.getConnection((err, connection) => {
   req.body.motto,
   req.body.status,
   global.userId,
-  Date.now(),
-  churchId
+  Date.now()
   ],
   (err, result) => {
     connection.release();
@@ -93,7 +87,7 @@ pool.getConnection((err, connection) => {
     }
     else
     {
-      res.redirect("churches/" + churchId);
+      res.redirect("churches/" + result.insertId);
     }
 });
 });
@@ -202,8 +196,6 @@ connection.query('UPDATE church SET parentChurchId = ?, title = ?, name = ?, tag
 
  const church_tagname_get = async (req, res) => {
 const tagName = req.params.name;
-console.log('Inside tagname method');
-      console.log(tagName);
 pool.getConnection((err, connection) => {
   if(err) throw err; 
   connection.query('SELECT * FROM church WHERE status = ? AND tagName = ?',['Active',tagName], (err, result) => { 
@@ -213,11 +205,7 @@ pool.getConnection((err, connection) => {
     }
     else
     {
-      
       let id = result[0].churchId;
-      // result.forEach(one => {
-      //  id = one._id;
-      // });
       res.redirect(req.baseUrl + '/' + id); //, { title: 'All Churches', churches: result })
     }
 });
@@ -230,9 +218,6 @@ pool.getConnection((err, connection) => {
    }
   
    const church_createBranch_post = async (req, res) => {
-     console.log('Inside the create branch');
-     console.log(req.body);
-    const churchId = req.params.id;
     pool.getConnection((err, connection) => {
       if(err) throw err; 
       connection.query('INSERT INTO church SET parentChurchId = ?, title = ?, name = ?, tagName = ?, founded = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, phone = ?, email = ?, vision = ?, motto = ?,  status = ?, enteredBy = ?, dateEntered = ?',
@@ -265,7 +250,7 @@ pool.getConnection((err, connection) => {
         }
         else
         {
-          res.redirect("churches/" + churchId);
+          res.redirect("/churches/" + req.body.parentChurchId);
         }
     });
     });
