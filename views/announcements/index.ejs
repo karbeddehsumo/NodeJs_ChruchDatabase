@@ -12,9 +12,8 @@
                <% } else { %>
                 <% if(announcements.length > 0) { %>
                     <% announcements.forEach(announcement => { %>
-                        <a class="single" href="/announcements/<%= announcement.churchID %>" >
-                    <h3 class="title"><%= announcement.title %> </h3>
-                    <p class="snippet"><%= announcement.message %></p>
+                        <a class="single" href="/announcements/<%= announcement.announcementId %>" >
+                    <h3><%= announcement.title %> (<%= announcement.startDate.toLocaleDateString()==announcement.endDate.toLocaleDateString()  ? announcement.startDate.toLocaleDateString() : ((announcement.startDate.toLocaleDateString()).toString() + " - " +  (announcement.endDate.toLocaleDateString()).toString()) %>)</h3>
                     </a>
                     <% }) %>
                 <% } %>

@@ -1,5 +1,5 @@
 //app.get('*', checkUser); //put user values in res.locals
-
+const moment = require('moment');
 const mysql = require('mysql');
   const pool = mysql.createPool({
     host:  process.env.MYSQL_HOST,
@@ -38,7 +38,7 @@ const announcement_details = (req, res) => {
         }
         else
         {
-          res.render("announcements/details", { announcement: result[0], title: 'announcement Details'})
+          res.render("announcements/details", { announcement: result[0], title: 'announcement Details', moment})
         }
     });
     });
@@ -93,7 +93,7 @@ const announcement_create_post = async (req, res) => {
       }
       else
       {
-        res.redirect("announcements/church/" + announcementId);
+        res.redirect("announcements/church/" + req.body.churchId);
       }
   });
   });
@@ -142,9 +142,17 @@ const announcement_edit_get = async (req, res) => {
   const announcementId = req.params.id;
     pool.getConnection((err, connection) => {
       let _status;
+      let _access;
+      let _allMinistries;
       if(err) throw err;
-     connection.query('SELECT name FROM announcement WHERE category = ? ',['Status'], (err, status) => {
+       connection.query('SELECT name FROM ministry WHERE churchId = ? ',[global.churchId], (err, allMinistries) => {
+        _allMinistries = allMinistries;
+      });
+     connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
           _status = status;
+      });
+      connection.query('SELECT name FROM constant WHERE category = ? ',['Access'], (err, access) => {
+         _access = access;
       });
       connection.query('SELECT * FROM announcement WHERE announcementId = ?', [announcementId], (err, result) => {
         connection.release();
@@ -154,7 +162,7 @@ const announcement_edit_get = async (req, res) => {
         }
         else
         {
-          res.render("announcements/edit", { announcement: result[0], title: 'Edit announcement', status: _status})
+          res.render("announcements/edit", { announcement: result[0], title: 'Edit announcement', status: _status, access: _access, ministries: _allMinistries, moment})
         }
     });
     });

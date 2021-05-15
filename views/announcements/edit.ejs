@@ -15,17 +15,17 @@
                         <label for="endDate">End Date</label>
                         <input type="date" id="endDate" name="endDate" value="<%= moment(announcement.endDate).format('YYYY-MM-DD') %>"" >
                         <label for="access">Access By</label>
-                        <select name="access" onchange="showMinistry(this);">
+                        <select id="access" name="access" onchange="showMinistry(this);">
                             <option value="None"></option>
                             <% if(access.length > 0) { %>
                                 <% access.forEach(aces => { %>
-                                    <option <%= aces._id==announcement.access.toString() ? "selected" : "" %> value="<%= aces._id %>"><%= aces.name %></option>
+                                    <option <%= aces.name==announcement.access.toString() ? "selected" : "" %> value="<%= aces.name %>"><%= aces.name %></option>
                                 <% }) %>
                             <% } %>
                         </select>
                         <div id="ministryDiv">
                             <label>Select Host Ministries:</label>
-                            <% if(announcement.ministries.length > 0) {%>
+                            <% if(announcement.ministry1 > 0) {%>
                                 <label for="ministry1">Ministry 1</label>
                                 <select name="ministry1">
                                     <option value="None"></option>
@@ -108,6 +108,11 @@
         <%- include('../partials/footer.ejs') %>
 
         <script type="text/javascript">
+            window.onload = (event) => {
+                //alert('page is fully loaded');
+                var x = document.getElementById("access");
+                showMinistry(x);
+            };
             function showMinistry(sel)
             {
                 var n = sel.options[sel.selectedIndex].text;

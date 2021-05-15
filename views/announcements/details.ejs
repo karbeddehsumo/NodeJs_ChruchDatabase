@@ -5,15 +5,13 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="details content">
-            <h2><%= announcement.title %></h2>
             <div class="content" >
-                <p><%= announcement.calendarId %></p>
-    
-            <a class="edit blogs" href="/announcements/edit/<%= announcement._id %>">
+                <h3><%= announcement.title %>(<%= announcement.startDate.toLocaleDateString()==announcement.endDate.toLocaleDateString()  ? announcement.startDate.toLocaleDateString() : ((announcement.startDate.toLocaleDateString()).toString() + " - " +  (announcement.endDate.toLocaleDateString()).toString()) %>)</h3>
+            <a class="edit blogs" href="/announcements/edit/<%= announcement.announcementId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/announcements/delete/<%= announcement._id %>">
+           <a class="delete blogs" href="/announcements/delete/<%= announcement.announcementId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     

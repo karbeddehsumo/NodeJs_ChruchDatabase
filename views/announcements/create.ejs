@@ -17,10 +17,10 @@
                 <input type="date" id="endDate" name="endDate" >
                 <label for="access">Access By</label>
                 <select id="access" name="access" onchange="showMinistry(this);">
-                    <option value="0"></option>
+                    <option value="None"></option>
                     <% if(access.length > 0) { %>
                         <% access.forEach(acces => { %>
-                        <option value="<%= acces.constantId %>"><%= acces.name %></option>
+                        <option value="<%= acces.name %>"><%= acces.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
@@ -65,6 +65,12 @@
         <%- include('../partials/footer.ejs') %>
 
         <script type="text/javascript">
+                window.onload = (event) => {
+                //alert('page is fully loaded');
+                var x = document.getElementById("access");
+                showMinistry(x);
+            };
+
             function showMinistry(sel)
             {
                 var n = sel.options[sel.selectedIndex].text;
