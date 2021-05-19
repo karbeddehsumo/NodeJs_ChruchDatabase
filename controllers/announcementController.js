@@ -28,6 +28,8 @@ const announcement_index = async (req, res) => {
 
 const announcement_details = (req, res) => {
     const announcementId = req.params.id;
+    console.log('Announcement details');
+    console.log(announcementId);
     pool.getConnection((err, connection) => {
       if(err) throw err;
       connection.query('SELECT * FROM announcement WHERE announcementId = ?', [announcementId], (err, result) => {
@@ -38,7 +40,7 @@ const announcement_details = (req, res) => {
         }
         else
         {
-          res.render("announcements/details", { announcement: result[0], title: 'announcement Details', moment})
+          res.render("announcements/details", { announcement: result[0], title: 'Announcement Details', moment})
         }
     });
     });
@@ -176,19 +178,20 @@ const announcement_edit = async (req, res) => {
  const announcementId = req.params.id;
 pool.getConnection((err, connection) => {
   if(err) throw err;
-  connection.query('UPDATE announcement SET churchId = ?, category = ?, name = ?, value1 = ?, value2 = ?, value3 = ?, sort = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE announcementID = ?',
+  connection.query('UPDATE announcement SET  title = ?, ministry1 = ?, ministry2 = ?, ministry3 = ?, startDate = ?, endDate = ?, message = ?, access = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE announcementID = ?',
   [
-    req.body.churchId,
-    req.body.category,
-    req.body.name,
-    req.body.value1,
-    req.body.value2,
-    req.body.value3,
-    req.body.sort,
-    req.body.status,
-    global.userId,
-    Date.now(),
-    announcementId
+      req.body.title,
+      req.body.ministry1,
+      req.body.ministry2,
+      req.body.ministry3,
+      req.body.startDate,
+      req.body.endDate,
+      req.body.message,
+      req.body.access,
+      req.body.status,
+      global.userId,
+      new Date(),
+      announcementId
   ],
   (err, result) => {
     connection.release();
@@ -198,7 +201,7 @@ pool.getConnection((err, connection) => {
     }
     else
     {
-      res.redirect("/announcements/church/" + req.body.churchId);
+      res.redirect("/announcements/church/" + global.churchId);
     }
 });
 });

@@ -1,92 +1,212 @@
-const Bank = require('../models/bank');
-const Church = require('../models/church');
+// 
+
+const moment = require('moment');
+const mysql = require('mysql');
+  const pool = mysql.createPool({
+    host:  process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DBNAME,
+    user:  process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD
+  });
+
 
 const bank_index = async (req, res) => {
-    const churchId = req.params.id;
-    await Bank.find({ church: churchId }).sort({ createdAt: -1 })
-    .then((result) => {
-      res.render('banks/index', { title: 'All bank', banks: result, churchId })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  const churchId = req.params.id;
+    pool.getConnection((err, connection) => {
+      if(err) throw err; 
+      connection.query('SELECT * FROM bank WHERE churchId = ?',[churchId], (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+        }
+        else
+        {
+            res.render('banks/index', { title: 'All banks', banks: result, churchId: churchId })
+        }
+    });
+    });
 }
 
-const bank_details = async (req, res) => {
-    const id = req.params.id;
-    await Bank.findById(id)
-     .then((result) => {
-      res.render("banks/details", { bank: result, title: 'bank Details'})
-    })
-    .catch((err) => {
-      res.status(404).render('404', {title: 'bank not found'});
+const bank_details = (req, res) => {
+    const bankId = req.params.id;
+    console.log('bank details');
+    console.log(bankId);
+    pool.getConnection((err, connection) => {
+      if(err) throw err;
+      connection.query('SELECT * FROM bank WHERE bankId = ?', [bankId], (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+          console.log(err);
+        }
+        else
+        {
+          res.render("banks/details", { bank: result[0], title: 'bank Details', moment})
+        }
+    });
     });
 }
 
 const bank_create_get = (req, res) => {
-  const churchId = req.params.id;
-    res.render('banks/create', {title: 'Create a New bank', churchId});
+    const churchId = req.params.id;
+    pool.getConnection((err, connection) => {
+      let _access;
+      if(err) throw err;
+     connection.query('SELECT name FROM constant WHERE category = ? ',['Access'], (err, access) => {
+          _access = access;
+      });
+      connection.query('SELECT * FROM ministry WHERE churchId = ?', [churchId], (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+          console.log(err);
+        }
+        else
+        {
+          res.render("banks/create", { ministries: result, title: 'Add New bank', access: _access, churchId})
+        }
+    });
+  });
 }
 
-const bank_create_post = (req, res) => {
-  const bank = new Bank(req.body);
-  bank.church = req.body.churchId;
-  bank.enteredBy = global.userId;
-
-  bank.save()
-  .then((result) => {
-    res.redirect("/banks/church/" + req.body.churchId);
-  })
-  .catch((err) => {
-    console.log(err);
+const bank_create_post = async (req, res) => {
+  const bankId = req.params.id;
+  pool.getConnection((err, connection) => {
+    if(err) throw err; 
+    connection.query('INSERT INTO bank SET churchId = ?, title = ?, ministry1 = ?, ministry2 = ?, ministry3 = ?, startDate = ?, endDate = ?, message = ?, access = ?, status = ?, enteredBy = ?, dateEntered = ?',
+    [
+      req.body.churchId,
+      req.body.title,
+      req.body.ministry1,
+      req.body.ministry2,
+      req.body.ministry3,
+      req.body.startDate,
+      req.body.endDate,
+      req.body.message,
+      req.body.access,
+      req.body.status,
+      global.userId,
+      Date.now()
+    ],
+    (err, result) => {
+      connection.release();
+      if(err){
+        console.log('we have mysql error');
+        console.log(err);
+      }
+      else
+      {
+        res.redirect("banks/church/" + req.body.churchId);
+      }
+  });
   });
 }
 
 const bank_delete = async (req, res) => {
- const id = req.params.id;
-  await Bank.findByIdAndDelete(id)
-  .then((result) => {
-    res.redirect("/banks");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  console.log('Inside delete');
+  console.log(req.params.id);
+ const bankId = req.params.id;
+ pool.getConnection((err, connection) => {
+  if(err) throw err;
+  connection.query('DELETE FROM bank WHERE bankId = ?', [bankId], (err, result) => {
+    connection.release();
+    if(err){
+      console.log('we have mysql error');
+      console.log(err);
+    }
+    else
+    {
+      res.redirect("/banks/church/" + global.churchId);
+    }
+});
+});
 }
+
+
 const bank_delete_get = async (req, res) => {
-  const id = req.params.id;
-    await Bank.findById(id)
-    .then(result => {
-      res.render('banks/delete', {bank: result, title: 'Delete bank'});
-    })
-    .catch(err => console.log(err));
+  const bankId = req.params.id;
+  pool.getConnection((err, connection) => {
+    if(err) throw err;
+    connection.query('SELECT * FROM bank WHERE bankId = ?', [bankId], (err, result) => {
+      connection.release();
+      if(err){
+        console.log('we have mysql error');
+        console.log(err);
+      }
+      else
+      {
+        res.render("banks/delete", { bank: result[0], title: 'Delete bank'})
+      }
+  });
+});
 }
 
 const bank_edit_get = async (req, res) => {
-  const id = req.params.id;
-    await Bank.findById(id)
-    .then(result => {
-      res.render('banks/edit', {bank: result, title: 'Edit bank'});
-    })
-    .catch(err => console.log(err));
-}
+  const bankId = req.params.id;
+    pool.getConnection((err, connection) => {
+      let _status;
+      let _access;
+      let _allMinistries;
+      if(err) throw err;
+       connection.query('SELECT name FROM ministry WHERE churchId = ? ',[global.churchId], (err, allMinistries) => {
+        _allMinistries = allMinistries;
+      });
+     connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
+          _status = status;
+      });
+      connection.query('SELECT name FROM constant WHERE category = ? ',['Access'], (err, access) => {
+         _access = access;
+      });
+      connection.query('SELECT * FROM bank WHERE bankId = ?', [bankId], (err, result) => {
+        connection.release();
+        if(err){
+          console.log('we have mysql error');
+          console.log(err);
+        }
+        else
+        {
+          res.render("banks/edit", { bank: result[0], title: 'Edit bank', status: _status, access: _access, ministries: _allMinistries, moment})
+        }
+    });
+    });
+  }
 
 const bank_edit = async (req, res) => {
-const id = req.params.id;
-const bank = new Bank(req.body);
-await Bank.findById(id)
-.then(result => {
-  result.church = bank.church;
-  result.accountName = bank.accountName;
-  result.accountNumber = bank.accountNumber;
-  result.description = bank.description;
-  result.enteredBy = global.userId;
-  result.save();
-  res.redirect('/banks/church/' + req.body.church);
-})
-.catch(err => console.log(err));
-  
+  console.log('Inside edit constatn');
+  console.log(req.body);
+  console.log('params');
+  console.log(req.params.id);
+ const bankId = req.params.id;
+pool.getConnection((err, connection) => {
+  if(err) throw err;
+  connection.query('UPDATE bank SET  title = ?, ministry1 = ?, ministry2 = ?, ministry3 = ?, startDate = ?, endDate = ?, message = ?, access = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE bankID = ?',
+  [
+      req.body.title,
+      req.body.ministry1,
+      req.body.ministry2,
+      req.body.ministry3,
+      req.body.startDate,
+      req.body.endDate,
+      req.body.message,
+      req.body.access,
+      req.body.status,
+      global.userId,
+      new Date(),
+      bankId
+  ],
+  (err, result) => {
+    connection.release();
+    if(err){
+      console.log('we have mysql error');
+      console.log(err);
+    }
+    else
+    {
+      res.redirect("/banks/church/" + global.churchId);
+    }
+});
+});
 }
-
 module.exports = {
     bank_index,
     bank_details,
