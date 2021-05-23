@@ -64,7 +64,7 @@ const constant_create_post = async (req, res) => {
       req.body.sort,
       req.body.status,
       global.userId,
-      Date.now()
+      new Date()
     ],
     (err, result) => {
       connection.release();
@@ -74,7 +74,7 @@ const constant_create_post = async (req, res) => {
       }
       else
       {
-        res.redirect("constants/church/" + constantId);
+        res.redirect("constants/church/" + req.body.churchId);
       }
   });
   });

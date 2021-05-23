@@ -7,13 +7,15 @@
         <div class="create-blog content">
             <h2><%= title %></h2>
             
-                    <form action="/members/edited/<%= member._id %>" method="post">
+                    <form action="/members/edited/<%= member.memberId %>" method="post">
                         <label for="firstName">First Name</label>
                         <input type="text" id="firstName" name="firstName" value="<%= member.firstName %>"" required>
-                        <label for="lastname">Last Name</label>
-                        <input type="text" id="lastname" name="lastname" value="<%= member.lastname %>"" required>
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" value="<%= member.lastName %>"" required>
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" id="middleName" name="middleName" value="<%= member.middleName %>"" required>
                         <label for="dob">Birth Date</label>
-                        <input type="date" id="dob" name="dob" value="<%= member.dob %>"" >
+                        <input type="date" id="dob" name="dob" value="<%= member.dob.toISOString().substr(0,10) %>"" >
                         <label for="gender">Gender</label>
                         <select name="gender">
                             <option <%= member.gender=="Male" ? "selected" : "" %> value="Male">Male</option> 
@@ -25,22 +27,45 @@
                         <input type="text" id="email" name="email" value="<%= member.email %>"" >
                         <label for="title">Church Title</label>
                         <select name="title">
+                            <option value="0"></option>
                             <% if(churchTitles.length > 0) { %>
-                                <% churchTitles.forEach(churchTitle => { %>
-                                <option value="<%= churchTitle.name %>"><%= churchTitle.name %></option>
+                                <% churchTitles.forEach(title => { %>
+                                    <% if(title.constantId === member.title) { %>
+                                        <option value= "<%= title.constantId %>" selected ><%= title.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= title.constantId %>"><%= title.name %></option> 
+                                    <% } %>
                                 <% }) %>
                             <% } %>
-                        </select>
+                        </select>     
                         <label for="membershipDate">Membership Since</label>
-                        <input type="date" id="membershipDate" name="membershipDate" value="<%= member.membershipDate %>"" >
+                        <input type="date" id="membershipDate" name="membershipDate" value="<%= member.membershipDate.toISOString().substr(0,10) %>"" >
                         <label for="contactType">contact Type</label>
-                        <select name="title">
+                        <select name="contactType">
+                            <option value="0"></option>
                             <% if(contactTypes.length > 0) { %>
                                 <% contactTypes.forEach(contactType => { %>
-                                <option value="<%= contactType.name %>"><%= contactType.name %></option>
+                                    <% if(contactType.constantId === member.contactType) { %>
+                                        <option value= "<%= contactType.constantId %>" selected ><%= contactType.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= contactType.constantId %>"><%= contactType.name %></option> 
+                                    <% } %>
                                 <% }) %>
                             <% } %>
-                        </select>
+                        </select>     
+                        <label for="status">Status</label>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === member.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>     
                         <button>Submit</button>
                     </form>
               

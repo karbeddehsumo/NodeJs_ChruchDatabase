@@ -7,11 +7,11 @@
         <div class="details content">
            <h2><%= calendar.title %>(<%= calendar.startDate.toLocaleDateString()==calendar.endDate.toLocaleDateString()  ? calendar.startDate.toLocaleDateString() : calendar.startDate.toLocaleDateString() - calendar.endDate.toLocaleDateString() %>)</h2> 
 
-            <a class="edit blogs" href="/calendars/edit/<%= calendar._id %>">
+            <a class="edit blogs" href="/calendars/edit/<%= calendar.calendarId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/calendars/delete/<%= calendar._id %>">
+           <a class="delete blogs" href="/calendars/delete/<%= calendar.calendarId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     

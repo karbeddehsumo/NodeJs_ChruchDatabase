@@ -17,10 +17,10 @@
                 <input type="datetime-local" id="endDate" name="endDate" >
                 <label for="access">Access By</label>
                 <select name="access" onchange="showMinistry(this);">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(access.length > 0) { %>
                         <% access.forEach(acces => { %>
-                        <option value="<%= acces._id %>"><%= acces.value1 %></option>
+                        <option value="<%= acces.constantId %>"><%= acces.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
@@ -28,16 +28,16 @@
                 <label>Select Host Ministries:</label>
                 <label for="ministry1">Ministry 1</label>
                 <select name="ministry1">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(ministries.length > 0) { %>
                         <% ministries.forEach(ministry => { %>
-                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <option value="<%= ministry.ministryId %>"><%= ministry.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
                 <label for="ministry2">Ministry 2</label>
                 <select name="ministry2">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(ministries.length > 0) { %>
                         <% ministries.forEach(ministry => { %>
                         <option value="<%= ministry._id %>"><%= ministry.name %></option>
@@ -46,24 +46,24 @@
                 </select>
                 <label for="ministry3">Ministry 3</label>
                 <select name="ministry3">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(ministries.length > 0) { %>
                         <% ministries.forEach(ministry => { %>
-                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <option value="<%= ministry.ministryId %>"><%= ministry.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
                 </div>              
-                <label for="agendaURL">Agenda URL</label>
-                <input type="text" id="agendaURL" name="agendaURL" >
+                <label for="url">URL</label>
+                <input type="text" id="url" name="url" placeholder="Optional" >
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" >
                 <label for="venue">Location</label>
                 <select name="venue">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(venues.length > 0) { %>
                         <% venues.forEach(venue => { %>
-                        <option value="<%= venue._id %>"><%= venue.value1 %></option>
+                        <option value="<%= venue.constantId %>"><%= venue.name %></option>
                         <% }) %>
                     <% } %>
                 </select>

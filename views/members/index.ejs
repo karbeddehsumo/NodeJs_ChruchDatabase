@@ -7,12 +7,12 @@
             <h1><%= global.churchName %></h1>
             <a href="/families/church/<%= churchId %>">Add Member</a>
             <h2>All Members</h2>
-            <% if(members !== null) { %>
+            <% if(members === null) { %>
                  <p>No member data available</p>
                 <% } else { %>
             <% if(members.length > 0) { %>
                 <% members.forEach(member => { %>
-                    <a class="single" href="/members/<%= member._id %>" >
+                    <a class="single" href="/members/<%= member.memberId %>" >
                 <h3 class="title"><%= member.lastName %> </h3>
                 <p class="snippet"><%= member.firstName %></p>
                 </a>

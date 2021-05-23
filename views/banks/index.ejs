@@ -12,7 +12,7 @@
                <% } else { %>
                 <% if(banks.length > 0) { %>
                     <% banks.forEach(bank => { %>
-                        <a class="single" href="/banks/<%= bank._id %>" >
+                        <a class="single" href="/banks/<%= bank.bankId %>" >
                     <h3 class="title"><%= bank.accountName %> </h3>
                     <p class="snippet"><%= bank.accountNumber %></p>
                     </a>

@@ -7,12 +7,12 @@
         <div class="create-blog content">
             <h1><%= global.churchName %></h1>
             <h2>Update Calendar</h2>
-            <form action="/calendars/edited/<%= calendar._id %>" method="POST">
-                <input type="hidden" id="church" name="church" value="<%= calendar.church %>">
+            <form action="/calendars/edited/<%= calendar.calendarId %>" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= calendar.churchId %>">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" value="<%= calendar.title %>"" required>
                 <label for="startDate">Start Date</label>
-                <input type="date" id="startDate" name="startDate" value="<%= moment(calendar.startDate).format('YYYY-MM-DD') %>" required >
+                <input type="date" id="startDate" name="startDate" value="<%= calendar.startDate.toISOString().substr(0,10) %>" required >
                 <label for="endDate">End Date</label>
                 <input type="date" id="endDate" name="endDate" value="<%= moment(calendar.endDate).format('YYYY-MM-DD') %>"" required>
                 <label for="access">Access By</label>
@@ -20,55 +20,51 @@
                     <option value="None"></option>
                     <% if(access.length > 0) { %>
                         <% access.forEach(acces => { %>
-                            <option <%= acces._id==calendar.access.toString() ? "selected" : "" %> value="<%= acces._id %>"><%= acces.name %></option>
+                            <option <%= acces.constantId==calendar.access.toString() ? "selected" : "" %> value="<%= acces.constantId %>"><%= acces.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
                 <div id="ministryDiv">
-                <% if( !calendar.ministries.length === null) { %>
+                <% if( calendar.ministry1 > 0) { %>
                 <label>Select Host Ministries:</label>
                 <label for="ministry1">Ministry 1</label>
                 <select name="ministry1">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(ministries.length > 0) { %>
                         <% ministries.forEach(ministry => { %>
-                            <option <%= ministry._id==calendar.ministries[0]._id.toString() ? "selected" : "" %> value="<%= ministry._id %>"><%= ministry.name %></option>
+                            <option <%= ministry.ministryId==calendar.ministry1.toString() ? "selected" : "" %> value="<%= ministry.ministryId %>"><%= ministry.name %></option>
                             <% }) %>
                     <% } %>
                 <% } else { %>
                     <label for="ministry1">Ministry 1</label>
                 <select name="ministry1">
-                    <option value="None"></option>
-                    <% if(calendar.ministries.length > 0) { %>
+                    <option value="0"></option>
                         <% ministries.forEach(ministry => { %>
                         <option value="<%= ministry._id %>"><%= ministry.name %></option>
                         <% }) %>
-                    <% } %>
                 </select>
                 <% } %>
                 </select>
-                <% if( calendar.ministries[1] != null) { %>
-                <label for="ministry2">Ministry 2-1</label>
+                <% if( calendar.ministry2 > 0) { %>
+                <label for="ministry2">Ministry 2</label>
                 <select name="ministry2">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(ministries.length > 0) { %>
                         <% ministries.forEach(ministry => { %>
-                            <option <%= ministry._id==calendar.ministries[1]._id.toString() ? "selected" : "" %> value="<%= ministry._id %>"><%= ministry.name %></option>
+                            <option <%= ministry.ministryId==calendar.ministry2.toString() ? "selected" : "" %> value="<%= ministry.ministryId %>"><%= ministry.name %></option>
                             <% }) %>
                     <% } %>
                 </select>
                 <% } else { %>
                     <label for="ministry2">Ministry 2</label>
                 <select name="ministry2">
-                    <option value="None"></option>
-                    <% if(calendar.ministries.length > 0) { %>
+                    <option value="None"></option>                   
                         <% ministries.forEach(ministry => { %>
-                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
-                        <% }) %>
-                    <% } %>
+                        <option value="<%= ministry.ministryId %>"><%= ministry.name %></option>
+                        <% }) %>                    
                 </select>
                 <% } %>
-                <% if( calendar.ministries[2] != null) { %>
+                <% if( calendar.ministry3 > 0) { %>
                 <label for="ministry3">Ministry 3</label>
                 <select name="ministry3">
                     <option value="None"></option>
@@ -81,25 +77,23 @@
                 <% } else { %>
                     <label for="ministry3">Ministry 3</label>
                 <select name="ministry3">
-                    <option value="None"></option>
-                    <% if(calendar.ministries.length > 0) { %>
+                    <option value="0"></option>
                         <% ministries.forEach(ministry => { %>
-                        <option value="<%= ministry._id %>"><%= ministry.name %></option>
+                        <option value="<%= ministry.ministryId %>"><%= ministry.name %></option>
                         <% }) %>
-                    <% } %>
                 </select>    
                 <% } %>  
                 </div>           
-                <label for="agendaURL">Agenda URL</label>
-                <input type="text" id="agendaURL" name="agendaURL" value="<%= calendar.agendaURL %>"" >
+                <label for="url">Agenda URL</label>
+                <input type="text" id="url" name="url" value="<%= calendar.url %>"" >
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" value="<%= calendar.description %>"" >
                 <label for="venue">Location</label>
                 <select name="venue">
-                    <option value="None"></option>
+                    <option value="0"></option>
                     <% if(venues.length > 0) { %>
                         <% venues.forEach(venue => { %>
-                        <option <%= venue._id==calendar.venue.toString() ? "selected" : "" %> value="<%= venue._id %>"><%= venue.name %></option>
+                        <option <%= venue.constantId==calendar.venue.toString() ? "selected" : "" %> value="<%= venue.constantId %>"><%= venue.name %></option>
                         <% }) %>
                     <% } %>
                 </select>

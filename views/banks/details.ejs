@@ -9,11 +9,11 @@
             <div class="content" >
                 <p><%= bank.accountNumber %></p>
     
-            <a class="edit blogs" href="/banks/edit/<%= bank._id %>">
+            <a class="edit blogs" href="/banks/edit/<%= bank.bankId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/banks/delete/<%= bank._id %>">
+           <a class="delete blogs" href="/banks/delete/<%= bank.bankId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     

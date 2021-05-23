@@ -7,23 +7,22 @@
         <div class="create-blog content">
             <h2><%= title %></h2>
             
-                    <form action="/families/edited/<%= family._id %>" method="post">
+                    <form action="/families/edited/<%= family.familyId %>" method="post">
+                        <input type="hidden" id="churchId" name="churchId" value="<%= family.churchId %>"" >
                         <label for="familyName">Family Name</label>
                         <input type="text" id="familyName" name="familyName" value="<%= family.familyName %>"" required>
-                        <label for="familyLabel">Family Patriots</label>       
-                        <input type="text" id="familyLabel" name="familyPatriots" value="<%= family.familyPatriots %>"" required>
                         <label for="address1">Address1</label>
                         <input type="text" id="address1" name="address1" value="<%= family.address1 %>"" >
                         <label for="address2">Address2</label>
                         <input type="text" id="address2" name="address2" value="<%= family.address2 %>"" >
                         <label for="city">City</label>
-                        <input type="text" id="city" name="city" value="<%= church.city %>"" >
+                        <input type="text" id="city" name="city" value="<%= family.city %>"" >
                         <label for="state">State</label>
-                        <input type="text" id="state" name="state" value="<%= church.state %>"" >
+                        <input type="text" id="state" name="state" value="<%= family.state %>"" >
                         <label for="zipcode">Zip Code</label>
-                        <input type="text" id="zipcode" name="zipcode" value="<%= church.zipcode %>"" >
+                        <input type="text" id="zipcode" name="zipcode" value="<%= family.zipcode %>"" >
                         <label for="country">Country</label>
-                        <input type="text" id="country" name="country" value="<%= church.country %>"" >
+                        <input type="text" id="country" name="country" value="<%= family.country %>"" >
                         <button>Submit</button>
                     </form>
               

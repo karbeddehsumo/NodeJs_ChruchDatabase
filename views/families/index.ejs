@@ -4,17 +4,17 @@
           <%- include('../partials/nav.ejs') %>
           <p>Select a family or add new family.</p>
         <div class="blogs content">
-            <a href="/families/create/<%= church %>">Add Family</a>
+            <a href="/families/create/<%= churchId %>">Add Family</a>
             <h2>All Families</h2>
-            <% if(families !== undefined) { %>
+            <% if(families === undefined) { %>
                 <p>No families data available</p>
                <% } else { %>
                 <% if(families.length > 0) { %>
                     <% families.forEach(family => { %>
-                        <a class="single" href="/families/<%= family._id %>" >
-                    <h3 class="title"><%= family.familyName %> (<%= family.familyPatriots %>) </h3>
+                        <a class="single" href="/families/<%= family.familyId %>" >
+                    <h3 class="title"><%= family.familyName %> (<%= family.city %>) </h3>
                     <p class="snippet"></p>
-                    <a href="/members/create/<%= family._id %>">Add Family Member</a>
+                    <a href="/members/create/<%= family.familyId %>">Add Family Member</a>
                     </a>
                     <% }) %>
                 <% } %>

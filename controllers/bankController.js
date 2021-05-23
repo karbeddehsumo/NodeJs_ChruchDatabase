@@ -49,44 +49,22 @@ const bank_details = (req, res) => {
 
 const bank_create_get = (req, res) => {
     const churchId = req.params.id;
-    pool.getConnection((err, connection) => {
-      let _access;
-      if(err) throw err;
-     connection.query('SELECT name FROM constant WHERE category = ? ',['Access'], (err, access) => {
-          _access = access;
-      });
-      connection.query('SELECT * FROM ministry WHERE churchId = ?', [churchId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("banks/create", { ministries: result, title: 'Add New bank', access: _access, churchId})
-        }
-    });
-  });
+    res.render("banks/create", {title: 'Add New Bank Account', churchId});
 }
 
 const bank_create_post = async (req, res) => {
   const bankId = req.params.id;
   pool.getConnection((err, connection) => {
     if(err) throw err; 
-    connection.query('INSERT INTO bank SET churchId = ?, title = ?, ministry1 = ?, ministry2 = ?, ministry3 = ?, startDate = ?, endDate = ?, message = ?, access = ?, status = ?, enteredBy = ?, dateEntered = ?',
+    connection.query('INSERT INTO bank SET churchId = ?, accountName = ?, accountNumber = ?, description = ?, status = ?, enteredBy = ?, dateEntered = ?',
     [
       req.body.churchId,
-      req.body.title,
-      req.body.ministry1,
-      req.body.ministry2,
-      req.body.ministry3,
-      req.body.startDate,
-      req.body.endDate,
-      req.body.message,
-      req.body.access,
+      req.body.accountName,
+      req.body.accountNumber,
+      req.body.description,
       req.body.status,
       global.userId,
-      Date.now()
+      new Date()
     ],
     (err, result) => {
       connection.release();
@@ -145,17 +123,8 @@ const bank_edit_get = async (req, res) => {
   const bankId = req.params.id;
     pool.getConnection((err, connection) => {
       let _status;
-      let _access;
-      let _allMinistries;
-      if(err) throw err;
-       connection.query('SELECT name FROM ministry WHERE churchId = ? ',[global.churchId], (err, allMinistries) => {
-        _allMinistries = allMinistries;
-      });
      connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
           _status = status;
-      });
-      connection.query('SELECT name FROM constant WHERE category = ? ',['Access'], (err, access) => {
-         _access = access;
       });
       connection.query('SELECT * FROM bank WHERE bankId = ?', [bankId], (err, result) => {
         connection.release();
@@ -165,7 +134,7 @@ const bank_edit_get = async (req, res) => {
         }
         else
         {
-          res.render("banks/edit", { bank: result[0], title: 'Edit bank', status: _status, access: _access, ministries: _allMinistries, moment})
+          res.render("banks/edit", { bank: result[0], title: 'Edit bank', status: _status, moment})
         }
     });
     });
@@ -179,20 +148,16 @@ const bank_edit = async (req, res) => {
  const bankId = req.params.id;
 pool.getConnection((err, connection) => {
   if(err) throw err;
-  connection.query('UPDATE bank SET  title = ?, ministry1 = ?, ministry2 = ?, ministry3 = ?, startDate = ?, endDate = ?, message = ?, access = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE bankID = ?',
+  connection.query('UPDATE bank SET  accountName = ?, accountNumber = ?, description = ?, isBudgeted = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE bankID = ?',
   [
-      req.body.title,
-      req.body.ministry1,
-      req.body.ministry2,
-      req.body.ministry3,
-      req.body.startDate,
-      req.body.endDate,
-      req.body.message,
-      req.body.access,
-      req.body.status,
-      global.userId,
-      new Date(),
-      bankId
+    req.body.accountName,
+    req.body.accountNumber,
+    req.body.description,
+    req.body.isBudgeted,
+    req.body.status,
+    global.userId,
+    new Date(),
+    bankId
   ],
   (err, result) => {
     connection.release();

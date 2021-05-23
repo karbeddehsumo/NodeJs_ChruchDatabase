@@ -12,7 +12,7 @@
                <% } else { %>
                 <% if(calendars.length > 0) { %>
                     <% calendars.forEach(calendar => { %>
-                        <a class="single" href="/calendars/<%= calendar._id %>" >
+                        <a class="single" href="/calendars/<%= calendar.calendarId %>" >
                     <h3><%= calendar.title %>(<%= calendar.startDate.toLocaleDateString()==calendar.endDate.toLocaleDateString()  ? calendar.startDate.toLocaleDateString() : ((calendar.startDate.toLocaleDateString()).toString() + " - " +  (calendar.endDate.toLocaleDateString()).toString()) %>)</h3>
                     <% }) %>
                 <% } %>
