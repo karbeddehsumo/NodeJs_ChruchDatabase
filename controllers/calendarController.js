@@ -1,4 +1,4 @@
-//app.get('*', checkUser); //put user values in res.locals
+
 const moment = require('moment');
 const mysql = require('mysql');
   const pool = mysql.createPool({

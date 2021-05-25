@@ -13,10 +13,10 @@
                <% } else { %>
                 <% if(budgets.length > 0) { %>
                     <% budgets.forEach(budget => { %>
-                        <a class="single" href="/budgets/<%= budget._id %>" >
+                        <a class="single" href="/budgets/<%= budget.budgetId %>" >
                     <h3 class="title"><%= budget.year %> </h3>
                     <p class="snippet"><%= budget.type %></p>
-                    <p class="snippet"><%= budget.fund.name %></p>
+                    <p class="snippet"><%= budget.fund %></p>
                     <p class="snippet"><%= budget.amount %></p>
                     </a>
                     <% }) %>

@@ -1,0 +1,67 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <h2><%= title %></h2>
+            
+                    <form action="/funds/edited/<%= fund.fundId %>" method="post">
+                        <input type="hidden" id="church" name="church" value="<%= fund.churchID %>"" required>
+                        <label for="name">Fund Name</label>
+                        <input type="text" id="name" name="name" value="<%= fund.name %>"" required>
+                        <label for="bankId">Bank</label>
+                        <select name="bankId">
+                            <option value="0"></option>
+                            <% if(banks.length > 0) { %>
+                                <% banks.forEach(bank => { %>
+                                    <% if(bank.bankId === fund.bankId) { %>
+                                        <option value= "<%= bank.bankId %>" selected ><%= bank.accountName %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= bank.bankId %>"><%= bank.accountName %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <label for="typeId">Fund Type</label>
+                        <select name="typeId">
+                            <option value="0"></option>
+                            <% if(fundTypes.length > 0) { %>
+                                <% fundTypes.forEach(type => { %>
+                                    <% if(type.constantId === fund.typeId) { %>
+                                        <option value= "<%= type.constantId %>" selected ><%= type.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= type.constantId %>"><%= type.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" value="<%= fund.description %>"" >
+                        <label for="isBudgeted">Is Budgeted</label>
+                        <input type="checkbox" id="isBudgeted" name="isBudgeted" value="<%= fund.isBudgeted %>"">
+                        <label for="status">Status</label>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === fund.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <button>Submit</button>
+                    </form>
+              
+
+        </div>
+        <%- include('../partials/footer.ejs') %>
+
+    
+    </body>
+
+</html>

@@ -8,25 +8,30 @@
             <form action="/funds" method="POST">
                 <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
                 <label for="bank">Bank</label>
-                <select name="bank">
-                    <option value="None"></option>
+                <select name="bankId">
+                    <option value="0"></option>
                     <% if(banks.length > 0) { %>
                         <% banks.forEach(bank => { %>
-                        <option value="<%= bank._id %>"><%= bank.accountName %></option>
+                        <option value="<%= bank.bankId %>"><%= bank.accountName %></option>
                         <% }) %>
                     <% } %>
                 </select>
-                <label for="category">Category</label>
-                <select name="category">
-                    <option value="None"></option>
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                    <option value="Both">Both</option>
+                <label for="typeId">Fund Type</label>
+                <select name="typeId">
+                    <option value="0"></option>
+                    <% if(fundTypes.length > 0) { %>
+                        <% fundTypes.forEach(type => { %>
+                        <option value="<%= type.constantId %>"><%= type.name %></option>
+                        <% }) %>
+                    <% } %>
                 </select>
                 <label for="name">Fund Name</label>
                 <input type="text" id="name" name="name" required>               
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" >
+                <label for="isBudgeted">Is Budgeted</label>
+                <input type="checkbox" id="isBudgeted" name="isBudgeted" >
+                <input type="hidden" id="status" name="status" value="Active">
                 <button>Submit</button>
             </form>
         </div>

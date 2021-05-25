@@ -12,7 +12,7 @@
                <% } else { %>
                 <% if(funds.length > 0) { %>
                     <% funds.forEach(fund => { %>
-                        <a class="single" href="/funds/<%= fund._id %>" >
+                        <a class="single" href="/funds/<%= fund.fundId %>" >
                     <h3 class="title"><%= fund.name %> </h3>
                     <p class="snippet"><%= fund.category %></p>
                     </a>
