@@ -30,7 +30,7 @@ const budget_details = (req, res) => {
     const budgetId = req.params.id;
     pool.getConnection((err, connection) => {
       if(err) throw err;
-      connection.query('SELECT * FROM budget WHERE budgetId = ?', [budgetId], (err, result) => {
+      connection.query('SELECT * FROM budget left join fund on budget.fundId = fund.fundId WHERE budgetId  = ?', [budgetId], (err, result) => {
         connection.release();
         if(err){
           console.log('we have mysql error');
@@ -44,19 +44,20 @@ const budget_details = (req, res) => {
     });
 }
 
-const budget_create_get = (req, res) => {
+const budget_create_get = async (req, res) => {
     const churchId = req.params.id;
+    const fundType = req.params.type;
+    let year = new Date().getFullYear();
+    var budgetYear = [year-1,year,year+1]
     pool.getConnection((err, connection) => {
-      let _access;
-      let _venue;
+      let _fundTypeId;
+      let _both;
       if(err) throw err;
-     connection.query('SELECT name, constantId FROM constant WHERE category = ? ',['Access'], (err, access) => {
-          _access = access;
-      });
-      connection.query('SELECT name, constantId FROM constant WHERE category = ? ',['Venue'], (err, venue) => {
-        _venue = venue;
-    });
-      connection.query('SELECT * FROM ministry WHERE churchId = ? AND status = ?', [churchId, 'Active'], (err, result) => {
+     connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', fundType], (err, fund) => {
+         _fundTypeId = fund[0].constantId;
+         connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', 'Both'], (err, both) => {
+           _both = both[0].constantId;
+      connection.query('SELECT name, fundId FROM fund WHERE churchId = ? AND typeId in (?, ?) AND status = ?',[churchId, _both, _fundTypeId, 'Active'], (err, result) => {
         connection.release();
         if(err){
           console.log('we have mysql error');
@@ -64,29 +65,26 @@ const budget_create_get = (req, res) => {
         }
         else
         {
-          res.render("budgets/create", { ministries: result, title: 'Add New budget', access: _access, venues: _venue, churchId})
+            res.render('budgets/create', {title: 'Create a New budget', churchId, funds: result, fundType, budgetYear,fundTypeId: _fundTypeId  })
         }
     });
   });
+  });
+});
 }
 
 const budget_create_post = async (req, res) => {
   const churchId = req.body.churchId;
   pool.getConnection((err, connection) => {
     if(err) throw err; 
-    connection.query('INSERT INTO budget SET churchId = ?, title = ?, startDate = ?, endDate = ?, description = ?, url = ?, venue = ?, access = ?, ministry1 = ?, ministry2 = ?, ministry3 = ?, status = ?, enteredBy = ?, dateEntered = ?',
+    connection.query('INSERT INTO budget SET churchId = ?, year = ?, typeId = ?, fundId = ?, amount = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ?',
     [
       req.body.churchId,
-      req.body.title,
-      req.body.startDate,
-      req.body.endDate,
-      req.body.description,
-      req.body.url,
-      req.body.venue,
-      req.body.access,
-      req.body.ministry1,
-      req.body.ministry2,
-      req.body.ministry3,
+      req.body.year,
+      req.body.typeId,
+      req.body.fundId,
+      req.body.amount,
+      req.body.comment,
       req.body.status,
       global.userId,
       new Date()

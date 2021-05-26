@@ -8,14 +8,15 @@
             <h1>Add <%= fundType %> Budget</h1>
             <form action="/budgets" method="POST">
                 <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
-                <label for="type">Budget Type</label>
-                <input type="text" id="type" name="type" value="<%= fundType %>" readonly>
-                <label for="fund">Fund</label>
-                <select name="fund">
-                    <option value="None"></option>
+                <input type="hidden" id="typeId" name="typeId" value="<%= fundTypeId %>">
+                <!-- <label for="type">Budget Type</label>
+                <input type="text" id="type" name="type" value="<%= fundType %>" readonly> -->
+                <label for="fundId">Fund</label>
+                <select name="fundId">
+                    <option value="0"></option>
                     <% if(funds.length > 0) { %>
                         <% funds.forEach(fund => { %>
-                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <option value="<%= fund.fundId %>"><%= fund.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
@@ -30,6 +31,9 @@
                 </select>
                 <label for="amount">Amount</label>
                 <input type="text" id="amount" name="amount" >
+                <label for="comment">Comment</label>
+                <input type="text" id="comment" name="comment" >
+                <input type="hidden" id="status" name="status" value="Active">
                 <button>Submit</button>
             </form>
         </div>

@@ -7,14 +7,14 @@
         <div class="details content">
             <h2><%= budget.year %></h2>
             <div class="content" >
-                <p><%= budget.type %></p>
-                <p><%= budget.fund.name %></p>
+                <p><%= budget.name %></p>
+                <p><%= budget.year %></p>
                 <p><%= budget.amount %></p>
-            <a class="edit blogs" href="/budgets/edit/<%= budget._id %>">
+            <a class="edit blogs" href="/budgets/edit/<%= budget.budgetId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/budgets/delete/<%= budget._id %>">
+           <a class="delete blogs" href="/budgets/delete/<%= budget.budgetId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     
