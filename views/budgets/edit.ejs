@@ -5,11 +5,12 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
-            <h2><%= title %></h2>
+            <h1><%= global.churchName %></h1>
+            <h2>Edit <%= budget.type %> Budget</h2>
             
                     <form action="/budgets/edited/<%= budget.budgetId %>" method="post">
-                        <input type="hidden" id="church" name="church" value="<%= budget.churchId %>"" required>
-                        <input type="text" id="type" name="type" value="<%= budget.type %>"" readonly>
+                        <input type="hidden" id="churchId" name="churchId" value="<%= budget.churchId %>"" required>
+                        <input type="hidden" id="typeId" name="typeId" value="<%= budget.typeId %>"" readonly>
                         <label for="year">Year</label>
                         <select name="year">
                             <option value="0"></option>
@@ -38,6 +39,8 @@
                         </select>
                         <label for="amount">Amount</label>
                         <input type="text" id="amount" name="amount" value="<%= budget.amount %>"" required>
+                        <label for="comment">Comment</label>
+                        <input type="text" id="comment" name="comment" value="<%= budget.comment %>"" >
                         <label for="status">Status</label>
                         <select name="status">
                             <option value="None"></option>
