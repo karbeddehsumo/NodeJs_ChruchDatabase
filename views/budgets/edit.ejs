@@ -7,20 +7,31 @@
         <div class="create-blog content">
             <h2><%= title %></h2>
             
-                    <form action="/budgets/edited/<%= budget._id %>" method="post">
-                        <input type="hidden" id="church" name="church" value="<%= budget.church %>"" required>
-                        <input type="hidden" id="type" name="type" value="<%= budget.type %>"" required>
+                    <form action="/budgets/edited/<%= budget.budgetId %>" method="post">
+                        <input type="hidden" id="church" name="church" value="<%= budget.churchId %>"" required>
+                        <input type="text" id="type" name="type" value="<%= budget.type %>"" readonly>
                         <label for="year">Year</label>
-                        <input type="text" id="year" name="year" value="<%= budget.year %>"" required>
-                        <label for="fund">Fund</label>
-                        <select name="fund">
-                            <option value="None"></option>
+                        <select name="year">
+                            <option value="0"></option>
+                            <% if(budgetYear.length > 0) { %>
+                                <% budgetYear.forEach(year => { %>
+                                    <% if(year === budget.year) { %>
+                                        <option value= "<%= year %>" selected ><%= year %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= year %>"><%= year %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <label for="fundId">Fund</label>
+                        <select name="fundId">
+                            <option value="0"></option>
                             <% if(funds.length > 0) { %>
                                 <% funds.forEach(fund => { %>
-                                    <% if(fund.name === budget.fund.name) { %>
-                                        <option value= "<%= fund._id %>" selected ><%= fund.name %></option> 
+                                    <% if(fund.name === budget.fund) { %>
+                                        <option value= "<%= fund.fundId %>" selected ><%= fund.name %></option> 
                                         <% } else { %>
-                                          <option value= "<%= fund._id %>"><%= fund.name %></option> 
+                                          <option value= "<%= fund.fundId %>"><%= fund.name %></option> 
                                     <% } %>
                                 <% }) %>
                             <% } %>

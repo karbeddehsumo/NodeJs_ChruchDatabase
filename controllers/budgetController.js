@@ -13,7 +13,7 @@ const budget_index = async (req, res) => {
   const churchId = req.params.id;
     pool.getConnection((err, connection) => {
       if(err) throw err; 
-      connection.query('SELECT * FROM budget WHERE churchId = ?',[churchId], (err, result) => {
+      connection.query('SELECT b.budgetId, b.year, b.amount, c.name as type, f.name as fund FROM budget as b inner join fund as f ON b.fundId = f.fundId inner join constant as c on b.typeId = c.constantId WHERE b.churchId = ?',[churchId], (err, result) => {
         connection.release();
         if(err){
           console.log('we have mysql error');
@@ -30,7 +30,7 @@ const budget_details = (req, res) => {
     const budgetId = req.params.id;
     pool.getConnection((err, connection) => {
       if(err) throw err;
-      connection.query('SELECT * FROM budget left join fund on budget.fundId = fund.fundId WHERE budgetId  = ?', [budgetId], (err, result) => {
+      connection.query('SELECT b.budgetId, b.year, b.amount, c.name as type, f.typeId, f.name as fund FROM budget as b inner join fund as f ON b.fundId = f.fundId inner join constant as c on b.typeId = c.constantId WHERE b.churchId = ? AND b.budgetId  = ?', [global.churchId, budgetId], (err, result) => {
         connection.release();
         if(err){
           console.log('we have mysql error');
@@ -38,6 +38,8 @@ const budget_details = (req, res) => {
         }
         else
         {
+          global.budgetFundType = result[0].type;
+          global.budgetFundTypeId = result[0].typeId;
           res.render("budgets/details", { budget: result[0], title: 'budget Details'})
         }
     });
@@ -55,7 +57,7 @@ const budget_create_get = async (req, res) => {
       if(err) throw err;
      connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', fundType], (err, fund) => {
          _fundTypeId = fund[0].constantId;
-         connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', 'Both'], (err, both) => {
+         connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', 'Income/Expense'], (err, both) => {
            _both = both[0].constantId;
       connection.query('SELECT name, fundId FROM fund WHERE churchId = ? AND typeId in (?, ?) AND status = ?',[churchId, _both, _fundTypeId, 'Active'], (err, result) => {
         connection.release();
@@ -144,25 +146,27 @@ const budget_delete_get = async (req, res) => {
 
 const budget_edit_get = async (req, res) => {
   const budgetId = req.params.id;
+    const fundType = req.params.type;
+    let year = new Date().getFullYear();
+    var budgetYear = [year-1,year,year+1]
+    console.log('Inside budget edit - budget type id');
+    console.log(global.budgetFundTypeId);
+
     pool.getConnection((err, connection) => {
+      let _fundTypeId;
+      let _both;
       let _status;
-      let _venue;
-      let _ministries;
-      let _access;
+      let _funds;
       if(err) throw err;
-     connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
-          _status = status;
-      });
-      connection.query('SELECT name, constantId FROM constant WHERE category = ? and churchId = ? ',['Venue',global.churchId], (err, venue) => {
-        _venue = venue;
-      });
-      connection.query('SELECT name, constantId FROM constant WHERE category = ? ',['Access'], (err, access) => {
-          _access = access;
-      });
-      connection.query('SELECT name, ministryId FROM ministry WHERE churchId = ? AND status = ?',[global.churchId,'Active'], (err, ministries) => {
-        _ministries = ministries;
-      });
-      connection.query('SELECT * FROM budget WHERE budgetId = ?', [budgetId], (err, result) => {
+      connection.query('SELECT fundId, name FROM fund WHERE churchId = ? AND typeId = ?',[global.churchId, global.budgetFundTypeId], (err, fund) => {
+        _funds = fund;
+      connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
+        _status = status;
+     connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', global.budgetFundType], (err, fund) => {
+         _fundTypeId = fund[0].constantId;
+         connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', 'Income/Expense'], (err, both) => {
+           _both = both[0].constantId;
+      connection.query('SELECT b.status, b.budgetId, b.year, b.amount, c.name as type, f.name as fund FROM budget as b inner join fund as f ON b.fundId = f.fundId inner join constant as c on b.typeId = c.constantId WHERE b.churchId = ? AND b.budgetId = ?',[global.churchId, budgetId], (err, result) => {
         connection.release();
         if(err){
           console.log('we have mysql error');
@@ -170,12 +174,14 @@ const budget_edit_get = async (req, res) => {
         }
         else
         {
-          console.log('Inside budget edit');
-          console.log(_ministries);
-          res.render("budgets/edit", { budget: result[0], title: 'Edit budget', status: _status, venues: _venue, access: _access, ministries: _ministries, moment})
+            res.render("budgets/edit", { budget: result[0], title: 'Edit budget', status: _status, funds: _funds, fundType, budgetYear,fundTypeId: _fundTypeId})
         }
+      });
     });
-    });
+  });
+  });
+});
+});
   }
 
 const budget_edit = async (req, res) => {
