@@ -11,7 +11,7 @@
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" >
                 <label for="purchaseDate">Purchase Date</label>
-                <input type="date" id="purchaseDate" name="purchaseDate" >
+                <input type="date" id="purchaseDate" name="purchaseDate" value="<%= new Date().toISOString().substr(0,10) %>">
                 <label for="value">Value</label>
                 <input type="text" id="value" name="value" >
                 <label for="quantity">Quantity</label>
@@ -21,7 +21,7 @@
                 <label for="assignedTo">Assigned To</label>
                 <input type="text" id="assignedTo" name="assignedTo" >
                 <label for="assignedDate">Assigned Date</label>
-                <input type="date" id="assignedDate" name="assignedDate" >
+                <input type="date" id="assignedDate" name="assignedDate" value="<%= new Date().toISOString().substr(0,10) %>">
                 <label for="condition">Condition</label>
                 <select name="condition">
                     <option value="None"></option>

@@ -9,11 +9,11 @@
             <div class="content" >
                 <p><%= income.checkNumber %></p>
     
-            <a class="edit blogs" href="/incomes/edit/<%= income._id %>">
+            <a class="edit blogs" href="/incomes/edit/<%= income.incomeId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/incomes/delete/<%= income._id %>">
+           <a class="delete blogs" href="/incomes/delete/<%= income.incomeId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     

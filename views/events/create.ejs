@@ -12,9 +12,9 @@
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" required>
                 <label for="startDate">Start Date</label>
-                <input type="datetime-local" id="startDate" name="startDate" >
+                <input type="datetime-local" id="startDate" name="startDate" value="<%= new Date().toISOString().substr(0,10) %>">
                 <label for="endDate">End Date</label>
-                <input type="datetime-local" id="endDate" name="endDate" >
+                <input type="datetime-local" id="endDate" name="endDate" value="<%= new Date().toISOString().substr(0,10) %>">
                 <label>Select Host Ministries:</label>
                 <label for="ministry1">Ministry 1</label>
                 <select name="ministry1">

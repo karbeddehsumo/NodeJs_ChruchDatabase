@@ -12,6 +12,8 @@
                         <input type="text" id="accountName" name="accountName" value="<%= bank.accountName %>"" required>                        
                         <label for="accountNumber">Account Number</label>
                         <input type="text" id="accountNumber" name="accountNumber" value="<%= bank.accountNumber %>"" required>
+                        <label for="shortAccountName">Short Name</label>
+                        <input type="text" id="shortAccountName" name="shortAccountName" value="<%= bank.shortAccountName %>"" value="" required>
                         <label for="description">Description</label>
                         <input type="text" id="description" name="description" value="<%= bank.description %>"" required>                        
                         <label>Is Budgeted<input type="checkbox" id="isBudgeted" name="isBudgeted" <%= bank.isBudgeted.check ? "checked" : null %> ></label>

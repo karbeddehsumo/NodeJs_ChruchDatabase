@@ -27,9 +27,9 @@
                 <textarea type="text" id="story" name="story" cols="40" rows="7"></textarea>
     
                 <label for="publishStartDate">Publish Start Date</label>
-                <input type="date" id="publishStartDate" name="publishStartDate" >  
+                <input type="date" id="publishStartDate" name="publishStartDate" value="<%= new Date().toISOString().substr(0,10) %>">  
                 <label for="publishEndDate">Publish End Date</label>
-                <input type="date" id="publishEndDate" name="publishEndDate" >
+                <input type="date" id="publishEndDate" name="publishEndDate" value="<%= new Date().toISOString().substr(0,10) %>">
                 <label for="author">Author</label>
                 <input type="text" id="author" name="author" >
                 <button>Submit</button>

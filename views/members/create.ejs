@@ -16,7 +16,7 @@
                 <label for="middleName">Middle Name</label>
                 <input type="text" id="middleName" name="middleName">
                 <label for="dob">Birth Date</label>
-                <input type="date" id="dob" name="dob" >
+                <input type="date" id="dob" name="dob" value="<%= new Date().toISOString().substr(0,10) %>">
                 <label for="gender">Gender</label>
                 <select name="gender">
                     <option value="None"></option>
@@ -38,7 +38,7 @@
                 </select>
 
                 <label for="membershipDate">Membership Since</label>
-                <input type="date" id="membershipDate" name="membershipDate" >
+                <input type="date" id="membershipDate" name="membershipDate" value="<%= new Date().toISOString().substr(0,10) %>">
                 <label for="contactType">contact Type</label>
                 <select name="contactType">
                     <option value="0"></option>

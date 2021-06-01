@@ -5,33 +5,69 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
+            <h1><%= global.churchName %></h1>
+            <h2>Add Income</h2>
             <form action="/incomes" method="POST">
                 <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
                 <label for="fundId">Fund</label>
-                <select name="fund">
-                    <option value="None"></option>
+                <select name="fundId">
+                    <option value="0"></option>
                     <% if(funds.length > 0) { %>
                         <% funds.forEach(fund => { %>
-                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <option value="<%= fund.fundId %>"><%= fund.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
                 <label for="incomeDate">Date</label>
-                <input type="date" id="incomeDate" name="incomeDate" value="<%= todayDate %>" required>
+                <input type="date" id="incomeDate" name="incomeDate" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="cashAmount">Cash Amount</label>
-                <input type="text" id="cashAmount" name="cashAmount" required>
+                <input type="number" id="cashAmount" name="cashAmount" placeholder="0">
                 <label for="checkAmount">Check Amount</label>
-                <input type="text" id="checkAmount" name="checkAmount" >
+                <input type="number" id="checkAmount" name="checkAmount" placeholder="0">
                 <label for="coinAmount">Coin Amount</label>
-                <input type="text" id="coinAmount" name="coinAmount" >
+                <input type="number" id="coinAmount" name="coinAmount" placeholder="0">
+                <label for="checkNumber">Check #</label>
+                <input type="text" id="checkNumber" name="checkNumber" >
                 <label for="total">Total</label>
-                <input type="text" id="total" name="total"  readonly>
+                <input type="number" id="total" name="total"  readonly>
                 <label for="comment">Comment</label>
                 <input type="text" id="comment" name="comment" >
+                <input type="hidden" id="status" name="status" value="Not Committed">
                 <button>Submit</button>
             </form>
         </div>
         <%- include('../partials/footer.ejs') %>
+        <script type="text/javascript">
+            let cash = document.getElementById("cashAmount");
+            let check = document.getElementById("checkAmount");
+            let coin = document.getElementById("coinAmount");
+
+            cash.addEventListener('change', function () {
+                setTotal(cash.value, check.value, coin.value);
+            });
+            check.addEventListener('change', function () {
+                setTotal(cash.value, check.value, coin.value);
+            });
+            coin.addEventListener('change', function () {
+                setTotal(cash.value, check.value, coin.value);
+            });
+
+            function setTotal(cash, check, coin)
+            {
+                if(cash.length == 0){
+                cash = 0;
+                }
+                if(check.length == 0){
+                check = 0;
+                }
+                if(coin.length == 0){
+                coin = 0;
+                }
+
+                var total = document.getElementById("total");
+                total.value =  parseFloat(cash) + parseFloat(check) + parseFloat(coin);
+            }
+            </script>
     </body>
 
 </html>

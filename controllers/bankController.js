@@ -56,11 +56,12 @@ const bank_create_post = async (req, res) => {
   const bankId = req.params.id;
   pool.getConnection((err, connection) => {
     if(err) throw err; 
-    connection.query('INSERT INTO bank SET churchId = ?, accountName = ?, accountNumber = ?, description = ?, status = ?, enteredBy = ?, dateEntered = ?',
+    connection.query('INSERT INTO bank SET churchId = ?, accountName = ?, accountNumber = ?, shortAccountName = ?, description = ?, status = ?, enteredBy = ?, dateEntered = ?',
     [
       req.body.churchId,
       req.body.accountName,
       req.body.accountNumber,
+      req.body.shortAccountName,
       req.body.description,
       req.body.status,
       global.userId,
@@ -148,10 +149,11 @@ const bank_edit = async (req, res) => {
  const bankId = req.params.id;
 pool.getConnection((err, connection) => {
   if(err) throw err;
-  connection.query('UPDATE bank SET  accountName = ?, accountNumber = ?, description = ?, isBudgeted = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE bankID = ?',
+  connection.query('UPDATE bank SET  accountName = ?, accountNumber = ?, shortAccountName = ?, description = ?, isBudgeted = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE bankID = ?',
   [
     req.body.accountName,
     req.body.accountNumber,
+    req.body.shortAccountName,
     req.body.description,
     req.body.isBudgeted,
     req.body.status,

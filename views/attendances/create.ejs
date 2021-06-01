@@ -9,7 +9,7 @@
                 <label for="memberId">Member</label>
                 <input type="text" id="memberId" name="memberId" required>
                 <label for="calendarId">Date</label>
-                <input type="date" id="calendarId" name="calendarId" required>
+                <input type="date" id="calendarId" name="calendarId" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="rollcall">Roll</label>
                 <input type="checkbox" id="rollcall" name="rollcall" required>
                 <button>Submit</button>

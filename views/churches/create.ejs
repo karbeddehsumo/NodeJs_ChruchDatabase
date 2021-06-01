@@ -11,7 +11,7 @@
                 <label for="tagName">Tag Name</label>
                 <input type="text" id="tagName" name="tagName" placeholder="Example, UpperRoomChurch; No spaces allowed" required>
                 <label for="founded">Date Founded</label>
-                <input type="date" id="founded" name="founded" required>
+                <input type="date" id="founded" name="founded" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="city">City</label>
                 <input type="text" id="city" name="city" >
                 <label for="country">Country</label>

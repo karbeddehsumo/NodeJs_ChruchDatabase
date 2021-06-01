@@ -23,7 +23,7 @@
                 <label for="checkNumber">Check Number</label>
                 <input type="text" id="checkNumber" name="checkNumber" >
                 <label for="expenseDate">Date</label>
-                <input type="date" id="expenseDate" name="expenseDate" required>
+                <input type="date" id="expenseDate" name="expenseDate" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="comment">Comment</label>
                 <input type="text" id="comment" name="comment" >
                 <label for="statusId">Status</label>

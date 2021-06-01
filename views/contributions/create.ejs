@@ -17,7 +17,7 @@
                     <% } %>
                 </select>
                 <label for="contributionDate">Date</label>
-                <input type="date" id="contributionDate" name="contributionDate" required>
+                <input type="date" id="contributionDate" name="contributionDate" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="amount">Amount</label>
                 <input type="text" id="amount" name="amount" required >
                 <label for="checkNumber">Check Number</label>

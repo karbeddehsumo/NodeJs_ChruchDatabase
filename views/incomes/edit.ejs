@@ -8,20 +8,36 @@
             <h2><%= title %></h2>
             
                     <form action="/incomes/edited/<%= income._id %>" method="post">
+                        <input type="hidden" id="churchId" name="churchId" value="<%= income.churchId %>"">         
                         <label for="fundId">Income Type</label>
-                        <input type="text" id="fundId" name="fundId" value="<%= income.fundId %>"" required>
+                        <select name="fundId">
+                            <option value="0"></option>
+                            <% if(funds.length > 0) { %>
+                                <% funds.forEach(fund => { %>
+                                    <% if(fund.fundId === income.fundId) { %>
+                                        <option value= "<%= fund.fundId %>" selected ><%= fund.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= fund.fundId %>"><%= fund.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
                         <label for="incomeDate">Date</label>
-                        <input type="date" id="incomeDate" name="incomeDate" value="<%= income.incomeDate %>"" required>
+                        <input type="date" id="incomeDate" name="incomeDate" value="<%= income.incomeDate.toISOString().substr(0,10) %>"" required>
                         <label for="cashAmount">Cash Amount</label>
-                        <input type="text" id="cashAmount" name="cashAmount" value="<%= income.cashAmount %>"" required>
+                        <input type="text" id="cashAmount" name="cashAmount" value="<%= income.cashAmount %>"" onchange="myFunction()">
                         <label for="checkAmount">Check Amount</label>
-                        <input type="text" id="checkAmount" name="checkAmount" value="<%= income.checkAmount %>"" >
+                        <input type="text" id="checkAmount" name="checkAmount" value="<%= income.checkAmount %>"" onchange="myFunction()">
                         <label for="coinAmount">Coin Amount</label>
-                        <input type="text" id="coinAmount" name="coinAmount" value="<%= income.coinAmount %>"" >
+                        <input type="text" id="coinAmount" name="coinAmount" value="<%= income.coinAmount %>"" onchange="myFunction()">
                         <label for="checkNumber">Check Number</label>
                         <input type="text" id="checkNumber" name="checkNumber" value="<%= income.checkNumber %>"" >
+                        <label for="total">Total</label>
+                        <input type="text" id="total" name="total" value="<%= income.total %>"" readonly>
                         <label for="comment">Comment</label>
                         <input type="text" id="comment" name="comment" value="<%= income.comment %>"" >
+                        <label for="status">Status</label>
+                        <input type="text" id="status" name="status" value="<%= income.status %>"" readonly >
                         <button>Submit</button>
                     </form>
               
@@ -29,6 +45,37 @@
         </div>
         <%- include('../partials/footer.ejs') %>
 
+        <script type="text/javascript">
+             let cash = document.getElementById("cashAmount");
+            let check = document.getElementById("checkAmount");
+            let coin = document.getElementById("coinAmount");
+
+            cash.addEventListener('change', function () {
+                setTotal(cash.value, check.value, coin.value);
+            });
+            check.addEventListener('change', function () {
+                setTotal(cash.value, check.value, coin.value);
+            });
+            coin.addEventListener('change', function () {
+                setTotal(cash.value, check.value, coin.value);
+            });
+
+            function setTotal(cash, check, coin)
+            {
+                if(cash.length == 0){
+                cash = 0;
+                }
+                if(check.length == 0){
+                check = 0;
+                }
+                if(coin.length == 0){
+                coin = 0;
+                }
+
+                var total = document.getElementById("total");
+                total.value =  parseFloat(cash) + parseFloat(check) + parseFloat(coin);
+            }
+        </script>
     
     </body>
 

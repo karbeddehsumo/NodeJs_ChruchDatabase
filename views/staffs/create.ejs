@@ -30,7 +30,7 @@
                 <label for="supervisor">Supervisor</label>
                 <input type="text" id="supervisor" name="supervisor" >
                 <label for="dateHired">Hire Date</label>
-                <input type="date" id="dateHired" name="dateHired" >
+                <input type="date" id="dateHired" name="dateHired" value="<%= new Date().toISOString().substr(0,10) %>">
                 <button>Submit</button>
             </form>
         </div>
