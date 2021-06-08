@@ -30,7 +30,11 @@
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" >
                 <label for="isBudgeted">Is Budgeted</label>
-                <input type="checkbox" id="isBudgeted" name="isBudgeted" >
+                <select name="isBudgeted">
+                    <option value="None"></option>
+                    <option value= "1" selected >Yes</option> 
+                    <option value= "0">No</option> 
+                </select>
                 <input type="hidden" id="status" name="status" value="Active">
                 <button>Submit</button>
             </form>

@@ -5,29 +5,28 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
-            <form action="/expense" method="POST">
+            <form action="/expenses" method="POST">
                 <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
                 <label for="fundId">Expense Type</label>
-                <select name="fund">
+                <select name="fundId">
                     <option value="None"></option>
                     <% if(funds.length > 0) { %>
                         <% funds.forEach(fund => { %>
-                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <option value="<%= fund.fundId %>"><%= fund.name %>(<%= fund.shortAccountName %>)</option>
                         <% }) %>
                     <% } %>
                 </select>        
                 <label for="payee">Payee</label>
                 <input type="text" id="payee" name="payee" required>
                 <label for="amount">Amount</label>
-                <input type="text" id="amount" name="amount" >
+                <input type="number" id="amount" step="any" name="amount" >
                 <label for="checkNumber">Check Number</label>
                 <input type="text" id="checkNumber" name="checkNumber" >
                 <label for="expenseDate">Date</label>
                 <input type="date" id="expenseDate" name="expenseDate" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="comment">Comment</label>
                 <input type="text" id="comment" name="comment" >
-                <label for="statusId">Status</label>
-                <input type="text" id="statusId" name="statusId"  >
+                <input type="hidden" id="status" name="status" value="Not Committed" >
 
                 <button>Submit</button>
             </form>

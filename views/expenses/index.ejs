@@ -7,12 +7,14 @@
             <h1><%= global.churchName %></h1>
             <a href="/expenses/create/<%= churchId %>">Add Expense</a>
             <h2>All Expenses</h2>
-            <% if(expenses !== undefined ) { %>
+            <% if(expenses == null ) { %>
                 <p>No expenses data available</p>
                <% } else { %>
                 <% if(expenses.length > 0) { %>
                     <% expenses.forEach(expense => { %>
-                        <a class="single" href="/expenses/<%= expense._id %>" >
+                        <a class="single" href="/expenses/<%= expense.expenseId %>" >
+                    <h3><%= expense.payee %></h3>      
+                    <h3><%= expense.date %></h3>      
                     <h3 class="title"><%= expense.amount %> </h3>
                     <p class="snippet"><%= expense.checkNumber %></p>
                     </a>

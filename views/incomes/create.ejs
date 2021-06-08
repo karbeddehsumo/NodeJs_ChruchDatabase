@@ -14,20 +14,18 @@
                     <option value="0"></option>
                     <% if(funds.length > 0) { %>
                         <% funds.forEach(fund => { %>
-                        <option value="<%= fund.fundId %>"><%= fund.name %></option>
+                        <option value="<%= fund.fundId %>"><%= fund.name %>(<%= fund.shortAccountName %>)</option>
                         <% }) %>
                     <% } %>
                 </select>
                 <label for="incomeDate">Date</label>
                 <input type="date" id="incomeDate" name="incomeDate" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="cashAmount">Cash Amount</label>
-                <input type="number" id="cashAmount" name="cashAmount" placeholder="0">
+                <input type="number" id="cashAmount" name="cashAmount" step="any" placeholder="0">
                 <label for="checkAmount">Check Amount</label>
-                <input type="number" id="checkAmount" name="checkAmount" placeholder="0">
+                <input type="number" id="checkAmount" name="checkAmount" step="any" placeholder="0">
                 <label for="coinAmount">Coin Amount</label>
-                <input type="number" id="coinAmount" name="coinAmount" placeholder="0">
-                <label for="checkNumber">Check #</label>
-                <input type="text" id="checkNumber" name="checkNumber" >
+                <input type="number" id="coinAmount" name="coinAmount" step="any" placeholder="0">
                 <label for="total">Total</label>
                 <input type="number" id="total" name="total"  readonly>
                 <label for="comment">Comment</label>
@@ -43,29 +41,29 @@
             let coin = document.getElementById("coinAmount");
 
             cash.addEventListener('change', function () {
-                setTotal(cash.value, check.value, coin.value);
+                setTotal(cash, check, coin);
             });
             check.addEventListener('change', function () {
-                setTotal(cash.value, check.value, coin.value);
+                setTotal(cash, check, coin);
             });
             coin.addEventListener('change', function () {
-                setTotal(cash.value, check.value, coin.value);
+                setTotal(cash, check, coin);
             });
 
             function setTotal(cash, check, coin)
             {
-                if(cash.length == 0){
-                cash = 0;
+                if(cash.value.length == 0){
+                  cash.value = 0;
                 }
-                if(check.length == 0){
-                check = 0;
+                if(check.value.length == 0){
+                  check.value = 0;
                 }
-                if(coin.length == 0){
-                coin = 0;
+                if(coin.value.length == 0){
+                  coin.value = 0;
                 }
 
                 var total = document.getElementById("total");
-                total.value =  parseFloat(cash) + parseFloat(check) + parseFloat(coin);
+                total.value =  parseFloat(cash.value) + parseFloat(check.value) + parseFloat(coin.value);
             }
             </script>
     </body>

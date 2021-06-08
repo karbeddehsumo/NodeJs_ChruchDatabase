@@ -1,0 +1,46 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="create-blog content">
+            <form action="/expenses/edited/<%= expense.expenseId %>" method="post">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>"">
+                <label for="fundId">Expense Type</label>
+                <select name="fundId">
+                    <option value="0"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                            <% if(fund.fundId === expense.fundId) { %>
+                                <option value= "<%= fund.fundId %>" selected ><%= fund.name %></option> 
+                                <% } else { %>
+                                  <option value= "<%= fund.fundId %>"><%= fund.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>      
+                <label for="payee">Payee</label>
+                <input type="text" id="payee" name="payee" value="<%= expense.payee %>" required>
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" step="any" value="<%= expense.amount %>"" >
+                <label for="checkNumber">Check Number</label>
+                <input type="text" id="checkNumber" name="checkNumber" value="<%= expense.checkNumber %>"">
+                <label for="expenseDate">Date</label>
+                <input type="date" id="expenseDate" name="expenseDate" value="<%= expense.expenseDate.toISOString().substr(0,10) %>"" required>
+                <label for="comment">Comment</label>
+                <input type="text" id="comment" name="comment" value="<%= expense.comment %>"">
+                <label for="status">Status</label>
+                <input type="text" id="status" name="status" value="<%= expense.status %>" readonly >
+                <label for="enteredBy">Entered By</label>
+                <input type="text" id="enteredBy" name="enteredBy" value="<%= expense.enteredBy %>"" readonly >
+                <label for="dateEntered">Date Entered</label>
+                <input type="text" id="dateEntered" name="dateEntered" value="<%= expense.dateEntered.toISOString().substr(0,10) %>"" readonly>
+
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

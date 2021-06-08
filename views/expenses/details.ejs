@@ -5,15 +5,15 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="details content">
-            <h2><%= contribution.contributionType %></h2>
+            <h2><%= expense.payee %></h2>
             <div class="content" >
-                <p><%= contribution.amount %></p>
+                <p><%= expense.amount %></p>
     
-            <a class="edit blogs" href="/expenses/edit/<%= contribution._id %>">
+            <a class="edit blogs" href="/expenses/edit/<%= expense.expenseId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/expenses/delete/<%= contribution._id %>">
+           <a class="delete blogs" href="/expenses/delete/<%= expense.expenseId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     

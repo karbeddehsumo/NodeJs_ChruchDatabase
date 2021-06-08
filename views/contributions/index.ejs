@@ -11,8 +11,8 @@
                <% } else { %>
                 <% if(members.length > 0) { %>
                     <% members.forEach(member => { %>
-                        <a class="single" href="/contributions/<%= member._id %>" >
-                    <h3 class="title"><%= member.lastName %>, <%= member.firstName %> <a href="/contributions/create/<%= member._id %>">Add Contribution</a></h3>                  
+                        <a class="single" href="/contributions/<%= member.memberId %>" >
+                    <h3 class="title"><%= member.lastName %>, <%= member.firstName %> <a href="/contributions/create/<%= member.memberId %>">Add Contribution</a></h3>                  
                     </a>
                     <% }) %>
                 <% } %>

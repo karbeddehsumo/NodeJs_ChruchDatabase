@@ -7,7 +7,7 @@
         <div class="create-blog content">
             <h2><%= title %></h2>
             
-                    <form action="/incomes/edited/<%= income._id %>" method="post">
+                    <form action="/incomes/edited/<%= income.incomeId %>" method="post">
                         <input type="hidden" id="churchId" name="churchId" value="<%= income.churchId %>"">         
                         <label for="fundId">Income Type</label>
                         <select name="fundId">
@@ -25,13 +25,11 @@
                         <label for="incomeDate">Date</label>
                         <input type="date" id="incomeDate" name="incomeDate" value="<%= income.incomeDate.toISOString().substr(0,10) %>"" required>
                         <label for="cashAmount">Cash Amount</label>
-                        <input type="text" id="cashAmount" name="cashAmount" value="<%= income.cashAmount %>"" onchange="myFunction()">
+                        <input type="number" id="cashAmount" name="cashAmount" step="any" value="<%= income.cashAmount %>"" onchange="myFunction()">
                         <label for="checkAmount">Check Amount</label>
-                        <input type="text" id="checkAmount" name="checkAmount" value="<%= income.checkAmount %>"" onchange="myFunction()">
+                        <input type="number" id="checkAmount" name="checkAmount" step="any" value="<%= income.checkAmount %>"" onchange="myFunction()">
                         <label for="coinAmount">Coin Amount</label>
-                        <input type="text" id="coinAmount" name="coinAmount" value="<%= income.coinAmount %>"" onchange="myFunction()">
-                        <label for="checkNumber">Check Number</label>
-                        <input type="text" id="checkNumber" name="checkNumber" value="<%= income.checkNumber %>"" >
+                        <input type="number" id="coinAmount" name="coinAmount" step="any" value="<%= income.coinAmount %>"" onchange="myFunction()">
                         <label for="total">Total</label>
                         <input type="text" id="total" name="total" value="<%= income.total %>"" readonly>
                         <label for="comment">Comment</label>
@@ -46,34 +44,34 @@
         <%- include('../partials/footer.ejs') %>
 
         <script type="text/javascript">
-             let cash = document.getElementById("cashAmount");
+            let cash = document.getElementById("cashAmount");
             let check = document.getElementById("checkAmount");
             let coin = document.getElementById("coinAmount");
 
             cash.addEventListener('change', function () {
-                setTotal(cash.value, check.value, coin.value);
+                setTotal(cash, check, coin);
             });
             check.addEventListener('change', function () {
-                setTotal(cash.value, check.value, coin.value);
+                setTotal(cash, check, coin);
             });
             coin.addEventListener('change', function () {
-                setTotal(cash.value, check.value, coin.value);
+                setTotal(cash, check, coin);
             });
 
             function setTotal(cash, check, coin)
             {
-                if(cash.length == 0){
-                cash = 0;
+                if(cash.value.length == 0){
+                  cash.value = 0;
                 }
-                if(check.length == 0){
-                check = 0;
+                if(check.value.length == 0){
+                  check.value = 0;
                 }
-                if(coin.length == 0){
-                coin = 0;
+                if(coin.value.length == 0){
+                  coin.value = 0;
                 }
 
                 var total = document.getElementById("total");
-                total.value =  parseFloat(cash) + parseFloat(check) + parseFloat(coin);
+                total.value =  parseFloat(cash.value) + parseFloat(check.value) + parseFloat(coin.value);
             }
         </script>
     
