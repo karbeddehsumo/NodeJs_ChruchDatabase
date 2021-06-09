@@ -36,6 +36,11 @@
                         <input type="text" id="comment" name="comment" value="<%= income.comment %>"" >
                         <label for="status">Status</label>
                         <input type="text" id="status" name="status" value="<%= income.status %>"" readonly >
+                        <label for="enteredBy">Entered By</label>
+                        <input type="text" id="enteredBy" name="enteredBy" value="<%= income.enteredBy %>"" readonly >
+                        <label for="dateEntered">Date Entered</label>
+                        <input type="text" id="dateEntered" name="dateEntered" value="<%= income.dateEntered.toLocaleDateString() %>"" readonly>
+
                         <button>Submit</button>
                     </form>
               

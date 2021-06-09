@@ -13,17 +13,19 @@ const contribution_index = async (req, res) => {
   const churchId = req.params.id;
     pool.getConnection((err, connection) => {
       if(err) throw err; 
-      connection.query('SELECT * FROM contribution WHERE churchId = ?',[churchId], (err, result) => {
+      connection.query('SELECT * FROM member WHERE churchId = ? AND status = ?',[churchId, 'Active'], (err, result) => {
+        connection.query('SELECT c.contributionId, c.amount, c.contributionDate, t.name AS fundType, m.lastName, m.firstName, m.middleName, m.memberId  FROM contribution AS c INNER JOIN member AS m ON c.memberId = m.memberId INNER JOIN constant AS t ON c.typeId = t.constantId WHERE c.churchId = ?',[global.churchId], (err, contributionList) => {       
         connection.release();
         if(err){
           console.log('we have mysql error');
         }
         else
         {
-            res.render('contributions/index', { title: 'All contributions', contributions: result, churchId: churchId })
+            res.render('contributions/index', { title: 'All contributions', members: result, churchId: churchId, contributionList })
         }
     });
     });
+  });
 }
 
 const contribution_details = (req, res) => {
@@ -45,24 +47,34 @@ const contribution_details = (req, res) => {
 }
 
 const contribution_create_get = (req, res) => {
-    const churchId = req.params.id;
-    res.render('contributions/create', {title: 'Create a New contribution', churchId});
+    const memberId = req.params.id;
+    pool.getConnection((err, connection) => {
+      if(err) throw err; 
+      connection.query('SELECT * FROM constant WHERE churchId = ? AND category = ?',[global.churchId, 'Member Contribution Type'], (err, contributionTypes) => {
+         connection.release();
+        if(err){
+          console.log('we have mysql error');
+        }
+        else
+        {
+            res.render('contributions/create', { title: 'Create a New contribution', contributionTypes, churchId: global.churchId, memberId })
+        }
+    });
+  });
 }
 
 const contribution_create_post = async (req, res) => {
-  const contributionId = req.params.id;
   pool.getConnection((err, connection) => {
     if(err) throw err; 
-    connection.query('INSERT INTO contribution SET churchId = ?, category = ?, name = ?, value1 = ?, value2 = ?, value3 = ?, sort = ?, status = ?, enteredBy = ?, dateEntered = ?',
+    connection.query('INSERT INTO contribution SET churchId = ?, memberId = ?, amount = ?, typeId = ?, checkNumber = ?, contributionDate = ?, comment = ?, enteredBy = ?, dateEntered = ?',
     [
       req.body.churchId,
-      req.body.category,
-      req.body.name,
-      req.body.value1,
-      req.body.value2,
-      req.body.value3,
-      req.body.sort,
-      req.body.status,
+      req.body.memberId,
+      req.body.amount,
+      req.body.typeId,
+      req.body.checkNumber,
+      req.body.contributionDate,
+      req.body.comment,
       global.userId,
       new Date()
     ],
@@ -122,12 +134,9 @@ const contribution_delete_get = async (req, res) => {
 const contribution_edit_get = async (req, res) => {
   const contributionId = req.params.id;
     pool.getConnection((err, connection) => {
-      let _status;
       if(err) throw err;
-     connection.query('SELECT name FROM contribution WHERE category = ? ',['Status'], (err, status) => {
-          _status = status;
-      });
-      connection.query('SELECT * FROM contribution WHERE contributionId = ?', [contributionId], (err, result) => {
+     connection.query('SELECT * FROM contribution WHERE contributionId = ? ',[contributionId], (err, result) => {
+      connection.query('SELECT * FROM constant WHERE churchId = ? AND category = ?',[global.churchId, 'Member Contribution Type'], (err, contributionTypes) => {
         connection.release();
         if(err){
           console.log('we have mysql error');
@@ -135,32 +144,27 @@ const contribution_edit_get = async (req, res) => {
         }
         else
         {
-          res.render("contributions/edit", { contribution: result[0], title: 'Edit contribution', status: _status})
+          res.render("contributions/edit", { contribution: result[0], title: 'Edit contribution', contributionTypes})
         }
     });
     });
+  });
   }
 
 const contribution_edit = async (req, res) => {
-  console.log('Inside edit constatn');
-  console.log(req.body);
-  console.log('params');
-  console.log(req.params.id);
  const contributionId = req.params.id;
 pool.getConnection((err, connection) => {
   if(err) throw err;
-  connection.query('UPDATE contribution SET churchId = ?, category = ?, name = ?, value1 = ?, value2 = ?, value3 = ?, sort = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE contributionID = ?',
+  connection.query('UPDATE contribution SET memberId = ?, amount = ?, typeId = ?, checkNumber = ?, contributionDate = ?, comment = ?, enteredBy = ?, dateEntered = ? WHERE contributionID = ?',
   [
-    req.body.churchId,
-    req.body.category,
-    req.body.name,
-    req.body.value1,
-    req.body.value2,
-    req.body.value3,
-    req.body.sort,
-    req.body.status,
-    global.userId,
-    Date.now(),
+      req.body.memberId,
+      req.body.amount,
+      req.body.typeId,
+      req.body.checkNumber,
+      req.body.contributionDate,
+      req.body.comment,
+      global.userId,
+      new Date(),
     contributionId
   ],
   (err, result) => {

@@ -35,7 +35,7 @@
                 <label for="enteredBy">Entered By</label>
                 <input type="text" id="enteredBy" name="enteredBy" value="<%= expense.enteredBy %>"" readonly >
                 <label for="dateEntered">Date Entered</label>
-                <input type="text" id="dateEntered" name="dateEntered" value="<%= expense.dateEntered.toISOString().substr(0,10) %>"" readonly>
+                <input type="text" id="dateEntered" name="dateEntered" value="<%= expense.dateEntered.toLocaleDateString() %>"" readonly>
 
                 <button>Submit</button>
             </form>

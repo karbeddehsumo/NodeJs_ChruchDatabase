@@ -6,20 +6,21 @@
 
         <div class="create-blog content">
             <form action="/contributions" method="POST">
-                <input type="hidden" id="memberId" name="memberId" required value="<%= memberId %>"" required>
-                <label for="contributionTypeId">Fund</label>
-                <select name="contributionType">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>"" >
+                <input type="hidden" id="memberId" name="memberId" value="<%= memberId %>"" >
+                <label for="typeId">Fund</label>
+                <select name="typeId">
                     <option value="None"></option>
                     <% if(contributionTypes.length > 0) { %>
                         <% contributionTypes.forEach(contributionType => { %>
-                        <option value="<%= contributionType._id %>"><%= contributionType.name %></option>
+                        <option value="<%= contributionType.constantId %>"><%= contributionType.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
                 <label for="contributionDate">Date</label>
                 <input type="date" id="contributionDate" name="contributionDate" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="amount">Amount</label>
-                <input type="text" id="amount" name="amount" required >
+                <input type="number" id="amount" name="amount" step="any" required >
                 <label for="checkNumber">Check Number</label>
                 <input type="text" id="checkNumber" name="checkNumber" >
                 <label for="comment">Comment</label>

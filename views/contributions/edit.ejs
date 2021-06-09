@@ -7,27 +7,34 @@
         <div class="create-blog content">
             <h1><%= global.churchName %></h1>
             <h2>Edit Contribution</h2>
-            <form action="/contributions" method="POST">
-                <input type="text" id="churchId" name="churchId" value="<%= churchId %>"" required>
-                <input type="text" id="memberId" name="memberId" required value="<%= memberId %>"" required>
-                <label for="contributionTypeId">Fund</label>
-                <select name="contributionTypeId">
+            <form action="/contributions/edited/<%= contribution.contributionId %>" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= contribution.churchId %>"" required>
+                <input type="hidden" id="memberId" name="memberId" required value="<%= contribution.memberId %>"" required>
+                <label for="typeId">Fund</label>
+                <select name="typeId">
                     <option value="None"></option>
                     <% if(contributionTypes.length > 0) { %>
                         <% contributionTypes.forEach(contributionType => { %>
-                        <option value="<% contributionType %>"><%= contributionType._id %></option>
+                            <% if(contributionType.constantId === contribution.typeId) { %>
+                                <option value= "<%= contributionType.constantId %>" selected ><%= contributionType.name %></option> 
+                                <% } else { %>
+                                  <option value= "<%= contributionType.constantId %>"><%= contributionType.name %></option> 
+                            <% } %>
                         <% }) %>
                     <% } %>
                 </select>
                 <label for="contributionDate">Date</label>
-                <input type="date" id="contributionDate" name="contributionDate" value="<%= moment(contribution.contributionDate).format('YYYY-MM-DD') %>"" required>
+                <input type="date" id="contributionDate" name="contributionDate" value="<%= contribution.contributionDate.toISOString().substr(0,10) %>"" required>
                 <label for="amount">Amount</label>
-                <input type="text" id="amount" name="amount" value="<%= contribution.amount %>"" required >
+                <input type="number" id="amount" name="amount" step="any" value="<%= contribution.amount %>"" required >
                 <label for="checkNumber">Check Number</label>
                 <input type="text" id="checkNumber" name="checkNumber" value="<%= contribution.checkNumber %>"" >
                 <label for="comment">Comment</label>
-                <input type="textbox" id="comment" name="comment" value="<%= contribution.amount %>"" >
+                <input type="textbox" id="comment" name="comment" value="<%= contribution.comment %>"" >
+                <label for="enteredBy">Entered By</label>
                 <input type="text" id="enteredBy" name="enteredBy" value="<%= contribution.enteredBy %>"" readonly>
+                <label for="dateEntered">Date Entered</label>
+                <input type="text" id="dateEntered" name="dateEntered" value="<%= contribution.dateEntered.toLocaleDateString() %>"" readonly>
                 <button>Submit</button>
             </form>
         </div>

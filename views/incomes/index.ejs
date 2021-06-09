@@ -14,7 +14,7 @@
                     <% incomes.forEach(income => { %>
                         <a class="single" href="/incomes/<%= income.incomeId %>" >
                     <h3 class="title"><%= income.fundType %> </h3>
-                    <h3 class="title"><%= income.incomeDate.toISOString().substr(0,10) %> </h3>
+                    <h3 class="title"><%= income.incomeDate.toLocaleDateString() %> </h3>
                     <h3 class="title"><%= income.cashAmount %> </h3>
                     <h3 class="title"><%= income.checkAmount %> </h3>
                     <h3 class="title"><%= income.coinAmount %> </h3>

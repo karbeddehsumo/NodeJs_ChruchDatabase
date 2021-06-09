@@ -11,13 +11,22 @@
                <% } else { %>
                 <% if(members.length > 0) { %>
                     <% members.forEach(member => { %>
-                        <a class="single" href="/contributions/<%= member.memberId %>" >
-                    <h3 class="title"><%= member.lastName %>, <%= member.firstName %> <a href="/contributions/create/<%= member.memberId %>">Add Contribution</a></h3>                  
-                    </a>
+                        <a class="single" href="/contributions/create/<%= member.memberId %>" ><%= member.lastName %>, <%= member.firstName %></a>                  
                     <% }) %>
                 <% } %>
            <% } %>
-            
+           <% if(contributionList === null) { %>
+            <p>No contributions data available</p>
+           <% } else { %>
+            <% if(contributionList.length > 0) { %>
+                <% contributionList.forEach(contribution => { %>
+                    <a class="single" href="/contributions/edit/<%= contribution.contributionId %>" >
+                        <%= contribution.lastName %>, <%= contribution.firstName %> <%= contribution.middleName %>
+                        <%= contribution.fundtype %> <%= contribution.amount %> <%= contribution.contributionDate.toLocaleDateString() %>
+                    </a>                  
+                <% }) %>
+            <% } %>
+       <% } %>
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>
