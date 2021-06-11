@@ -81,8 +81,6 @@ const constant_create_post = async (req, res) => {
 }
 
 const constant_delete = async (req, res) => {
-  console.log('Inside delete');
-  console.log(req.params.id);
  const constantId = req.params.id;
  pool.getConnection((err, connection) => {
   if(err) throw err;

@@ -29,8 +29,6 @@ const bank_index = async (req, res) => {
 
 const bank_details = (req, res) => {
     const bankId = req.params.id;
-    console.log('bank details');
-    console.log(bankId);
     pool.getConnection((err, connection) => {
       if(err) throw err;
       connection.query('SELECT * FROM bank WHERE bankId = ?', [bankId], (err, result) => {
@@ -82,8 +80,6 @@ const bank_create_post = async (req, res) => {
 }
 
 const bank_delete = async (req, res) => {
-  console.log('Inside delete');
-  console.log(req.params.id);
  const bankId = req.params.id;
  pool.getConnection((err, connection) => {
   if(err) throw err;
@@ -123,10 +119,7 @@ const bank_delete_get = async (req, res) => {
 const bank_edit_get = async (req, res) => {
   const bankId = req.params.id;
     pool.getConnection((err, connection) => {
-      let _status;
      connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
-          _status = status;
-      });
       connection.query('SELECT * FROM bank WHERE bankId = ?', [bankId], (err, result) => {
         connection.release();
         if(err){
@@ -135,17 +128,14 @@ const bank_edit_get = async (req, res) => {
         }
         else
         {
-          res.render("banks/edit", { bank: result[0], title: 'Edit bank', status: _status, moment})
+          res.render("banks/edit", { bank: result[0], title: 'Edit bank', status, moment})
         }
     });
     });
+  });
   }
 
 const bank_edit = async (req, res) => {
-  console.log('Inside edit constatn');
-  console.log(req.body);
-  console.log('params');
-  console.log(req.params.id);
  const bankId = req.params.id;
 pool.getConnection((err, connection) => {
   if(err) throw err;

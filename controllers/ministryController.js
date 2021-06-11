@@ -47,16 +47,16 @@ const ministry_details = (req, res) => {
 const ministry_create_get = (req, res) => {
     const churchId = req.params.id;
     res.render('ministries/create', {title: 'Create a New ministry', churchId});
+    
 }
 
 const ministry_create_post = async (req, res) => {
   const ministryId = req.params.id;
   pool.getConnection((err, connection) => {
     if(err) throw err; 
-    connection.query('INSERT INTO ministry SET churchId = ?, parentMinistryId = ?, name = ?, description = ?, contact = ?, email = ?, phone = ?, missionStatement = ?, status = ?, enteredBy = ?, dateEntered = ?',
+    connection.query('INSERT INTO ministry SET churchId = ?, name = ?, description = ?, contact = ?, email = ?, phone = ?, missionStatement = ?, status = ?, enteredBy = ?, dateEntered = ?',
     [
       req.body.churchId,
-      req.body.parentMinistryId,
       req.body.name,
       req.body.description,
       req.body.contact,
@@ -65,7 +65,7 @@ const ministry_create_post = async (req, res) => {
       req.body.missionStatement,
       req.body.status,
       global.userId,
-      Date.now()
+      new Date()
     ],
     (err, result) => {
       connection.release();
@@ -75,7 +75,7 @@ const ministry_create_post = async (req, res) => {
       }
       else
       {
-        res.redirect("ministries/church/" + ministryId);
+        res.redirect("ministries/church/" + req.body.churchId);
       }
   });
   });

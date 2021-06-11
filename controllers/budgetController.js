@@ -52,14 +52,10 @@ const budget_create_get = async (req, res) => {
     let year = new Date().getFullYear();
     var budgetYear = [year-1,year,year+1]
     pool.getConnection((err, connection) => {
-      let _fundTypeId;
-      let _both;
       if(err) throw err;
      connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', fundType], (err, fund) => {
-         _fundTypeId = fund[0].constantId;
          connection.query('SELECT constantId FROM constant WHERE category = ? and name = ?',['Fund Type', 'Income/Expense'], (err, both) => {
-           _both = both[0].constantId;
-      connection.query('SELECT name, fundId FROM fund WHERE churchId = ? AND typeId in (?, ?) AND status = ?',[churchId, _both, _fundTypeId, 'Active'], (err, result) => {
+      connection.query('SELECT name, fundId FROM fund WHERE churchId = ? AND typeId in (?, ?) AND status = ?',[churchId, both[0].constantId, fund[0].constantId, 'Active'], (err, result) => {
         connection.release();
         if(err){
           console.log('we have mysql error');
@@ -67,7 +63,7 @@ const budget_create_get = async (req, res) => {
         }
         else
         {
-            res.render('budgets/create', {title: 'Create a New budget', churchId, funds: result, fundType, budgetYear,fundTypeId: _fundTypeId  })
+            res.render('budgets/create', {title: 'Create a New budget', churchId, funds: result, fundType, budgetYear,fundTypeId: fund[0].constantId  })
         }
     });
   });

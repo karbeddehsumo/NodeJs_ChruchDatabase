@@ -4,15 +4,17 @@
           <%- include('../partials/nav.ejs') %>
           
         <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/attendances/create/<%= attendance.attendanceId %>">Add Attendance</a>
             <h2>All Attendances</h2>
-            <% if(attendances !== undefined) { %>
+            <% if(attendances === null) { %>
                 <p>No attendances data available</p>
                <% } else { %>
                 <% if(attendances.length > 0) { %>
                     <% attendances.forEach(attendance => { %>
-                        <a class="single" href="/attendances/<%= attendance._id %>" >
-                    <h3 class="title"><%= attendance.calendarId %> </h3>
-                    <p class="snippet"><%= attendance.memberId %></p>
+                        <a class="single" href="/attendances/<%= attendance.attendanceId %>" >
+                    <h3 class="title"><%= attendance.title %> </h3>
+                    <p class="snippet"><%= attendance.lastName %>, <%= attendance.firstName %></p>
                     </a>
                     <% }) %>
                 <% } %>

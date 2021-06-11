@@ -47,15 +47,9 @@ const calendar_details = (req, res) => {
 const calendar_create_get = (req, res) => {
     const churchId = req.params.id;
     pool.getConnection((err, connection) => {
-      let _access;
-      let _venue;
       if(err) throw err;
      connection.query('SELECT name, constantId FROM constant WHERE category = ? ',['Access'], (err, access) => {
-          _access = access;
-      });
-      connection.query('SELECT name, constantId FROM constant WHERE category = ? ',['Venue'], (err, venue) => {
-        _venue = venue;
-    });
+      connection.query('SELECT name, constantId FROM constant WHERE category = ? ',['Venue'], (err, venues) => {
       connection.query('SELECT * FROM ministry WHERE churchId = ? AND status = ?', [churchId, 'Active'], (err, result) => {
         connection.release();
         if(err){
@@ -64,10 +58,12 @@ const calendar_create_get = (req, res) => {
         }
         else
         {
-          res.render("calendars/create", { ministries: result, title: 'Add New Calendar', access: _access, venues: _venue, churchId})
+          res.render("calendars/create", { ministries: result, title: 'Add New Calendar', access, venues, churchId})
         }
     });
   });
+});
+});
 }
 
 const calendar_create_post = async (req, res) => {
@@ -106,8 +102,6 @@ const calendar_create_post = async (req, res) => {
 }
 
 const calendar_delete = async (req, res) => {
-  console.log('Inside delete');
-  console.log(req.params.id);
  const calendarId = req.params.id;
  pool.getConnection((err, connection) => {
   if(err) throw err;
@@ -147,23 +141,11 @@ const calendar_delete_get = async (req, res) => {
 const calendar_edit_get = async (req, res) => {
   const calendarId = req.params.id;
     pool.getConnection((err, connection) => {
-      let _status;
-      let _venue;
-      let _ministries;
-      let _access;
       if(err) throw err;
      connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
-          _status = status;
-      });
       connection.query('SELECT name, constantId FROM constant WHERE category = ? and churchId = ? ',['Venue',global.churchId], (err, venue) => {
-        _venue = venue;
-      });
       connection.query('SELECT name, constantId FROM constant WHERE category = ? ',['Access'], (err, access) => {
-          _access = access;
-      });
       connection.query('SELECT name, ministryId FROM ministry WHERE churchId = ? AND status = ?',[global.churchId,'Active'], (err, ministries) => {
-        _ministries = ministries;
-      });
       connection.query('SELECT * FROM calendar WHERE calendarId = ?', [calendarId], (err, result) => {
         connection.release();
         if(err){
@@ -174,10 +156,14 @@ const calendar_edit_get = async (req, res) => {
         {
           console.log('Inside calendar edit');
           console.log(_ministries);
-          res.render("calendars/edit", { calendar: result[0], title: 'Edit calendar', status: _status, venues: _venue, access: _access, ministries: _ministries, moment})
+          res.render("calendars/edit", { calendar: result[0], title: 'Edit calendar', status, venues, access, ministries, moment})
         }
     });
     });
+  });
+  });
+  });
+  });
   }
 
 const calendar_edit = async (req, res) => {

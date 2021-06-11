@@ -135,11 +135,8 @@ pool.getConnection((err, connection) => {
 const church_edit_get = async (req, res) => {
 const churchId = req.params.id;
   pool.getConnection((err, connection) => {
-    let _status;
     if(err) throw err;
    connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
-        _status = status;
-    });
     connection.query('SELECT * FROM church WHERE churchId = ?', [churchId], (err, result) => {
       connection.release();
       if(err){
@@ -148,10 +145,11 @@ const churchId = req.params.id;
       }
       else
       {
-        res.render("churches/edit", { church: result[0], title: 'Edit church', status: _status, moment})
+        res.render("churches/edit", { church: result[0], title: 'Edit church', status, moment})
       }
   });
   });
+});
 }
 
 const church_edit = async (req, res) => {

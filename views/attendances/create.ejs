@@ -5,15 +5,46 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
+            <h1><%= global.churchName %></h1>
+            <h2>Attendance: <%= calendar.title %> - <%= calendar.startDate.toLocaleDateString() %></h2>
             <form action="/attendances" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <input type="hidden" id="calendarId" name="calendarId" value="<%= calendar.calendarId %>">
                 <label for="memberId">Member</label>
-                <input type="text" id="memberId" name="memberId" required>
+                <select name="memberId">
+                    <option value="0"></option>
+                    <% if(memberList.length > 0) { %>
+                        <% memberList.forEach(member => { %>
+                        <option value="<%= member.memberId %>"><%= member.lastName %>, <%= member.firstName %> <%= member.middleName %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
                 <label for="calendarId">Date</label>
-                <input type="date" id="calendarId" name="calendarId" value="<%= new Date().toISOString().substr(0,10) %>" required>
-                <label for="rollcall">Roll</label>
-                <input type="checkbox" id="rollcall" name="rollcall" required>
+                <input type="date" id="calendarDate" name="calendarDate" value="<%= calendar.startDate.toISOString().substr(0,10) %>" readonly>
+                <label for="roll">Roll</label>
+                <input type="checkbox" id="roll" name="roll" checked="true" value="true">
                 <button>Submit</button>
             </form>
+
+            <h2>All Attendances</h2>
+            <% if(attendees === null) { %>
+                <p>No attendances data available</p>
+               <% } else { %>
+                <% if(attendees.length > 0) { %>
+                    <% attendees.forEach(attendance => { %>
+                        <a class="single" href="/attendances/edit/<%= attendance.attendanceId %>" >
+                    <span class="snippet"><%= attendance.lastName %>, <%= attendance.firstName %> <%= attendance.middleName %></span>
+                    <% if(attendance.roll === 1) { %>
+                        <span style="color:green">...Present</span>
+                    <% } else { %>
+                        <span style="color:red">...Absent</span>
+                    <% } %>
+                     <br>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+
         </div>
         <%- include('../partials/footer.ejs') %>
     </body>
