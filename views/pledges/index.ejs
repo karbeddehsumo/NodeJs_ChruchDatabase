@@ -12,8 +12,8 @@
                <% } else { %>
                 <% if(pledges.length > 0) { %>
                     <% pledges.forEach(pledge => { %>
-                        <a class="single" href="/pledges/<%= pledge._id %>" >
-                    <h3 class="title"><%= pledge.member.lastName %>, <%= pledge.member.firstName %> - <%= pledge.amount %> </h3>
+                        <a class="single" href="/pledges/<%= pledge.pledgeId %>" >
+                    <h3 class="title"><%= pledge.lastName %>, <%= pledge.firstName %> - <%= pledge.amount %> <%= pledge.fund %> <%= pledge.frequency %></h3>
                             </a>
                     <% }) %>
                 <% } %>

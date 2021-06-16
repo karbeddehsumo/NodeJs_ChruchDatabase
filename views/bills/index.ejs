@@ -1,0 +1,27 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/bills/create/<%= churchId %>">Add Bill</a>
+            <h2>All Bills</h2>
+            <% if( bills === null) { %>
+                <p>No bills data available</p>
+               <% } else { %>
+                <% if(bills.length > 0) { %>
+                    <% bills.forEach(bill => { %>
+                        <a class="single" href="/bills/<%= bill.billId %>" >
+                    <h3 class="title"><%= bill.name %> </h3>
+                    <p class="snippet"><%= bill.dueDate %></p>
+                    </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,0 +1,71 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Edit Pledge</h2>
+        <div class="create-blog content">
+            <form action="/pledges/edited/<%= pledge.pledgeId %>" method="post">
+                <input type="hidden" id="churchId" name="churchId" value="<%= pledge.churchId %>">
+                <label for="year">Year</label>
+                <select name="year">
+                    <option value="None"></option>
+                    <% if(pledgeYear.length > 0) { %>
+                        <% pledgeYear.forEach(year => { %>
+                        <% if(year === pledge.year) { %>
+                                <option value= "<%= year %>" selected ><%= year %></option> 
+                                <% } else { %>
+                                  <option value= "<%= year %>"><%= year %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="memberId">Member</label>
+                <select name="memberId">
+                    <option value="None"></option>
+                    <% if(members.length > 0) { %>
+                        <% members.forEach(member => { %>
+                        <% if(member.memberId === pledge.memberId) { %>
+                                <option value= "<%= member.memberId %>" selected ><%= member.lastName %>, <%= member.firstName %> <%= member.middleName %></option> 
+                                <% } else { %>
+                                  <option value= "<%= member.memberId %>"><%= member.lastName %>, <%= member.firstName %> <%= member.middleName %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="fundId">Fund</label>
+                <select name="fundId">
+                    <option value="None"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                        <% if(fund.constantId === pledge.fundId) { %>
+                                <option value= "<%= fund.constantId %>" selected ><%= fund.name %></option> 
+                                <% } else { %>
+                                  <option value= "<%= fund.constantId %>"><%= fund.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" step="any" value="<%= pledge.amount %>"">
+                <label for="frequencyId">Frequency</label>
+                <select name="frequencyId">
+                    <option value="None"></option>
+                    <% if(frequencies.length > 0) { %>
+                        <% frequencies.forEach(frequency => { %>
+                        <% if(frequency.constantId === pledge.frequencyId) { %>
+                                <option value= "<%= frequency.constantId %>" selected ><%= frequency.name %></option> 
+                                <% } else { %>
+                                  <option value= "<%= frequency.constantId %>"><%= frequency.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

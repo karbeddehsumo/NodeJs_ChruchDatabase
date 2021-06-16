@@ -6,16 +6,16 @@
 
         <div class="details content">
             <h1><%= global.churchName %></h1>
-            <h2><%= pledge.member.firstName %> <%= pledge.member.lastName %></h2>
+            <h2><%= pledge.firstName %> <%= pledge.lastName %></h2>
             <div class="content" >
-                <p><%= pledge.fund.name %></p>
+                <p><%= pledge.fund %></p>
                 <p><%= pledge.amount %></p>
     
-            <a class="edit blogs" href="/pledges/edit/<%= pledge._id %>">
+            <a class="edit blogs" href="/pledges/edit/<%= pledge.pledgeId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a class="delete blogs" href="/pledges/delete/<%= pledge._id %>">
+           <a class="delete blogs" href="/pledges/delete/<%= pledge.pledgeId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     

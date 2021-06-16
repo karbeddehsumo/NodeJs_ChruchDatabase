@@ -17,32 +17,32 @@
                         <% }) %>
                     <% } %>
                 </select>
-                <label for="member">Member</label>
-                <select name="member">
+                <label for="memberId">Member</label>
+                <select name="memberId">
                     <option value="None"></option>
                     <% if(members.length > 0) { %>
                         <% members.forEach(member => { %>
-                        <option value="<%= member._id %>"><%= member.lastName %>, <%= member.firstName %></option>
+                        <option value="<%= member.memberId %>"><%= member.lastName %>, <%= member.firstName %></option>
                         <% }) %>
                     <% } %>
                 </select>
-                <label for="fund">Fund</label>
-                <select name="fund">
+                <label for="fundId">Fund</label>
+                <select name="fundId">
                     <option value="None"></option>
                     <% if(funds.length > 0) { %>
                         <% funds.forEach(fund => { %>
-                        <option value="<%= fund._id %>"><%= fund.name %></option>
+                        <option value="<%= fund.constantId %>"><%= fund.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
                 <label for="amount">Amount</label>
-                <input type="text" id="amount" name="amount" >
-                <label for="frequency">Frequency</label>
-                <select name="frequency">
+                <input type="number" id="amount" name="amount" step="any" placeholder="0.00">
+                <label for="frequencyId">Frequency</label>
+                <select name="frequencyId">
                     <option value="None"></option>
                     <% if(frequencies.length > 0) { %>
                         <% frequencies.forEach(frequency => { %>
-                        <option value="<%= frequency._id %>"><%= frequency.name %></option>
+                        <option value="<%= frequency.constantId %>"><%= frequency.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
