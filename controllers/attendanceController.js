@@ -9,7 +9,7 @@ const mysql = require('mysql');
   });
 
 
-const attendance_index = async (req, res) => {
+const attendance_index = (req, res) => {
   const calendarId = req.params.id;
     pool.getConnection((err, connection) => {
       if(err) throw err; 

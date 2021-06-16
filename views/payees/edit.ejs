@@ -1,0 +1,81 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Payee</h2>
+        <div class="create-blog content">
+            <form action="/payees/edited/<%= payee.payeeId %>" method="post">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="name">Payee Name</label>
+                <input type="text" id="name" name="name" value="<%= payee.name %>"" required>
+                <label for="fundId">Fund</label>
+                <select name="fundId">
+                    <option value="None"></option>
+                    <% if(funds.length > 0) { %>
+                        <% funds.forEach(fund => { %>
+                            <% if(fund.fundId === payee.fundId) { %>
+                                <option value= "<%= fund.fundId %>" selected ><%= fund.name %></option> 
+                                <% } else { %>
+                                  <option value= "<%= fund.fundId %>"><%= fund.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="typeId">Type</label>
+                <select name="typeId">
+                    <option value="None"></option>
+                    <% if(types.length > 0) { %>
+                        <% types.forEach(type => { %>
+                            <% if(type.constantId === payee.typeId) { %>
+                                <option value= "<%= type.constantId %>" selected ><%= type.name %></option> 
+                                <% } else { %>
+                                  <option value= "<%= type.constantId %>"><%= type.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="frequencyId">Frequency</label>
+                <select name="frequencyId">
+                    <option value="None"></option>
+                    <% if(frequencies.length > 0) { %>
+                        <% frequencies.forEach(frequency => { %>
+                            <% if(frequency.constantId === payee.frequencyId) { %>
+                                <option value= "<%= frequency.constantId %>" selected ><%= frequency.name %></option> 
+                                <% } else { %>
+                                  <option value= "<%= frequency.constantId %>"><%= frequency.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="accountNumber">Account</label>
+                <input type="text" id="accountNumber" name="accountNumber" value="<%= payee.accountNumber %>"">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" value="<%= payee.phone %>""> 
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" value="<%= payee.email %>"">
+                <label for="url">URL</label>
+                <input type="text" id="url" name="url" value="<%= payee.url %>"">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" value="<%= payee.description %>"">
+                <label for="status">Status</label>
+                        <select name="status">
+                            <option value="None"></option>
+                            <% if(status.length > 0) { %>
+                                <% status.forEach(statuz => { %>
+                                    <% if(statuz.name === payee.status) { %>
+                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>  
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -12,8 +12,8 @@
                <% } else { %>
                 <% if(payees.length > 0) { %>
                     <% payees.forEach(payee => { %>
-                        <a class="single" href="/payees/<%= payee._id %>" >
-                    <h3 class="title"><%= payee.payee %> - <%= payee.fund.name %> </h3>
+                        <a class="single" href="/payees/<%= payee.payeeId %>" >
+                    <h3 class="title"><%= payee.payee %> - <%= payee.name %> </h3>
                     </a>
                     <% }) %>
                 <% } %>

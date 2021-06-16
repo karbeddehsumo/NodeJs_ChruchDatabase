@@ -7,13 +7,13 @@
         <h2>Payee Details</h2>
         <div class="details content">
             <div class="content" >
-                <p><%= payee.payee %> <%= payee.fund.name %>
+                <p><%= payee.name %> <%= payee.phone %>
     
-            <a href="/payees/edit/<%= payee._id %>">
+            <a href="/payees/edit/<%= payee.payeeId %>">
                 <img src="/pencil.svg" alt="edit icon">
             </a>
            
-           <a href="/payees/delete/<%= payee._id %>">
+           <a href="/payees/delete/<%= payee.payeeId %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
     </p>

@@ -9,10 +9,11 @@ const mysql = require('mysql');
   });
 
 
-const expense_index = async (req, res) => {
+const expense_index = (req, res) => {
   const churchId = req.params.id;
     pool.getConnection((err, connection) => {
       if(err) throw err; 
+      connection.query('SELECT l.endBalance, l.endRevenue, l.bankBalanceId, b.accountName FROM bankBalance As l INNER JOIN bank As b ON b.bankId = l.bankId WHERE churchId = ?',[churchId], (err, bankBalances) => {
       connection.query('SELECT * FROM expense WHERE churchId = ?',[churchId], (err, result) => {
         connection.release();
         if(err){
@@ -20,10 +21,11 @@ const expense_index = async (req, res) => {
         }
         else
         {
-            res.render('expenses/index', { title: 'All expenses', expenses: result, churchId: churchId })
+            res.render('expenses/index', { title: 'All expenses', expenses: result, churchId: churchId, bankBalances })
         }
     });
     });
+  });
 }
 
 const expense_details = (req, res) => {
