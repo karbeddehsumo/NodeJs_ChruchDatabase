@@ -8,12 +8,13 @@
         <div class="create-blog content">
             <form action="/properties" method="POST">
                 <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <input type="hidden" id="pictureId" name="pictureId">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" >
                 <label for="purchaseDate">Purchase Date</label>
-                <input type="date" id="purchaseDate" name="purchaseDate" value="<%= new Date().toISOString().substr(0,10) %>">
+                <input type="date" id="purchaseDate" name="purchaseDate" value="<%= new Date() %>">
                 <label for="value">Value</label>
-                <input type="text" id="value" name="value" >
+                <input type="number" id="value" name="value" step="any" placeholder="0.00">
                 <label for="quantity">Quantity</label>
                 <input type="text" id="quantity" name="quantity" >
                 <label for="location">Location</label>
@@ -21,13 +22,13 @@
                 <label for="assignedTo">Assigned To</label>
                 <input type="text" id="assignedTo" name="assignedTo" >
                 <label for="assignedDate">Assigned Date</label>
-                <input type="date" id="assignedDate" name="assignedDate" value="<%= new Date().toISOString().substr(0,10) %>">
-                <label for="condition">Condition</label>
-                <select name="condition">
+                <input type="date" id="assignedDate" name="assignedDate" value="<%= new Date() %>">
+                <label for="conditionType">Condition</label>
+                <select name="conditionType">
                     <option value="None"></option>
                     <% if(conditions.length > 0) { %>
                         <% conditions.forEach(condition => { %>
-                        <option value="<%= condition._id %>"><%= condition.name %></option>
+                        <option value="<%= condition.constantId %>"><%= condition.name %></option>
                         <% }) %>
                     <% } %>
                 </select>
@@ -37,6 +38,8 @@
                 <input type="text" id="description" name="description" >
                 <label for="comment">Comment</label>
                 <input type="text" id="comment" name="comment" >
+                <input type="hidden" id="lastInventoryDate" name="lastInventoryDate">
+                <input type="hidden" id="status" name="status" value="Active">
                 <button>Submit</button>
             </form>
         </div>

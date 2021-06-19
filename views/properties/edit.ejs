@@ -1,0 +1,77 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Property</h2>
+        <div class="create-blog content">
+            <form action="/properties/edited/<%= property.propertyId %>" method="post">
+                <input type="hidden" id="churchId" name="churchId" value="<%= property.churchId %>"">
+                <input type="hidden" id="pictureId" name="pictureId">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="<%= property.title %>"">
+                <label for="purchaseDate">Purchase Date</label>
+                <% if(isNaN(property.purchaseDate.valueOf())) { %>
+                    <input type="date" id="purchaseDate" name="purchaseDate" value="<%=  new Date() %>"">
+                    <% } else { %>
+                        <input type="date" id="purchaseDate" name="purchaseDate" value="<%= property.purchaseDate.toISOString().substr(0,10) %>"">
+                <% } %>                  <label for="value">Value</label>
+                <input type="number" id="value" name="value" step="any" value="<%= property.value %>"">
+                <label for="quantity">Quantity</label>
+                <input type="text" id="quantity" name="quantity" value="<%= property.quantity %>"">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" value="<%= property.location %>"">
+                <label for="assignedTo">Assigned To</label>
+                <input type="text" id="assignedTo" name="assignedTo" value="<%= property.assignedTo %>"">
+                <label for="assignedDate">Assigned Date</label>
+                <% if(isNaN(property.assignedDate.valueOf())) { %>
+                    <input type="date" id="assignedDate" name="assignedDate" value="<%=  new Date() %>"">
+                    <% } else { %>
+                        <input type="date" id="assignedDate" name="assignedDate" value="<%= property.assignedDate.toISOString().substr(0,10) %>"">
+                <% } %>                
+                <label for="conditionType">Condition</label>
+                <select name="conditionType">
+                    <option value="None"></option>
+                    <% if(conditions.length > 0) { %>
+                        <% conditions.forEach(condition => { %>
+                            <% if(condition.constantId === property.conditionType) { %>
+                                <option value="<%= condition.constantId %>" selected ><%= condition.name %></option> 
+                                <% } else { %>
+                                  <option value="<%= condition.constantId %>"><%= condition.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="tagNumber">Tag Number</label>
+                <input type="text" id="tagNumber" name="tagNumber" value="<%= property.tagNumber %>"">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" value="<%= property.description %>"" >
+                <label for="comment">Comment</label>
+                <input type="text" id="comment" name="comment" value="<%= property.comment %>"" >
+                <label for="lastInventoryDate">Last Inventory Date</label>
+                <% if(isNaN(property.lastInventoryDate.valueOf())) { %>
+                    <input type="date" id="lastInventoryDate" name="lastInventoryDate" value="<%=  new Date() %>"">
+                    <% } else { %>
+                        <input type="date" id="lastInventoryDate" name="lastInventoryDate" value="<%= property.lastInventoryDate.toISOString().substr(0,10) %>"">
+                <% } %>
+                <label for="status">Status</label>
+                <select name="status">
+                    <option value="None"></option>
+                    <% if(status.length > 0) { %> 
+                        <% status.forEach(statuz => { %>
+                            <% if(statuz.name === property.status) { %>
+                                <option value="<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                <% } else { %>
+                                    <option value="<%= statuz.name %>"><%= statuz.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>  
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

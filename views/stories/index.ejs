@@ -5,16 +5,15 @@
           
         <div class="blogs content">
             <h1><%= global.churchName %></h1>
-            <a href="/stories/create/<%= churchId %>">Add New Staff</a>
+            <a href="/stories/create/<%= churchId %>">Add New Story</a>
             <h2>Story List</h2>
             <% if( stories === null) { %>
                 <p>No story data available</p>
                <% } else { %>
                 <% if(stories.length > 0) { %>
                     <% stories.forEach(story => { %>
-                        <a class="single" href="/stories/<%= story._id %>" >
+                        <a class="single" href="/stories/<%= story.storyId %>" >
                     <h3 class="title"><%= story.title %></h3>
-                    <h3 class="title"><%= story.subTitle %></h3>
                             </a>
                     <% }) %>
                 <% } %>

@@ -60,18 +60,18 @@
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" value="<%= payee.description %>"">
                 <label for="status">Status</label>
-                        <select name="status">
-                            <option value="None"></option>
-                            <% if(status.length > 0) { %>
-                                <% status.forEach(statuz => { %>
-                                    <% if(statuz.name === payee.status) { %>
-                                        <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
-                                        <% } else { %>
-                                          <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
-                                    <% } %>
-                                <% }) %>
+                <select name="status">
+                    <option value="None"></option>
+                    <% if(status.length > 0) { %>
+                        <% status.forEach(statuz => { %>
+                            <% if(statuz.name === payee.status) { %>
+                                <option value= "<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                <% } else { %>
+                                    <option value= "<%= statuz.name %>"><%= statuz.name %></option> 
                             <% } %>
-                        </select>  
+                        <% }) %>
+                    <% } %>
+                </select>  
                 <button>Submit</button>
             </form>
         </div>

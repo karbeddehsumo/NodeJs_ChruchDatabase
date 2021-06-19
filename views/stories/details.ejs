@@ -1,0 +1,27 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        
+        <%- include('../partials/nav.ejs') %>
+
+        <div class="details content">
+            <h1><%= global.churchName %></h1>
+            <h2><%= story.title %></h2>
+            <div class="content" >
+                <p><%= story.author %></p>
+    
+            <a class="edit blogs" href="/stories/edit/<%= story.storyId %>">
+                <img src="/pencil.svg" alt="edit icon">
+            </a>
+           
+           <a class="delete blogs" href="/stories/delete/<%= story.storyId %>">
+            <img src="/trashcan.svg" alt="delete icon">
+        </a>
+    
+            </div>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+            
+    </body>
+
+</html>
