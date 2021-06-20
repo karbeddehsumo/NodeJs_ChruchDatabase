@@ -1,0 +1,121 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Table</h2>
+        <div class="create-blog content">
+            <form action="/tableHeaders" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
+                <label for="ministryId">Ministry</label>
+                <select name="ministryId">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                        <option value="<%= ministry.ministryId %>"><%= ministry.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>                <label for="title">Title</label>
+                <input type="text" id="title" name="title" >
+                <label for="subTitle">SubTitle</label>
+                <input type="text" id="subTitle" name="subTitle" >
+                
+                <input type="text" id="columnName1" name="columnName1">
+                <select name="dataType1">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName2" name="columnName2">
+                <select name="dataType2">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName3" name="columnName3">
+                <select name="dataType3">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName4" name="columnName4">
+                <select name="dataType4">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName5" name="columnName5">
+                <select name="dataType5">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName6" name="columnName6">
+                <select name="dataType6">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName7" name="columnName7">
+                <select name="dataType7">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName8" name="columnName8">
+                <select name="dataType8">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName9" name="columnName9">
+                <select name="dataType9">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="text" id="columnName10" name="columnName10">
+                <select name="dataType10">
+                    <option value="None"></option>
+                    <option value="string">String</option>
+                    <option value="Number">Number (1, 2, 3...)</option>
+                    <option value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option>
+                    <option value="date">Date</option>
+                </select>
+
+                <input type="hidden" id="status" name="status" value="Active">
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

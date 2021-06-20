@@ -1,0 +1,26 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+          <%- include('../partials/nav.ejs') %>
+          
+        <div class="blogs content">
+            <h1><%= global.churchName %></h1>
+            <a href="/tableHeaders/create/<%= churchId %>">Add New Table</a>
+            <h2>Table List</h2>
+            <% if( tableHeaders === null) { %>
+                <p>No table available</p>
+               <% } else { %>
+                <% if(tableHeaders.length > 0) { %>
+                    <% tableHeaders.forEach(header => { %>
+                        <a class="single" href="/tableHeaders/<%= tableHeader.tableHeaderId %>" >
+                    <h3 class="title"><%= tableHeader.title %></h3>
+                            </a>
+                    <% }) %>
+                <% } %>
+           <% } %>
+            
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
