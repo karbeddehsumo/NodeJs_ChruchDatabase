@@ -15,7 +15,7 @@
                         <label for="title">Church Title</label>
                         <input type="text" id="title" name="title" value="<%= church.title %>"" >
                         <label for="tagName">Tag Name</label>
-                        <input type="text" id="tagName" name="tagName" value="<%= church.tagName%>"" required>
+                        <input type="text" id="tagName" name="tagName" value="<%= church.tagName %>"" required>
                         <label for="founded">Date Founded</label>
                         <input type="date" id="founded" name="founded" value="<%= moment(church.founded).format('YYYY-MM-DD') %>"" required>
                         <label for="address1">Address1</label>
@@ -34,8 +34,10 @@
                         <input type="phone" id="phone" name="phone" value="<%= church.phone %>"" >
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" value="<%= church.email %>"" >
+                        <label for="motto">Motto</label>
+                        <textarea id="motto" name="motto"><%= church.motto %></textarea>
                         <label for="vision">Vision</label>
-                        <textarea id="message"><%= church.vision %></textarea>
+                        <textarea id="vision" name="vision"><%= church.vision %></textarea>
                         <label for="status">Status</label>
                         <select name="status">
                             <option value="None"></option>

@@ -1,7 +1,10 @@
 
 //app.get('*', checkUser); //put user values in res.locals
 
-const mysql = require('mysql');
+const mysql = require('mysql2/promise');
+const constantDb = require('../db/constantDb');
+const tableDataDb = require('../db/tableDataDb');
+
   const pool = mysql.createPool({
     host:  process.env.MYSQL_HOST,
     database: process.env.MYSQL_DBNAME,

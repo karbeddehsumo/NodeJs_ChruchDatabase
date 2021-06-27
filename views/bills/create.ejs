@@ -9,7 +9,7 @@
             <h2><%= title %></h2>
             <form action="/bills" method="POST">
                 <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>">
-                <label for="payeeId">Access By</label>
+                <label for="payeeId">Payee</label>
                 <select name="payeeId" >
                     <option value="0"></option>
                     <% if(payees.length > 0) { %>
