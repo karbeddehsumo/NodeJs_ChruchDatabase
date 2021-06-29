@@ -1,3 +1,4 @@
+const { identity } = require("lodash");
 
  const get = async function getByMemberId(con, memberId, startDate, endDate) {
     const results = await con.query(`SELECT * FROM contribution WHERE memberId = ? AND contributionDate >= ? AND contributionDate <= ?`,[memberId, startDate, enddate]);
@@ -25,7 +26,7 @@ const getAll =  async function getAll(con, churchId) {
 
  const _update = async function update(con, memberId, amount, typeId, checkNumber, contributionDate, comment, enteredBy, dateEntered, id) {
   const result = await con.query(`UPDATE contribution SET memberId = ?, amount = ?, typeId = ?, checkNumber = ?, contributionDate = ?, comment = ?, enteredBy = ?, dateEntered = ? WHERE contributionId = ?`,
-  [memberId, amount, typeId, checkNumber, contributionDate, comment, enteredBy, dateEntered]
+  [memberId, amount, typeId, checkNumber, contributionDate, comment, enteredBy, dateEntered, id]
   );
 };
 

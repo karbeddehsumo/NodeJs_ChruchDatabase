@@ -19,7 +19,7 @@ const attendance_index = async (req, res) => {
   const connection = await pool.getConnection();
    try {
      const result = await connection.query('SELECT m.lastName, m.firstName, m.middleName, c.title, c.startDate, a.roll FROM attendance AS a INNER JOIN calendar as c ON a.calendarId = c.calendarId INNER JOIN member AS m ON a.memberID = m.memberID WHERE a.calendarId = ?',[calendarId])
-     res.render('attendances/index', { title: 'All attendances', attendances: result, churchId: churchId }); 
+     res.render('attendances/index', { title: 'All attendances', attendances: result[0], churchId: churchId }); 
    } catch(err) {
     throw err;
    } finally {
@@ -72,9 +72,9 @@ const attendance_create_get = async (req, res) => {
     const connection = await pool.getConnection();
    try {
      const calendar = await calendarDb.getById(connection, calendarId);
-     const memberList = await connection.query('SELECT * FROM member WHERE churchId = ? ORDER BY lastName, firstName, middleName',[global.churchId]);
-     const attendees = await connection.query('SELECT m.lastName, m.firstName, m.middleName, c.title, c.startDate, a.roll, a.attendanceId FROM attendance AS a INNER JOIN calendar as c ON a.calendarId = c.calendarId INNER JOIN member AS m ON a.memberID = m.memberID WHERE a.calendarId = ?',[calendarId]);
-     res.render('attendances/create', {title: 'Create a New attendance', churchId: global.churchId, calendar: calendar, memberList, attendees});
+     const members = await connection.query('SELECT * FROM member WHERE churchId = ? ORDER BY lastName, firstName, middleName',[global.churchId]);
+     const attendeeList = await connection.query('SELECT m.lastName, m.firstName, m.middleName, c.title, c.startDate, a.roll, a.attendanceId FROM attendance AS a INNER JOIN calendar as c ON a.calendarId = c.calendarId INNER JOIN member AS m ON a.memberID = m.memberID WHERE a.calendarId = ?',[calendarId]);
+     res.render('attendances/create', {title: 'Create a New attendance', churchId: global.churchId, calendar: calendar, memberList: members[0], attendees: attendeeList[0]});
    } catch(err) {
     throw err;
    } finally {
@@ -114,7 +114,7 @@ const attendance_create_post = async (req, res) => {
       global.userId,
       new Date()
       );
-      res.redirect("attendances/church/" + req.body.churchId);
+      res.redirect("attendances/create/" + req.body.calendarId);
     } catch(err) {
    throw err;
   } finally {

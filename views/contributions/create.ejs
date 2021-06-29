@@ -5,9 +5,11 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
+            <h2><%= title %></h2>
+            <h3><%= member.firstName %> <%= member.middleName %> <%= member.lastName %></h3>
             <form action="/contributions" method="POST">
                 <input type="hidden" id="churchId" name="churchId" value="<%= churchId %>"" >
-                <input type="hidden" id="memberId" name="memberId" value="<%= memberId %>"" >
+                <input type="hidden" id="memberId" name="memberId" value="<%= member.memberId %>"" >
                 <label for="typeId">Fund</label>
                 <select name="typeId">
                     <option value="None"></option>

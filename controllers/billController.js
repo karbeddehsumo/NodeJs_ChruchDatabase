@@ -44,7 +44,7 @@ const bill_details = async (req, res) => {
     const connection = await pool.getConnection();
     try {
       const billing = await connection.query('SELECT * FROM bill AS b INNER JOIN payee AS p ON b.payeeId = p.payeeId WHERE billId = ?', [billId]);
-      res.render("bills/details", { bill: billing[0], title: 'bill Details'})
+      res.render("bills/details", { bill: billing[0][0], title: 'bill Details'})
   
     } catch(err) {
      throw err;
@@ -187,7 +187,7 @@ const bill_edit_get = async (req, res) => {
   const billId = req.params.id;
   const connection = await pool.getConnection();
   try {
-    const bills = await constantDb.get(connection, 'Status','Active');
+    const status = await constantDb.get(connection, 'Status','Active');
     const payees = await payeeDb.getAll(connection, global.churchId);
     const bill = await billDb.getById(connection, billId);
     res.render("bills/edit", { bill, title: 'Edit bill', status, payees})
