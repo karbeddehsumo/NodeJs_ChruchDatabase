@@ -14,50 +14,69 @@ const familyDb = require('../db/familyDb');
 
 const family_index = async (req, res) => {
   const churchId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err; 
-      connection.query('SELECT * FROM family WHERE churchId = ?',[churchId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-        }
-        else
-        {
-            res.render('families/index', { title: 'All families', families: result, churchId: churchId })
-        }
-    });
-    });
+  const connection = await pool.getConnection();
+  try {
+    const result = await familyDb.getAll(connection, churchId);
+    res.render('families/index', { title: 'All families', families: result, churchId: churchId });
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err; 
+    //   connection.query('SELECT * FROM family WHERE churchId = ?',[churchId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //     }
+    //     else
+    //     {
+    //         res.render('families/index', { title: 'All families', families: result, churchId: churchId })
+    //     }
+    // });
+    // });
 }
 
-const family_details = (req, res) => {
+const family_details = async (req, res) => {
     const familyId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-      connection.query('SELECT * FROM family WHERE familyId = ?', [familyId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("families/details", { family: result[0], title: 'family Details'})
-        }
-    });
-    });
+    const connection = await pool.getConnection();
+  try {
+    const result = await familyDb.getAll(connection, churchId);
+    res.render("families/details", { family: result[0], title: 'family Details'});
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err;
+    //   connection.query('SELECT * FROM family WHERE familyId = ?', [familyId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //       console.log(err);
+    //     }
+    //     else
+    //     {
+    //       res.render("families/details", { family: result[0], title: 'family Details'})
+    //     }
+    // });
+    // });
 }
 
-const family_create_get = (req, res) => {
+const family_create_get = async (req, res) => {
     const churchId = req.params.id;
     res.render("families/create", { title: 'Add New family', churchId})
 }
 
 const family_create_post = async (req, res) => {
   const churchId = req.body.churchId;
-  pool.getConnection((err, connection) => {
-    if(err) throw err; 
-    connection.query('INSERT INTO family SET churchId = ?, familyName = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, enteredBy = ?, dateEntered = ?',
-    [
+  const connection = await pool.getConnection();
+  try {
+    const bills = await familyDb._insert(connection, 
       req.body.churchId,
       req.body.familyName,
       req.body.address1,
@@ -68,19 +87,42 @@ const family_create_post = async (req, res) => {
       req.body.country,
       global.userId,
       new Date()
-    ],
-    (err, result) => {
-      connection.release();
-      if(err){
-        console.log('we have mysql error');
-        console.log(err);
-      }
-      else
-      {
-        res.redirect("families/church/" + churchId);
-      }
-  });
-  });
+      );
+      res.redirect("families/church/" + req.body.churchId);
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+
+  // pool.getConnection((err, connection) => {
+  //   if(err) throw err; 
+  //   connection.query('INSERT INTO family SET churchId = ?, familyName = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, enteredBy = ?, dateEntered = ?',
+  //   [
+  //     req.body.churchId,
+  //     req.body.familyName,
+  //     req.body.address1,
+  //     req.body.address2,
+  //     req.body.city,
+  //     req.body.state,
+  //     req.body.zipcode,
+  //     req.body.country,
+  //     global.userId,
+  //     new Date()
+  //   ],
+  //   (err, result) => {
+  //     connection.release();
+  //     if(err){
+  //       console.log('we have mysql error');
+  //       console.log(err);
+  //     }
+  //     else
+  //     {
+  //       res.redirect("families/church/" + churchId);
+  //     }
+  // });
+  // });
 }
 
 const family_delete = async (req, res) => {
@@ -124,54 +166,84 @@ const family_delete_get = async (req, res) => {
 
 const family_edit_get = async (req, res) => {
   const familyId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-      connection.query('SELECT * FROM family WHERE familyId = ? AND churchId = ?', [familyId, global.churchId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("families/edit", { family: result[0], title: 'Edit family', familyId})
-        }
-    });
-    });
+  const connection = await pool.getConnection();
+  try {
+    const result = await expenseDb.getById(connection, familyId);
+    res.render("families/edit", { family: result, title: 'Edit family', familyId});
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err;
+    //   connection.query('SELECT * FROM family WHERE familyId = ? AND churchId = ?', [familyId, global.churchId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //       console.log(err);
+    //     }
+    //     else
+    //     {
+    //       res.render("families/edit", { family: result[0], title: 'Edit family', familyId})
+    //     }
+    // });
+    // });
   }
 
 const family_edit = async (req, res) => {
   const churchId = req.body.churchId;
  const familyId = req.params.id;
- console.log('inside family edit');
- console.log(req.body);
-pool.getConnection((err, connection) => {
-  if(err) throw err;
-  connection.query('UPDATE family SET familyName = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, enteredBy = ?, dateEntered = ? WHERE familyID = ?',
-  [
-      req.body.familyName,
-      req.body.address1,
-      req.body.address2,
-      req.body.city,
-      req.body.state,
-      req.body.zipcode,
-      req.body.country,
-      global.userId,
-      new Date(),
+ const connection = await pool.getConnection();
+ try {
+   const bills = await familyDb._insert(connection, 
+    req.body.familyName,
+    req.body.address1,
+    req.body.address2,
+    req.body.city,
+    req.body.state,
+    req.body.zipcode,
+    req.body.country,
+    global.userId,
+    new Date(),
     familyId
-  ],
-  (err, result) => {
-    connection.release();
-    if(err){
-      console.log('we have mysql error');
-      console.log(err);
-    }
-    else
-    {
-      res.redirect("/families/church/" + req.body.churchId);
-    }
-});
-});
+     );
+     res.redirect("/families/church/" + req.body.churchId);
+
+ } catch(err) {
+  throw err;
+ } finally {
+   connection.release();
+ }
+// pool.getConnection((err, connection) => {
+//   if(err) throw err;
+//   connection.query('UPDATE family SET familyName = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ?, country = ?, enteredBy = ?, dateEntered = ? WHERE familyID = ?',
+//   [
+//       req.body.familyName,
+//       req.body.address1,
+//       req.body.address2,
+//       req.body.city,
+//       req.body.state,
+//       req.body.zipcode,
+//       req.body.country,
+//       global.userId,
+//       new Date(),
+//     familyId
+//   ],
+//   (err, result) => {
+//     connection.release();
+//     if(err){
+//       console.log('we have mysql error');
+//       console.log(err);
+//     }
+//     else
+//     {
+//       res.redirect("/families/church/" + req.body.churchId);
+//     }
+// });
+// });
 }
 
 module.exports = {

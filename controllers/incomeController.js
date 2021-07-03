@@ -14,64 +14,97 @@ const incomeDb = require('../db/incomeDb');
 
 const income_index = async (req, res) => {
   const churchId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err; 
-      connection.query('SELECT i.incomeId, i.cashAmount + i.checkAmount + i.coinAmount as total, f.name as fundType, i.incomeDate, i.cashAmount, i.checkAmount, i.coinAmount, i.comment FROM income as i LEFT JOIN fund as f ON i.fundId = f.fundId LEFT JOIN bank as b ON f.bankId = b.bankId LEFT JOIN constant as c ON f.typeID = c.constantId  WHERE i.churchId = ?',[churchId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-        }
-        else
-        {
-            res.render('incomes/index', { title: 'All incomes', incomes: result, churchId: churchId })
-        }
-    });
-    });
+  const connection = await pool.getConnection();
+  try {
+    const result = await connection.query('SELECT i.incomeId, i.cashAmount + i.checkAmount + i.coinAmount as total, f.name as fundType, i.incomeDate, i.cashAmount, i.checkAmount, i.coinAmount, i.comment FROM income as i LEFT JOIN fund as f ON i.fundId = f.fundId LEFT JOIN bank as b ON f.bankId = b.bankId LEFT JOIN constant as c ON f.typeID = c.constantId  WHERE i.churchId = ?',[global.churchId]);
+    res.render('incomes/index', { title: 'All incomes', incomes: result[0], churchId });
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err; 
+    //   connection.query('SELECT i.incomeId, i.cashAmount + i.checkAmount + i.coinAmount as total, f.name as fundType, i.incomeDate, i.cashAmount, i.checkAmount, i.coinAmount, i.comment FROM income as i LEFT JOIN fund as f ON i.fundId = f.fundId LEFT JOIN bank as b ON f.bankId = b.bankId LEFT JOIN constant as c ON f.typeID = c.constantId  WHERE i.churchId = ?',[churchId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //     }
+    //     else
+    //     {
+    //         res.render('incomes/index', { title: 'All incomes', incomes: result, churchId: churchId })
+    //     }
+    // });
+    // });
 }
 
-const income_details = (req, res) => {
+const income_details = async (req, res) => {
     const incomeId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-      connection.query('SELECT * FROM income WHERE incomeId = ?', [incomeId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("incomes/details", { income: result[0], title: 'income Details'})
-        }
-    });
-    });
+    const connection = await pool.getConnection();
+  try {
+    const result = await incomeDb.getById(connection, incomeId);
+    res.render("incomes/details", { income: result, title: 'income Details'});
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err;
+    //   connection.query('SELECT * FROM income WHERE incomeId = ?', [incomeId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //       console.log(err);
+    //     }
+    //     else
+    //     {
+    //       res.render("incomes/details", { income: result[0], title: 'income Details'})
+    //     }
+    // });
+    // });
 }
 
-const income_create_get = (req, res) => {
+const income_create_get = async (req, res) => {
     const churchId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-      connection.query('SELECT f.fundId, f.name, b.shortAccountName FROM fund AS f INNER JOIN  constant AS c ON f.typeId = c.constantId INNER JOIN bank As b ON b.bankId = f.bankId WHERE f.churchId = ? AND Trim(c.name) in (?, ?) AND f.status = ?',[churchId, 'Income', 'Income & Expense', 'Active'], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render('incomes/create', {funds: result, title: 'Create a New income', churchId});
-        }
-    });
-    });
+    const connection = await pool.getConnection();
+  try {
+    const result = await connection.query('SELECT f.fundId, f.name, b.shortAccountName FROM fund AS f INNER JOIN  constant AS c ON f.typeId = c.constantId INNER JOIN bank As b ON b.bankId = f.bankId WHERE f.churchId = ? AND Trim(c.name) in (?, ?) AND f.status = ?',[churchId, 'Income', 'Income & Expense', 'Active']);
+    res.render('incomes/create', {funds: result[0], title: 'Create a New income', churchId});
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+
+
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err;
+    //   connection.query('SELECT f.fundId, f.name, b.shortAccountName FROM fund AS f INNER JOIN  constant AS c ON f.typeId = c.constantId INNER JOIN bank As b ON b.bankId = f.bankId WHERE f.churchId = ? AND Trim(c.name) in (?, ?) AND f.status = ?',[churchId, 'Income', 'Income & Expense', 'Active'], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //       console.log(err);
+    //     }
+    //     else
+    //     {
+    //       res.render('incomes/create', {funds: result, title: 'Create a New income', churchId});
+    //     }
+    // });
+    // });
     
 }
 
 const income_create_post = async (req, res) => {
   const incomeId = req.params.id;
-  pool.getConnection((err, connection) => {
-    if(err) throw err; 
-    connection.query('INSERT INTO income SET churchId = ?, fundId = ?, incomeDate = ?, cashAmount = ?, checkAmount = ?, coinAmount = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ?',
-    [
+  const connection = await pool.getConnection();
+  try {
+    const fund = await incomeDb._insert(connection, 
       req.body.churchId,
       req.body.fundId,
       req.body.incomeDate,
@@ -82,19 +115,41 @@ const income_create_post = async (req, res) => {
       req.body.status,
       global.userId,
       new Date()
-    ],
-    (err, result) => {
-      connection.release();
-      if(err){
-        console.log('we have mysql error');
-        console.log(err);
-      }
-      else
-      {
-        res.redirect("incomes/church/" + req.body.churchId);
-      }
-  });
-  });
+      );
+      res.redirect("incomes/church/" + req.body.churchId);
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+  // pool.getConnection((err, connection) => {
+  //   if(err) throw err; 
+  //   connection.query('INSERT INTO income SET churchId = ?, fundId = ?, incomeDate = ?, cashAmount = ?, checkAmount = ?, coinAmount = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ?',
+  //   [
+  //     req.body.churchId,
+  //     req.body.fundId,
+  //     req.body.incomeDate,
+  //     req.body.cashAmount,
+  //     req.body.checkAmount,
+  //     req.body.coinAmount,
+  //     req.body.comment,
+  //     req.body.status,
+  //     global.userId,
+  //     new Date()
+  //   ],
+  //   (err, result) => {
+  //     connection.release();
+  //     if(err){
+  //       console.log('we have mysql error');
+  //       console.log(err);
+  //     }
+  //     else
+  //     {
+  //       res.redirect("incomes/church/" + req.body.churchId);
+  //     }
+  // });
+  // });
 }
 
 const income_delete = async (req, res) => {
@@ -138,57 +193,88 @@ const income_delete_get = async (req, res) => {
 
 const income_edit_get = async (req, res) => {
   const incomeId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-        connection.query('SELECT f.name, f.fundId FROM fund As f INNER JOIN constant As c ON f.typeId = c.constantId WHERE f.churchId = ? AND c.name in (?, ?)  ',[global.churchId, 'Income', 'Income & Expense'], (err, funds) => {
-      connection.query('SELECT sum(cashAmount + checkAmount + coinAmount) as total, incomeId, fundId, churchId, incomeDate, cashAmount, checkAmount, coinAmount, comment, status, enteredBy, dateEntered FROM income WHERE incomeId = ?', [incomeId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("incomes/edit", { income: result[0], title: 'Edit income', funds})
-        }
-    });
-    });
-  });
+  const connection = await pool.getConnection();
+  try {
+    const fundList = await connection.query('SELECT f.name, f.fundId FROM fund As f INNER JOIN constant As c ON f.typeId = c.constantId WHERE f.churchId = ? AND c.name in (?, ?)  ',[global.churchId, 'Income', 'Income & Expense']);
+    const result = await connection.query('SELECT sum(cashAmount + checkAmount + coinAmount) as total, incomeId, fundId, churchId, incomeDate, cashAmount, checkAmount, coinAmount, comment, status, enteredBy, dateEntered FROM income WHERE incomeId = ?', [incomeId]);
+    console.log('Inside income edit get');
+  console.log(result[0]);
+    res.render("incomes/edit", { income: result[0][0], title: 'Edit income', funds: fundList[0]});
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+
+  //   pool.getConnection((err, connection) => {
+  //     if(err) throw err;
+  //       connection.query('SELECT f.name, f.fundId FROM fund As f INNER JOIN constant As c ON f.typeId = c.constantId WHERE f.churchId = ? AND c.name in (?, ?)  ',[global.churchId, 'Income', 'Income & Expense'], (err, funds) => {
+  //     connection.query('SELECT sum(cashAmount + checkAmount + coinAmount) as total, incomeId, fundId, churchId, incomeDate, cashAmount, checkAmount, coinAmount, comment, status, enteredBy, dateEntered FROM income WHERE incomeId = ?', [incomeId], (err, result) => {
+  //       connection.release();
+  //       if(err){
+  //         console.log('we have mysql error');
+  //         console.log(err);
+  //       }
+  //       else
+  //       {
+  //         res.render("incomes/edit", { income: result[0], title: 'Edit income', funds})
+  //       }
+  //   });
+  //   });
+  // });
   }
 
 const income_edit = async (req, res) => {
-  console.log('Inside edit constatn');
-  console.log(req.body);
-  console.log('params');
-  console.log(req.params.id);
  const incomeId = req.params.id;
-pool.getConnection((err, connection) => {
-  if(err) throw err;
-  connection.query('UPDATE income SET fundId = ?, incomeDate = ?, cashAmount = ?, checkAmount = ?, coinAmount = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE incomeID = ?',
-  [
-    req.body.fundId,
-    req.body.incomeDate,
-    req.body.cashAmount,
-    req.body.checkAmount,
-    req.body.coinAmount,
-    req.body.comment,
-    req.body.status,
-    global.userId,
-    new Date(),
-    incomeId
-  ],
-  (err, result) => {
-    connection.release();
-    if(err){
-      console.log('we have mysql error');
-      console.log(err);
-    }
-    else
-    {
+ const connection = await pool.getConnection();
+  try {
+    const income = await incomeDb._update(connection, 
+      req.body.fundId,
+      req.body.incomeDate,
+      req.body.cashAmount,
+      req.body.checkAmount,
+      req.body.coinAmount,
+      req.body.comment,
+      req.body.status,
+      global.userId,
+      new Date(),
+      incomeId
+      );
       res.redirect("/incomes/church/" + req.body.churchId);
-    }
-});
-});
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+// pool.getConnection((err, connection) => {
+//   if(err) throw err;
+//   connection.query('UPDATE income SET fundId = ?, incomeDate = ?, cashAmount = ?, checkAmount = ?, coinAmount = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE incomeID = ?',
+//   [
+//     req.body.fundId,
+//     req.body.incomeDate,
+//     req.body.cashAmount,
+//     req.body.checkAmount,
+//     req.body.coinAmount,
+//     req.body.comment,
+//     req.body.status,
+//     global.userId,
+//     new Date(),
+//     incomeId
+//   ],
+//   (err, result) => {
+//     connection.release();
+//     if(err){
+//       console.log('we have mysql error');
+//       console.log(err);
+//     }
+//     else
+//     {
+//       res.redirect("/incomes/church/" + req.body.churchId);
+//     }
+// });
+// });
 }
 
 module.exports = {

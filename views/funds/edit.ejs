@@ -8,8 +8,8 @@
             <h2><%= title %></h2>
             
                     <form action="/funds/edited/<%= fund.fundId %>" method="post">
-                        <input type="hidden" id="church" name="church" value="<%= fund.churchID %>"" required>
-                        <label for="name">Fund Name</label>
+                        <input type="hidden" id="churchId" name="churchId" value="<%= fund.churchId %>"" required>
+                        <label for="name">Name</label>
                         <input type="text" id="name" name="name" value="<%= fund.name %>"" required>
                         <label for="bankId">Bank</label>
                         <select name="bankId">
@@ -24,7 +24,7 @@
                                 <% }) %>
                             <% } %>
                         </select>
-                        <label for="typeId">Fund Type</label>
+                        <label for="typeId">Type</label>
                         <select name="typeId">
                             <option value="0"></option>
                             <% if(fundTypes.length > 0) { %>
@@ -37,10 +37,27 @@
                                 <% }) %>
                             <% } %>
                         </select>
+                        <label for="categoryId">Category</label>
+                        <select name="categoryId">
+                            <option value="0"></option>
+                            <% if(categories.length > 0) { %>
+                                <% categories.forEach(category => { %>
+                                    <% if(category.constantId === fund.categoryId) { %>
+                                        <option value= "<%= category.constantId %>" selected ><%= category.name %></option> 
+                                        <% } else { %>
+                                          <option value= "<%= category.constantId %>"><%= category.name %></option> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </select>
                         <label for="description">Description</label>
                         <input type="text" id="description" name="description" value="<%= fund.description %>"" >
                         <label for="isBudgeted">Is Budgeted</label>
-                        <input type="checkbox" id="isBudgeted" name="isBudgeted" value="<%= fund.isBudgeted %>"">
+                        <% if(fund.isBudgeted === 1) { %>
+                            <input type="checkbox" id="isBudgeted" name="isBudgeted" checked="true" value="true" >
+                            <% } else { %>
+                                <input type="checkbox" id="isBudgeted" name="isBudgeted" value="<%= fund.isBudgeted %>"">
+                        <% } %>
                         <label for="status">Status</label>
                         <select name="status">
                             <option value="None"></option>

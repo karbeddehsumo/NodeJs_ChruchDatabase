@@ -25,7 +25,7 @@ const getAll =  async function getAll(con, churchId) {
 
  const _update = async function update(con, fundId, amount, checkNumber, expenseDate, payee, comment, status, enteredBy, dateEntered, id) {
   const result = await con.query(`UPDATE expense SET fundId = ?, amount = ?, checkNumber = ?, expenseDate = ?, payee = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE expenseId = ?`,
-  [fundId, amount, checkNumber, expenseDate, payee, comment, status, enteredBy, dateEntered]
+  [fundId, amount, checkNumber, expenseDate, payee, comment, status, enteredBy, dateEntered, id]
   );
 };
 

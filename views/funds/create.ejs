@@ -16,7 +16,7 @@
                         <% }) %>
                     <% } %>
                 </select>
-                <label for="typeId">Fund Type</label>
+                <label for="typeId">Type</label>
                 <select name="typeId">
                     <option value="0"></option>
                     <% if(fundTypes.length > 0) { %>
@@ -25,16 +25,21 @@
                         <% }) %>
                     <% } %>
                 </select>
-                <label for="name">Fund Name</label>
-                <input type="text" id="name" name="name" required>               
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>  
+                <label for="categoryId">Category</label>
+                <select name="categoryId">
+                    <option value="0"></option>
+                    <% if(categories.length > 0) { %>
+                        <% categories.forEach(category => { %>
+                        <option value="<%= category.constantId %>"><%= category.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>             
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" >
                 <label for="isBudgeted">Is Budgeted</label>
-                <select name="isBudgeted">
-                    <option value="None"></option>
-                    <option value= "1" selected >Yes</option> 
-                    <option value= "0">No</option> 
-                </select>
+                <input type="checkbox" id="isBudgeted" name="isBudgeted" checked="true" value="true">
                 <input type="hidden" id="status" name="status" value="Active">
                 <button>Submit</button>
             </form>

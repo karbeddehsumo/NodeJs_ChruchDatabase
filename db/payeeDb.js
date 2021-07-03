@@ -33,9 +33,9 @@ const getAll =  async function getAll(con, churchId) {
    );
  };
 
- const _update = async function update(con, fundId, typeId, frequencyId, name, email, phone, url, description, accountNumber, status, enteredBy, dateEntered) {
+ const _update = async function update(con, fundId, typeId, frequencyId, name, email, phone, url, description, accountNumber, status, enteredBy, dateEntered, id) {
   const result = await con.query(`UPDATE payee SET fundId = ?, typeId = ?, frequencyId = ?, name = ?, email = ?, phone = ?, url = ?, description = ?, accountNumber = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE payeeId = ?`,
-  [fundId, typeId, frequencyId, name, email, phone, url, description, accountNumber, status, enteredBy, dateEntered]
+  [fundId, typeId, frequencyId, name, email, phone, url, description, accountNumber, status, enteredBy, dateEntered, id]
   );
 };
 

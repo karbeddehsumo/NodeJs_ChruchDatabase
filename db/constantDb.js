@@ -4,6 +4,11 @@
     return results[0];
  };
 
+ const getByChurch = async function getByChurch(con, category, status, churchId) {
+  const results = await con.query(`SELECT * FROM constant WHERE category = ? AND status = ? AND churchId = ?`,[category, status, churchId]);
+  return results[0];
+};
+
  const getById = async function getById(con, id) {
   const result = await con.query('SELECT * from constant WHERE constantId = ?', [id]);
   if (result[0].length < 1) {
@@ -33,4 +38,4 @@ const _delete = async function del(con, id) {
   await con.query('DELETE constant WHERE constantId = ?', {id});
 };
 
- module.exports = {get, getById, getAll, _insert, _update, _delete};
+ module.exports = {get, getByChurch, getById, getAll, _insert, _update, _delete};

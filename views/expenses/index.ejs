@@ -6,20 +6,7 @@
         <div class="blogs content">
             <h1><%= global.churchName %></h1>
             <a href="/expenses/create/<%= churchId %>">Add Expense</a>
-            <h3>Bank Blanaces</h3>
-            <% if(bankBalances == null ) { %>
-                <p>No bank balance data available</p>
-               <% } else { %>
-                <% if(bankBalances.length > 0) { %>
-                    <% bankBalances.forEach(balance => { %>
-                        <a class="single" href="/bankBalances/<%= balance.bankBalanceId %>" >
-                            <h3 class="title"><%= balance.accountName %> </h3>
-                            <h3><%= balance.endRevenue %></h3>      
-                    <h3><%= balance.endBalance %></h3>                     
-                    </a>
-                    <% }) %>
-                <% } %>
-           <% } %>
+
             <h2>All Expenses</h2>
             <% if(expenses == null ) { %>
                 <p>No expenses data available</p>

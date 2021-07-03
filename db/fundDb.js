@@ -22,15 +22,15 @@ const getAll =  async function getAll(con, churchId) {
   return results[0];
 };
 
- const _insert = async function insert(con, churchId, name, typeId, bankId, description, isBudgeted, status, enteredBy, dateEntered) {
-   const result = await con.query(`INSERT INTO fund SET churchId = ?, name = ?, typeId = ?, bankId = ?, description = ?, isBudgeted = ?, status = ?, enteredBy = ?, dateEntered = ?`,
-   [churchId, name, typeId, bankId, description, isBudgeted, status, enteredBy, dateEntered]
+ const _insert = async function insert(con, churchId, name, typeId, categoryId, bankId, description, isBudgeted, status, enteredBy, dateEntered) {
+   const result = await con.query(`INSERT INTO fund SET churchId = ?, name = ?, typeId = ?, categoryId = ?, bankId = ?, description = ?, isBudgeted = ?, status = ?, enteredBy = ?, dateEntered = ?`,
+   [churchId, name, typeId, categoryId, bankId, description, isBudgeted, status, enteredBy, dateEntered]
    );
  };
 
- const _update = async function update(con, name, typeId, bankId, description, isBudgeted, status, enteredBy, dateEntered, id) {
-  const result = await con.query(`UPDATE fund SET name = ?, typeId = ?, bankId = ?, description = ?, isBudgeted = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE fundId = ?`,
-  [name, typeId, bankId, description, isBudgeted, status, enteredBy, dateEntered, id]
+ const _update = async function update(con, name, typeId, categoryId, bankId, description, isBudgeted, status, enteredBy, dateEntered, id) {
+  const result = await con.query(`UPDATE fund SET name = ?, typeId = ?, categoryId = ?, bankId = ?, description = ?, isBudgeted = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE fundId = ?`,
+  [name, typeId, categoryId, bankId, description, isBudgeted, status, enteredBy, dateEntered, id]
   );
 };
 

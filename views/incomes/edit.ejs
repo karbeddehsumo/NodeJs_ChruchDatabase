@@ -5,6 +5,7 @@
         <%- include('../partials/nav.ejs') %>
 
         <div class="create-blog content">
+            <h2><%= global.churchName %></h2>
             <h2><%= title %></h2>
             
                     <form action="/incomes/edited/<%= income.incomeId %>" method="post">
@@ -39,7 +40,7 @@
                         <label for="enteredBy">Entered By</label>
                         <input type="text" id="enteredBy" name="enteredBy" value="<%= income.enteredBy %>"" readonly >
                         <label for="dateEntered">Date Entered</label>
-                        <input type="text" id="dateEntered" name="dateEntered" value="<%= income.dateEntered.toLocaleDateString() %>"" readonly>
+                        <input type="date" id="dateEntered" name="dateEntered" value="<%= income.dateEntered.toISOString().substr(0,10) %>"" readonly>
 
                         <button>Submit</button>
                     </form>

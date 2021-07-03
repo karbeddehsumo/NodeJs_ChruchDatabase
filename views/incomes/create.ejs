@@ -21,13 +21,13 @@
                 <label for="incomeDate">Date</label>
                 <input type="date" id="incomeDate" name="incomeDate" value="<%= new Date().toISOString().substr(0,10) %>" required>
                 <label for="cashAmount">Cash Amount</label>
-                <input type="number" id="cashAmount" name="cashAmount" step="any" placeholder="0">
+                <input type="number" id="cashAmount" name="cashAmount" step="0.01" >
                 <label for="checkAmount">Check Amount</label>
-                <input type="number" id="checkAmount" name="checkAmount" step="any" placeholder="0">
+                <input type="number" id="checkAmount" name="checkAmount" step="0.01" >
                 <label for="coinAmount">Coin Amount</label>
-                <input type="number" id="coinAmount" name="coinAmount" step="any" placeholder="0">
+                <input type="number" id="coinAmount" name="coinAmount" step="0.01" >
                 <label for="total">Total</label>
-                <input type="number" id="total" name="total"  readonly>
+                <input type="number" id="total" name="total" step="0.01"  readonly>
                 <label for="comment">Comment</label>
                 <input type="text" id="comment" name="comment" >
                 <input type="hidden" id="status" name="status" value="Not Committed">
