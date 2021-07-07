@@ -12,8 +12,8 @@
                <% } else { %>
                 <% if(staffs.length > 0) { %>
                     <% staffs.forEach(staff => { %>
-                        <a class="single" href="/staffs/<%= staff._id %>" >
-                    <h3 class="title"><%= staff.firstName %> <%= staff.lastName %>), <%= staff.title %></h3>
+                        <a class="single" href="/staffs/<%= staff.staffId %>" >
+                    <h3 class="title"><%= staff.firstName %> <%= staff.lastName %> - <%= staff.jobTitle %></h3>
                             </a>
                     <% }) %>
                 <% } %>

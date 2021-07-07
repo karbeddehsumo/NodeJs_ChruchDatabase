@@ -29,7 +29,7 @@ const getAll =  async function getAll(con, churchId) {
  };
 
  const _update = async function update(con, churchId, pictureId, title, purchaseDate, value, quantity, description, location, assignedTo, assignedDate, conditionType, tagNumber, lastInventoryDate, comment, status, enteredBy, dateEntered, id) {
-  const result = await con.query(`UPDATE property SET pictureId = ?, title = ?, purchaseDate = ?, value = ?, quantity = ?, description = ?, location = ?, assignedTo = ?, assignedDate = ?, conditionType = ?, tagNumber = ?, lastInventoryDate = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ?category = ?, name = ?, value1 = ?, value2 = ?, value3 = ?, sort = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE propertyId = ?`,
+  const result = await con.query(`UPDATE property SET pictureId = ?, title = ?, purchaseDate = ?, value = ?, quantity = ?, description = ?, location = ?, assignedTo = ?, assignedDate = ?, conditionType = ?, tagNumber = ?, lastInventoryDate = ?, comment = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE propertyId = ?`,
   [churchId, pictureId, title, purchaseDate, value, quantity, description, location, assignedTo, assignedDate, conditionType, tagNumber, lastInventoryDate, comment, status, enteredBy, dateEntered, id]
   );
 };

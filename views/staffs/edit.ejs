@@ -1,0 +1,57 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Property</h2>
+        <div class="create-blog content">
+            <form action="/staffs/edited/<%= staff.staffId %>" method="post">
+                <input type="hidden" id="churchId" name="churchId" value="<%= staff.churchId %>">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" value="<%= staff.firstName %>"" >
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" value="<%= staff.lastName %>"">
+                <label for="middleName">Middle firstName</label>
+                <input type="text" id="middleName" name="middleName" value="<%= staff.middleName %>"">
+                <label for="jobTitle">Job Title</label>
+                <input type="text" id="jobTitle" name="jobTitle" value="<%= staff.jobTitle %>"">
+                <label for="departmentId">Department</label>
+                <select name="departmentId">
+                    <option value="None"></option>
+                    <% if(departments.length > 0) { %>
+                        <% departments.forEach(department => { %>            
+                        <% if(department.constantId === staff.departmentId) { %>
+                            <option value="<%= department.constantId %>" selected ><%= department.name %></option> 
+                            <% } else { %>
+                                <option value="<%= department.constantId %>"><%= department.name %></option>
+                        <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>
+                <label for="jobDescription">Job Description</label>
+                <input type="text" id="jobDescription" name="jobDescription" value="<%= staff.jobDescription %>"">
+                <label for="supervisor">Supervisor</label>
+                <input type="text" id="supervisor" name="supervisor" value="<%= staff.supervisor %>"">
+                <label for="dateHired">Hire Date</label>
+                <input type="date" id="dateHired" name="dateHired" value="<%= staff.dateHired.toISOString().substr(0,10) %>"">
+                <label for="status">Status</label>
+                <select name="status">
+                    <option value="None"></option>
+                    <% if(status.length > 0) { %> 
+                        <% status.forEach(statuz => { %>
+                            <% if(statuz.name === staff.status) { %>
+                                <option value="<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                <% } else { %>
+                                    <option value="<%= statuz.name %>"><%= statuz.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>  
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

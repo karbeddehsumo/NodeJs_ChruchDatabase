@@ -14,10 +14,10 @@
                 <input type="text" id="lastName" name="lastName" >
                 <label for="middleName">Middle firstName</label>
                 <input type="text" id="middleName" name="middleName" >
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" >
-                <label for="department">Department</label>
-                <select name="department">
+                <label for="jobTitle">Title</label>
+                <input type="text" id="jobTitle" name="jobTitle" >
+                <label for="departmentId">Department</label>
+                <select name="departmentId">
                     <option value="None"></option>
                     <% if(departments.length > 0) { %>
                         <% departments.forEach(department => { %>
@@ -31,6 +31,7 @@
                 <input type="text" id="supervisor" name="supervisor" >
                 <label for="dateHired">Hire Date</label>
                 <input type="date" id="dateHired" name="dateHired" value="<%= new Date().toISOString().substr(0,10) %>">
+                <input type="hidden" id="status" name="status" value="Active">
                 <button>Submit</button>
             </form>
         </div>
