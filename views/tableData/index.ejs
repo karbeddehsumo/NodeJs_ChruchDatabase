@@ -5,19 +5,79 @@
           
         <div class="blogs content">
             <h1><%= global.churchName %></h1>
-            <a href="/tableData/create/<%= tableId %>">Add New Table</a>
-            <h2>Data List</h2>
-            <!-- <% if( tableData === null) { %>
+            <a href="/tableData/create/<%= tableId %>">Add Data</a>
+            <h2><%= tableHeader.title %></h2>
+            <% if( tableData === null) { %>
                 <p>No table available</p>
                <% } else { %>
                 <% if(tableData.length > 0) { %>
+                    <table id="customers">
+                    <thead>
+                    <tr>
+                        <% if(tableHeader !== null) { %>
+                            <% if( tableHeader.columnName1 !== null) { %>
+                                <th>
+                                    <%= tableHeader.columnName1 %>
+                                </th>
+                            <% } %>
+                            <% if( tableHeader.columnName2 !== null) { %>
+                                <th>
+                                    <%= tableHeader.columnName2 %>
+                                </th>
+                            <% } %>
+                            <% if( tableHeader.columnName3 !== null) { %>
+                                <th>
+                                    <%= tableHeader.columnName3 %>
+                                </th>
+                            <% } %>
+                            <% if( tableHeader.columnName4 !== null) { %>
+                                <th>
+                                    <%= tableHeader.columnName4 %>
+                                </th>
+                            <% } %>
+                            <th></th><th></th>
+                        <% } else { %>
+                            <p>No table data available</p>
+                        <% } %>
+
+                    </tr>
+                </thead>
+                <tbody>
                     <% tableData.forEach(tableData => { %>
-                        <a class="single" href="/tableData/<%= tableData.tableDataId %>" >
-                    <h3 class="title"><%= tableData.value1 %></h3>
-                            </a>
+                        <tr>
+                            <% if(tableHeader !== null) { %>
+                                <% if( tableHeader.columnName1 !== null) { %>
+                                    <td>
+                                        <%= tableData.data1 %>
+                                    </td>
+                                <% } %>
+                                <% if( tableHeader.columnName2 !== null) { %>
+                                    <td>
+                                        <%= tableData.data2 %>
+                                    </td>
+                                <% } %>
+                                <% if( tableHeader.columnName3 !== null) { %>
+                                    <td>
+                                        <%= tableData.data3 %>
+                                    </td>
+                                <% } %>
+                                <% if( tableHeader.columnName4 !== null) { %>
+                                    <td>
+                                        <%= tableData.data4 %>
+                                    </td>
+                                <% } %>
+                                <td><a href="/tableData/edit/<%= tableData.tableDataId %>">Edit</a></td>
+                                <td><a href="/tableData/delete/<%= tableData.tableDataId %>">Delete</a></td>
+                            <% } else { %>
+                                <p>No table data available</p>
+                            <% } %>
+    
+                        </tr>
                     <% }) %>
+                </tbody>
+                </table>
                 <% } %>
-           <% } %> -->
+           <% } %>
             
         </div>
         <%- include('../partials/footer.ejs') %>

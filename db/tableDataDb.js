@@ -19,7 +19,7 @@ const getAll =  async function getAll(con, churchId) {
 
  const _insert = async function insert(con, tableHeaderId, churchId, data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, status, enteredBy, dateEntered) {
    const result = await con.query(`INSERT INTO tableData SET tableHeaderId = ?, churchId = ?, data1 = ?, data2 = ?, data3 = ?, data4 = ?, data5 = ?, data6 = ?, data7 = ?, data8 = ?, data9 = ?, data10 = ?, status = ?, enteredBy = ?, dateEntered = ?`,
-   [tableHeader, churchId, data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, status, enteredBy, dateEntered]
+   [tableHeaderId, churchId, data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, status, enteredBy, dateEntered]
    );
  };
 
