@@ -11,10 +11,11 @@
                 <p>No table available</p>
                <% } else { %>
                 <% if(tableHeaders.length > 0) { %>
-                    <% tableHeaders.forEach(header => { %>
+                    <% tableHeaders.forEach(tableHeader => { %>
                         <a class="single" href="/tableHeaders/<%= tableHeader.tableHeaderId %>" >
                     <h3 class="title"><%= tableHeader.title %></h3>
                             </a>
+                            <a class="single" href="/tableData/church/<%= global.churchId %>/<%= tableHeader.tableHeaderId %>">View</a>
                     <% }) %>
                 <% } %>
            <% } %>

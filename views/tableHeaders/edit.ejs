@@ -1,0 +1,148 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2>Add New Table</h2>
+        <div class="create-blog content">
+            <form action="/tableHeaders/edited/<%= tableHeader.tableHeaderId %>" method="post">
+                <input type="hidden" id="churchId" name="churchId" value="<%= tableHeader.churchId %>"">
+                <label for="ministryId">Ministry</label>tableHeader.
+                <select name="ministryId">
+                    <option value="None"></option>
+                    <% if(ministries.length > 0) { %>
+                        <% ministries.forEach(ministry => { %>
+                            <% if(ministry.ministryId === tableHeader.ministryId) { %>
+                                <option value="<%= ministry.ministryId %>" selected ><%= ministry.name %></option> 
+                                <% } else { %>
+                                    <option value="<%= ministry.ministryId %>"><%= ministry.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>                
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value ="<%= tableHeader.title %>"">
+                <label for="subTitle">SubTitle</label>
+                <input type="text" id="subTitle" name="subTitle" value="<%= tableHeader.subTitle %>"" >
+                
+                <label for="columnName1">Column1</label>
+                <input type="text" id="columnName1" name="columnName1" value="<%= tableHeader.columnName1 %>"" placeholder="Column name">
+                <select name="dataType1">
+                    <option <%= tableHeader.dataType1=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType1=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType1=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType1=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType1=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName2">Column2</label>
+                <input type="text" id="columnName2" name="columnName2" value="<%= tableHeader.columnName2 %>"" placeholder="Column name">
+                <select name="dataType2">
+                    <option <%= tableHeader.dataType2=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType2=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType2=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType2=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType2=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName3">Column3</label>
+                <input type="text" id="columnName3" name="columnName3" value="<%= tableHeader.columnName3 %>"" placeholder="Column name">
+                <select name="dataType3">
+                    <option <%= tableHeader.dataType3=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType3=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType3=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType3=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType3=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName4">Column4</label>
+                <input type="text" id="columnName4" name="columnName4" value="<%= tableHeader.columnName4 %>"" placeholder="Column name">
+                <select name="dataType4">
+                    <option <%= tableHeader.dataType4=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType4=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType4=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType4=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType4=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName5">Column5</label>
+                <input type="text" id="columnName5" name="columnName5" value="<%= tableHeader.columnName5 %>"" placeholder="Column name">
+                <select name="dataType5">
+                    <option <%= tableHeader.dataType5=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType5=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType5=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType5=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType5=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName6">Column6</label>
+                <input type="text" id="columnName6" name="columnName6" value="<%= tableHeader.columnName6 %>"" placeholder="Column name">
+                <select name="dataType6">
+                    <option <%= tableHeader.dataType6=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType6=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType6=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType6=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType6=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName7">Column7</label>
+                <input type="text" id="columnName7" name="columnName7" value="<%= tableHeader.columnName7 %>"" placeholder="Column name">
+                <select name="dataType7">
+                    <option <%= tableHeader.dataType7=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType7=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType7=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType7=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType7=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName8">Column8</label>
+                <input type="text" id="columnName8" name="columnName8" value="<%= tableHeader.columnName8 %>"" placeholder="Column name">
+                <select name="dataType8">
+                    <option <%= tableHeader.dataType8=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType8=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType8=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType8=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType8=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName9">Column9</label>
+                <input type="text" id="columnName9" name="columnName9" value="<%= tableHeader.columnName9 %>"" placeholder="Column name">
+                <select name="dataType9">
+                    <option <%= tableHeader.dataType9=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType9=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType9=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType9=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType9=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="columnName10">Column10</label>
+                <input type="text" id="columnName10" name="columnName10" value="<%= tableHeader.columnName10 %>"" placeholder="Column name">
+                <select name="dataType10">
+                    <option <%= tableHeader.dataType10=="None" ? "selected" : "" %> value="None">Choose data type</option> 
+                    <option <%= tableHeader.dataType10=="string" ? "selected" : "" %> value="string">String</option> 
+                    <option <%= tableHeader.dataType10=="Number" ? "selected" : "" %> value="Number">Number (1, 2, 3...)</option> 
+                    <option <%= tableHeader.dataType10=="digits" ? "selected" : "" %> value="digits">Digits/Money (1.45, 3.56, 4.0, ...)</option> 
+                    <option <%= tableHeader.dataType10=="date" ? "selected" : "" %> value="date">Date</option> 
+                </select>
+
+                <label for="status">Status</label>
+                <select name="status">
+                    <option value="None"></option>
+                    <% if(status.length > 0) { %> 
+                        <% status.forEach(statuz => { %>
+                            <% if(statuz.name === tableHeader.status) { %>
+                                <option value="<%= statuz.name %>" selected ><%= statuz.name %></option> 
+                                <% } else { %>
+                                    <option value="<%= statuz.name %>"><%= statuz.name %></option> 
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </select>  
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -4,6 +4,7 @@
 const mysql = require('mysql2/promise');
 const constantDb = require('../db/constantDb');
 const tableDataDb = require('../db/tableDataDb');
+const tableHeaderDb = require('../db/tableHeaderDb');
 
   const pool = mysql.createPool({
     host:  process.env.MYSQL_HOST,
@@ -15,43 +16,72 @@ const tableDataDb = require('../db/tableDataDb');
 
 const tableData_index = async (req, res) => {
   const churchId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err; 
-      connection.query('SELECT * FROM tableData WHERE churchId = ?',[churchId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-        }
-        else
-        {
-            res.render('tableDatas/index', { title: 'All tableDatas', tableDatas: result, churchId: churchId })
-        }
-    });
-    });
+  const tableId = req.params.tableId;
+  const connection = await pool.getConnection();
+  try {
+    const result = await tableDataDb.getByTable(connection, tableId);
+    res.render('tableData/index', { title: 'All tableData', tableData: result, churchId, tableId });
+  } catch(err) {
+  throw err;
+  } finally {
+    connection.release();
+  }
+
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err; 
+    //   connection.query('SELECT * FROM tableData WHERE churchId = ?',[churchId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //     }
+    //     else
+    //     {
+    //         res.render('tableDatas/index', { title: 'All tableDatas', tableDatas: result, churchId: churchId })
+    //     }
+    // });
+    // });
 }
 
-const tableData_details = (req, res) => {
+const tableData_details = async (req, res) => {
     const tableDataId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-      connection.query('SELECT * FROM tableData WHERE tableDataId = ?', [tableDataId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("tableDatas/details", { tableData: result[0], title: 'tableData Details'})
-        }
-    });
-    });
+    const tableId = req.params.tableId;
+  const connection = await pool.getConnection();
+  try {
+    const result = await tableDataDb.getByTable(connection, tableId);
+    res.render("tableDatas/details", { tableData: result, title: 'tableData Details'});
+  } catch(err) {
+  throw err;
+  } finally {
+    connection.release();
+  }
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err;
+    //   connection.query('SELECT * FROM tableData WHERE tableDataId = ?', [tableDataId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //       console.log(err);
+    //     }
+    //     else
+    //     {
+    //       res.render("tableDatas/details", { tableData: result[0], title: 'tableData Details'})
+    //     }
+    // });
+    // });
 }
 
-const tableData_create_get = (req, res) => {
-    const churchId = req.params.id;
-    res.render('tableDatas/create', {title: 'Create a New tableData', churchId});
-}
+const tableData_create_get = async (req, res) => {
+    const tableId = req.params.id;
+    const connection = await pool.getConnection();
+    try {
+      const result = await tableHeaderDb.getById(connection, tableId);
+      res.render('tableData/create', {tableHeader: result, title: 'Create a New tableData', tableId});
+    } catch(err) {
+    throw err;
+    } finally {
+      connection.release();
+    }
+ }
 
 const tableData_create_post = async (req, res) => {
   const tableDataId = req.params.id;

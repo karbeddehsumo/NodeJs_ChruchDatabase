@@ -3,6 +3,7 @@
 const mysql = require('mysql2/promise');
 const constantDb = require('../db/constantDb');
 const storyDb = require('../db/storyDb');
+const ministryDb = require('../db/ministryDb');
 
   const pool = mysql.createPool({
     host:  process.env.MYSQL_HOST,
@@ -14,67 +15,95 @@ const storyDb = require('../db/storyDb');
 
 const story_index = async (req, res) => {
   const churchId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err; 
-      connection.query('SELECT * FROM story WHERE churchId = ?',[churchId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-        }
-        else
-        {
-            res.render('stories/index', { title: 'All stories', stories: result, churchId: churchId })
-        }
-    });
-    });
+  const connection = await pool.getConnection();
+  try {
+    const result = await storyDb.getAll(connection, global.churchId);
+    res.render('stories/index', { title: 'All stories', stories: result, churchId })
+  } catch(err) {
+  throw err;
+  } finally {
+    connection.release();
+  }
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err; 
+    //   connection.query('SELECT * FROM story WHERE churchId = ?',[churchId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //     }
+    //     else
+    //     {
+    //         res.render('stories/index', { title: 'All stories', stories: result, churchId: churchId })
+    //     }
+    // });
+    // });
 }
 
-const story_details = (req, res) => {
+const story_details = async (req, res) => {
     const storyId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err;
-      connection.query('SELECT * FROM story WHERE storyId = ?', [storyId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("stories/details", { story: result[0], title: 'story Details'})
-        }
-    });
-    });
+    const connection = await pool.getConnection();
+    try {
+      const result = await storyDb.getById(connection, storyId);
+      res.render("stories/details", { story: result, title: 'story Details'});
+    } catch(err) {
+    throw err;
+    } finally {
+      connection.release();
+    }
+
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err;
+    //   connection.query('SELECT * FROM story WHERE storyId = ?', [storyId], (err, result) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //       console.log(err);
+    //     }
+    //     else
+    //     {
+    //       res.render("stories/details", { story: result[0], title: 'story Details'})
+    //     }
+    // });
+    // });
 }
 
-const story_create_get_for_ministry = (req, res) => {
+const story_create_get_for_ministry = async (req, res) => {
   const ministryId = req.params.id;
   const churchId = global.churchId;
   res.render('stories/createForMinistry', {title: 'Create a New story', churchId, ministryId});
 }
-const story_create_get = (req, res) => {
+const story_create_get = async(req, res) => {
     const churchId = req.params.id;
-    pool.getConnection((err, connection) => {
-      if(err) throw err; 
-      connection.query('SELECT * FROM ministry WHERE churchId = ? AND status = ?', [churchId, 'Active'], (err, ministries) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-        }
-        else
-        {
-          res.render('stories/create', {title: 'Create a New story', churchId, ministries});
-        }
-    });
-    });   
+    const connection = await pool.getConnection();
+    try {
+      const ministryList = await ministryDb.getAll(connection, global.churchId);
+      res.render('stories/create', {title: 'Create a New story', churchId, ministries: ministryList});
+    } catch(err) {
+    throw err;
+    } finally {
+      connection.release();
+    }
+
+    // pool.getConnection((err, connection) => {
+    //   if(err) throw err; 
+    //   connection.query('SELECT * FROM ministry WHERE churchId = ? AND status = ?', [churchId, 'Active'], (err, ministries) => {
+    //     connection.release();
+    //     if(err){
+    //       console.log('we have mysql error');
+    //     }
+    //     else
+    //     {
+    //       res.render('stories/create', {title: 'Create a New story', churchId, ministries});
+    //     }
+    // });
+    // });   
 }
 
 const story_create_post = async (req, res) => {
   const storyId = req.params.id;
-  pool.getConnection((err, connection) => {
-    if(err) throw err; 
-    connection.query('INSERT INTO story SET churchId = ?, ministryId = ?, title = ?, subTitle = ?, intro = ?, story = ?, publishedStartDate = ?, publishedEndDate = ?, author = ?, status = ?, enteredBy = ?, dateEntered = ?',
-    [
+  const connection = await pool.getConnection();
+  try {
+    const story = await storyDb._insert(connection, 
       req.body.churchId,
       req.body.ministryId,
       req.body.title,
@@ -87,19 +116,44 @@ const story_create_post = async (req, res) => {
       req.body.status,
       global.userId,
       new Date()
-    ],
-    (err, result) => {
-      connection.release();
-      if(err){
-        console.log('we have mysql error');
-        console.log(err);
-      }
-      else
-      {
-        res.redirect("stories/church/" + req.body.churchId);
-      }
-  });
-  });
+      );
+      res.redirect("stories/church/" + req.body.churchId);
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+
+  // pool.getConnection((err, connection) => {
+  //   if(err) throw err; 
+  //   connection.query('INSERT INTO story SET churchId = ?, ministryId = ?, title = ?, subTitle = ?, intro = ?, story = ?, publishedStartDate = ?, publishedEndDate = ?, author = ?, status = ?, enteredBy = ?, dateEntered = ?',
+  //   [
+  //     req.body.churchId,
+  //     req.body.ministryId,
+  //     req.body.title,
+  //     req.body.subTitle,
+  //     req.body.intro,
+  //     req.body.story,
+  //     req.body.publishedStartDate,
+  //     req.body.publishedEndDate,
+  //     req.body.author,
+  //     req.body.status,
+  //     global.userId,
+  //     new Date()
+  //   ],
+  //   (err, result) => {
+  //     connection.release();
+  //     if(err){
+  //       console.log('we have mysql error');
+  //       console.log(err);
+  //     }
+  //     else
+  //     {
+  //       res.redirect("stories/church/" + req.body.churchId);
+  //     }
+  // });
+  // });
 }
 
 const story_delete = async (req, res) => {
@@ -141,58 +195,92 @@ const story_delete_get = async (req, res) => {
 
 const story_edit_get = async (req, res) => {
   const storyId = req.params.id;
-    pool.getConnection((err, connection) => {
-      let _status;
-      if(err) throw err;
-     connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
-      connection.query('SELECT * FROM ministry WHERE churchId = ? AND status = ?', [global.churchId, 'Active'], (err, ministries) => {
-      connection.query('SELECT * FROM story WHERE churchId = ? AND storyId = ?', [global.churchId, storyId], (err, result) => {
-        connection.release();
-        if(err){
-          console.log('we have mysql error');
-          console.log(err);
-        }
-        else
-        {
-          res.render("stories/edit", { story: result[0], title: 'Edit story', status, ministries})
-        }
-    });
-    });
-  });
-});
+  const connection = await pool.getConnection();
+    try {
+      const ministryList = await ministryDb.getAll(connection, global.churchId);
+      const statusList = await constantDb.get(connection,'Status','Active');
+      const result = await storyDb.getById(connection, storyId);
+      res.render("stories/edit", { story: result, title: 'Edit story', status: statusList, ministries: ministryList});
+    } catch(err) {
+    throw err;
+    } finally {
+      connection.release();
+    }
+//     pool.getConnection((err, connection) => {
+//       let _status;
+//       if(err) throw err;
+//      connection.query('SELECT name FROM constant WHERE category = ? ',['Status'], (err, status) => {
+//       connection.query('SELECT * FROM ministry WHERE churchId = ? AND status = ?', [global.churchId, 'Active'], (err, ministries) => {
+//       connection.query('SELECT * FROM story WHERE churchId = ? AND storyId = ?', [global.churchId, storyId], (err, result) => {
+//         connection.release();
+//         if(err){
+//           console.log('we have mysql error');
+//           console.log(err);
+//         }
+//         else
+//         {
+//           res.render("stories/edit", { story: result[0], title: 'Edit story', status, ministries})
+//         }
+//     });
+//     });
+//   });
+// });
   }
 
 const story_edit = async (req, res) => {
  const storyId = req.params.id;
-pool.getConnection((err, connection) => {
-  if(err) throw err;
-  connection.query('UPDATE story SET ministryId = ?, title = ?, subTitle = ?, intro = ?, story = ?, publishedStartDate = ?, publishedEndDate = ?, author = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE storyID = ?',
-  [
-    req.body.ministryId,
-    req.body.title,
-    req.body.subTitle,
-    req.body.intro,
-    req.body.story,
-    req.body.publishedStartDate,
-    req.body.publishedEndDate,
-    req.body.author,
-    req.body.status,
-    global.userId,
-    new Date(),
-    storyId
-  ],
-  (err, result) => {
-    connection.release();
-    if(err){
-      console.log('we have mysql error');
-      console.log(err);
-    }
-    else
-    {
+ const connection = await pool.getConnection();
+  try {
+    const staff = await storyDb._update(connection, 
+      req.body.ministryId,
+      req.body.title,
+      req.body.subTitle,
+      req.body.intro,
+      req.body.story,
+      req.body.publishedStartDate,
+      req.body.publishedEndDate,
+      req.body.author,
+      req.body.status,
+      global.userId,
+      new Date(),
+      storyId
+      );
       res.redirect("/stories/church/" + req.body.churchId);
-    }
-});
-});
+
+  } catch(err) {
+   throw err;
+  } finally {
+    connection.release();
+  }
+// pool.getConnection((err, connection) => {
+//   if(err) throw err;
+//   connection.query('UPDATE story SET ministryId = ?, title = ?, subTitle = ?, intro = ?, story = ?, publishedStartDate = ?, publishedEndDate = ?, author = ?, status = ?, enteredBy = ?, dateEntered = ? WHERE storyID = ?',
+//   [
+//     req.body.ministryId,
+//     req.body.title,
+//     req.body.subTitle,
+//     req.body.intro,
+//     req.body.story,
+//     req.body.publishedStartDate,
+//     req.body.publishedEndDate,
+//     req.body.author,
+//     req.body.status,
+//     global.userId,
+//     new Date(),
+//     storyId
+//   ],
+//   (err, result) => {
+//     connection.release();
+//     if(err){
+//       console.log('we have mysql error');
+//       console.log(err);
+//     }
+//     else
+//     {
+//       res.redirect("/stories/church/" + req.body.churchId);
+//     }
+// });
+// });
 }
 
 module.exports = {

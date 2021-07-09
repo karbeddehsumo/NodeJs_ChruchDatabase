@@ -1,0 +1,172 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+
+        <%- include('../partials/nav.ejs') %>
+        <h1><%= global.churchName %></h1>
+        <h2><%= tableHeader.title %></h2>
+        <div class="create-blog content">
+            <form action="/tableData" method="POST">
+                <input type="hidden" id="churchId" name="churchId" value="<%= global.churchId %>">
+                <input type="hidden" id="tableHeaderId" name="tableHeaderId" value="<%= tableId %>">
+                
+                <% if(tableHeader.dataType1 === "string") { %>
+                    <label for="data1"><%= tableHeader.columnName1 %></label>
+                    <input type="text" id="data1" name="data1" >
+                <% } else if(tableHeader.dataType1 === "date") {  %>
+                    <label for="data1"><%= tableHeader.columnName1 %></label>
+                    <input type="date" id="data1" name="data1" >
+                <% } else if(tableHeader.dataType1 === "digits") {  %>
+                    <label for="data1"><%= tableHeader.columnName1 %></label>
+                    <input type="number" id="data1" name="data1" step="any" >
+                <% } else if(tableHeader.dataType1 === "Number") {%>
+                        <label for="data1"><%= tableHeader.columnName1 %></label>
+                        <input type="number" id="data1" name="data1" >
+                <% } else {%>
+                <% } %>
+             
+                <% if(tableHeader.dataType2 === "string") { %>
+                    <label for="data2"><%= tableHeader.columnName2 %></label>
+                    <input type="text" id="data2" name="data2" >
+                <% } else if(tableHeader.dataType2 === "date") {  %>
+                    <label for="data2"><%= tableHeader.columnName2 %></label>
+                    <input type="date" id="data2" name="data2" >
+                <% } else if(tableHeader.dataType2 === "digits") {  %>
+                    <label for="data2"><%= tableHeader.columnName2 %></label>
+                    <input type="number" id="data2" name="data2" step="any" >
+                    <% } else if(tableHeader.dataType2 === "Number") {%>
+                        <label for="data2"><%= tableHeader.columnName2 %></label>
+                        <input type="number" id="data2" name="data2" >
+                <% } else {%>
+                <% } %>
+
+                <% if(tableHeader.dataType3 === "string") { %>
+                    <label for="data3"><%= tableHeader.columnName3 %></label>
+                    <input type="text" id="data3" name="data3" >
+                <% } else if(tableHeader.dataType3 === "date") {  %>
+                    <label for="data3"><%= tableHeader.columnName3 %></label>
+                    <input type="date" id="data3" name="data3" >
+                <% } else if(tableHeader.dataType3 === "digits") {  %>
+                    <label for="data3"><%= tableHeader.columnName3 %></label>
+                    <input type="number" id="data3" name="data3" step="any" >
+                    <% } else if(tableHeader.dataType3 === "Number") {%>
+                        <label for="data3"><%= tableHeader.columnName3 %></label>
+                        <input type="number" id="data3" name="data3" >
+                <% } else {%>
+                <% } %>
+
+                <% if(tableHeader.dataType4 === "string") { %>
+                    <label for="data4"><%= tableHeader.columnName4 %></label>
+                    <input type="text" id="data4" name="data4" >
+                <% } else if(tableHeader.dataType4 === "date") {  %>
+                    <label for="data4"><%= tableHeader.columnName4 %></label>
+                    <input type="date" id="data4" name="data4" >
+                <% } else if(tableHeader.dataType4 === "digits") {  %>
+                    <label for="data4"><%= tableHeader.columnName4 %></label>
+                    <input type="number" id="data4" name="data4" step="any" >
+                    <% } else if(tableHeader.dataType4 === "Number") {%>
+                        <label for="data4"><%= tableHeader.columnName4 %></label>
+                        <input type="number" id="data4" name="data4" >
+                <% } else {%>
+                <% } %>
+
+                <% if(tableHeader.dataType5 === "string") { %>
+                    <label for="data5"><%= tableHeader.columnName5 %></label>
+                    <input type="text" id="data5" name="data5" >
+                <% } else if(tableHeader.dataType5 === "date") {  %>
+                    <label for="data5"><%= tableHeader.columnName5 %></label>
+                    <input type="date" id="data5" name="data5" >
+                <% } else if(tableHeader.dataType5 === "digits") {  %>
+                    <label for="data5"><%= tableHeader.columnName5 %></label>
+                    <input type="number" id="data5" name="data5" step="any" >
+                    <% } else if(tableHeader.dataType5 === "Number") {%>
+                        <label for="data5"><%= tableHeader.columnName5 %></label>
+                        <input type="number" id="data5" name="data5" >
+                    <% } else {%>
+                    <% } %>
+
+                <% if(tableHeader.dataType6 === "string") { %>
+                    <label for="data6"><%= tableHeader.columnName6 %></label>
+                    <input type="text" id="data6" name="data6" >
+                <% } else if(tableHeader.dataType6 === "date") {  %>
+                    <label for="data6"><%= tableHeader.columnName6 %></label>
+                    <input type="date" id="data6" name="data6" >
+                <% } else if(tableHeader.dataType6 === "digits") {  %>
+                    <label for="data6"><%= tableHeader.columnName6 %></label>
+                    <input type="number" id="data6" name="data6" step="any" >
+                    <% } else if(tableHeader.dataType6 === "Number") {%>
+                        <label for="data6"><%= tableHeader.columnName6 %></label>
+                        <input type="number" id="data6" name="data6" >
+                    <% } else {%>
+                    <% } %>
+
+                <% if(tableHeader.dataType7 === "string") { %>
+                    <label for="data7"><%= tableHeader.columnName7 %></label>
+                    <input type="text" id="data7" name="data7" >
+                <% } else if(tableHeader.dataType7 === "date") {  %>
+                    <label for="data7"><%= tableHeader.columnName7 %></label>
+                    <input type="date" id="data7" name="data7" >
+                <% } else if(tableHeader.dataType7 === "digits") {  %>
+                    <label for="data7"><%= tableHeader.columnName7 %></label>
+                    <input type="number" id="data7" name="data7" step="any" >
+                    <% } else if(tableHeader.dataType7 === "Number") {%>
+                        <label for="data7"><%= tableHeader.columnName7 %></label>
+                        <input type="number" id="data7" name="data7" >
+                    <% } else {%>
+                    <% } %>
+
+                <% if(tableHeader.dataType8 === "string") { %>
+                    <label for="data8"><%= tableHeader.columnName8 %></label>
+                    <input type="text" id="data8" name="data8" >
+                <% } else if(tableHeader.dataType8 === "date") {  %>
+                    <label for="data8"><%= tableHeader.columnName8 %></label>
+                    <input type="date" id="data8" name="data8" >
+                <% } else if(tableHeader.dataType8 === "digits") {  %>
+                    <label for="data8"><%= tableHeader.columnName8 %></label>
+                    <input type="number" id="data8" name="data8" step="any" >
+                    <% } else if(tableHeader.dataType8 === "Number") {%>
+                        <label for="data8"><%= tableHeader.columnName8 %></label>
+                        <input type="number" id="data8" name="data8" >
+                    <% } else {%>
+                    <% } %>
+
+
+                <% if(tableHeader.dataType9 === "string") { %>
+                    <label for="data9"><%= tableHeader.columnName9 %></label>
+                    <input type="text" id="data9" name="data9" >
+                <% } else if(tableHeader.dataType9 === "date") {  %>
+                    <label for="data9"><%= tableHeader.columnName9 %></label>
+                    <input type="date" id="data9" name="data9" >
+                <% } else if(tableHeader.dataType9 === "digits") {  %>
+                    <label for="data9"><%= tableHeader.columnName9 %></label>
+                    <input type="number" id="data9" name="data9" step="any" >
+                    <% } else if(tableHeader.dataType8 === "Number") {%>
+                        <label for="data9"><%= tableHeader.columnName9 %></label>
+                        <input type="number" id="data9" name="data9" >
+                <% } else {%>
+                <% } %>
+
+                <% if(tableHeader.dataType10 === "string") { %>
+                    <label for="data10"><%= tableHeader.columnName10 %></label>
+                    <input type="text" id="data10" name="data10" >
+                <% } else if(tableHeader.dataType10 === "date") {  %>
+                    <label for="data10"><%= tableHeader.columnName10 %></label>
+                    <input type="date" id="data10" name="data10" >
+                <% } else if(tableHeader.dataType10 === "digits") {  %>
+                    <label for="data10"><%= tableHeader.columnName10 %></label>
+                    <input type="number" id="data10" name="data10" step="any" >
+                <% } else if(tableHeader.dataType10 === "Number") {%>
+                        <label for="data10"><%= tableHeader.columnName10 %></label>
+                        <input type="number" id="data10" name="data10" >
+                <% } else {%>
+                <% } %>
+
+
+                <input type="hidden" id="status" name="status" value="Active">
+                <button>Submit</button>
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>
